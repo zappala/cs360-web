@@ -1,0 +1,429 @@
+{% extends "sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Django Tutorial | Users</h1>
+
+      <p>Next we will create user accounts with the
+
+	<a href="http://docs.djangoproject.com/en/dev/topics/auth/">Django User authentication</a>
+
+	system. This will allow the user to cerate an account and login to the
+	system. We will also link the Item table to the Users table so that
+	each user can have her own list of items.</p>
+
+      <h2>Logging In and Out</h2>
+
+      <p>When we first setup Django we enabled the authentication system and
+	created a superuser.  Since we have this account already, we'll start
+	by allowing users to login.</p>
+
+      <ol>
+
+	<li><p>First, create a login form in models.py:</p>
+
+<pre>
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput(render_value=False),
+                               max_length=100)
+</pre>
+
+	  <p>This form takes a username and a password.  The only thing unusual here
+	    is that we use a
+
+	    <a href="http://docs.djangoproject.com/en/dev/ref/forms/widgets/">widget</a>
+
+	    in the password field so that the password is not shown on the screen.</p>
+
+	</li>
+
+	<li><p>Now we'll add login and logout methods in views.py</p>
+
+	  <p>First, add these include lines:</p>
+
+<pre>
+import django.contrib.auth
+from django.contrib.auth import authenticate
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
+</pre>
+
+	  <p>Next, add a
+
+	    <a href="http://docs.python.org/reference/compound_stmts.html#function">decorator</a>
+
+	    to the existing methods:</p>
+
+<pre>
+@login_required
+def index(request):
+...
+
+@login_required
+def item(request, id):
+...
+
+@login_required
+def add(request):
+...
+
+@login_required
+def edit(request, id):
+...
+
+@login_required
+def delete(request):
+...
+</pre>
+
+	  <p>This is provided by the authentication component and will require
+	    each person that visits the site to be logged in before they access
+	    these methods.</p>
+
+	  <p>Now add the login() and logout() methods:</p>
+
+<pre>
+def login(request):
+    if request.method == 'GET':
+        form = LoginForm()
+        next = request.GET['next']
+        return render_to_response('auth/login.html', {'form':form,
+                                                      'next':next},
+                                  context_instance=RequestContext(request))
+
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if not form.is_valid():
+            return render_to_response('auth/login.html', {'form':form},
+                                  context_instance=RequestContext(request))
+
+        user = authenticate(username=request.POST['username'],
+                            password=request.POST['password'])
+        if user is None:
+            return render_to_response('auth/login.html',
+                                      {'form':form,
+                                       'error': 'Invalid username or password'},
+                                      context_instance=RequestContext(request))
+        django.contrib.auth.login(request,user)
+        return HttpResponseRedirect(request.POST['next'])
+
+def logout(request):
+    django.contrib.auth.logout(request)
+    return HttpResponseRedirect(reverse('list.views.index'))
+</pre>
+
+	  <p>The login method checks whether the form was accessed with GET or
+	    POST.  In the case of GET, the a new form is displayed using a
+	    template.  One of the new things we are doing here is grabbing a
+	    parameter from the GET request.  The authentication component will use
+	    the <u>next</u> parameter to indicate which URL the application should
+	    redirect to after the user is logged in.  For example, the request may
+	    look like:</p>
+
+	  <pre>
+	    /list/auth/login/?next=/list/item/
+	  </pre>
+
+	  <p>Since HTTP is stateless, we need to store this parameter for use
+	    later on.  We do this by passing it to the template for this view,
+	    where it is rendered as a hidden field.  It will then be passed in the
+	    subsequent POST request when the user submits the form.</p>
+
+	  <p>For a POST request, the login() method fills in the form object
+	    with the POST data and validates the form.  Assuming it is OK, the
+	    method authentiates the user with the username and password supplied
+	    in the form, and either redirects back to the form if an error occured
+	    or logs in the user and redirects to the URL contained in the
+	    <u>next</u> parameter.  Note that the login() method from the Django
+	    authentication component will store the user as part of the session
+	    object.  More about that later.</p>
+
+	  <p>Also shown above is a logout() method that will call Django's
+	    login() method and then redirect back to the index view.</p>
+
+	</li>
+
+	<li><p>Next we will create the associated template for this view.
+	    Create a file called templates/auth/login.html containing the
+	    following:</p>
+
+{% raw %}
+<pre>
+&lt;p&gt;&lt;a href="/list/auth/create"&gt;Create an account&lt;/a&gt;&lt;/p&gt;
+
+&lt;b&gt;Login:&lt;/b&gt;
+
+{% if error %}&lt;p&gt;&lt;i&gt;{{ error }}&lt;/i&gt;&lt;/p&gt;{% endif %}
+
+&lt;form action="/list/auth/login/" method="post"&gt;
+{% csrf_token %}
+{{ form.as_p }}
+&lt;input type="submit" value="Save" /&gt;
+&lt;input type="hidden" name="next" value="{{ next }}" /&gt;
+&lt;/form&gt;
+</pre>
+{% endraw %}
+
+	  <p>This code is almost identical to the template we used for adding an
+	    item to the database.  The main difference is that we use a hidden
+	    form field to keep track of the <u>next</u> parameter used in the
+	    original GET request that loaded the form.  This parameter is read
+	    from the POST request by the login() method.</p>
+
+	</li>
+
+	<li><p>Add the following to the top of templates/item/index.html:</p>
+
+<pre>
+&lt;p&gt;&lt;a href="/list/auth/logout"&gt;Logout&lt;/a&gt;&lt;/p&gt;
+</pre>
+
+	  <p>This provides a logout link with the list.</p>
+
+	</li>
+
+	<li><p>Let's setup the routing for login() and logout() in
+	    list/urls.py:</p>
+
+<pre>
+                       url(r'^auth/login/$', 'login'),
+                       url(r'^auth/logout/$', 'logout'),
+</pre>
+
+	</li>
+
+	<li><p>Finally, add the following to settings.py:</p>
+
+<pre>
+LOGIN_URL = "/list/auth/login/"
+</pre>
+
+	  <p>This tells Django which URL to use for authenticating users.</p>
+
+      </ol>
+
+      <p>You should now be required to login to view the list items, and you
+	should be able to logout by clicking the logout link.</p>
+
+      <h2>Creating a New User</h2>
+
+      <p>Our next task is to allow new users to register with the site.  We
+	need to create a page that will collect their account information, and
+	then create a new account for them.</p>
+
+      <ol>
+
+	<li><p>Go back to models.py and add a new form:</p>
+
+<pre>
+class UserForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    email = forms.CharField(max_length=100)
+    password = forms.CharField(widget=forms.PasswordInput(render_value=False),
+                               max_length=100)
+    confirm = forms.CharField(widget=forms.PasswordInput(render_value=False),
+                               max_length=100)
+</pre>
+
+	  <p>This form collects a username, email address and password.  Notice
+	    that we will have the user retype their password to be sure they got
+	    it right.</p>
+
+	</li>
+
+	<li><p>Add a create() method in views.py:</p>
+
+<pre>
+def create(request):
+    if request.method == 'GET':
+        form = UserForm()
+        return render_to_response('auth/create.html', {'form':form},
+                                  context_instance=RequestContext(request))
+
+    if request.method == 'POST':
+        form = UserForm(request.POST)
+        if not form.is_valid():
+            return render_to_response('auth/create.html', {'form':form},
+                                  context_instance=RequestContext(request))
+
+        try:
+            u = User.objects.get(username=request.POST['username'])
+            return render_to_response('auth/create.html',
+                                      {'form':form,
+                                       'error':'Username already taken'},
+                                  context_instance=RequestContext(request))
+        except User.DoesNotExist:
+            pass
+
+        if request.POST['password'] != request.POST['confirm']:
+            return render_to_response('auth/create.html',
+                                      {'form':form,
+                                       'error':'Passwords must match'},
+                                  context_instance=RequestContext(request))
+
+        user = User.objects.create_user(request.POST['username'],
+                                        request.POST['email'],
+                                        request.POST['password'])
+        user.save()
+        return HttpResponseRedirect(reverse('list.views.index'))
+</pre>
+
+	  <p>This method looks a lot like login(), since both of them handle
+	    a form with GET and POST.  For GET, we simply render a UserForm using
+	    a new template.  For POST, we validate the form, check that the username
+	    is unique, and check that the passwords match. If these checks pass,
+	    we create a new User object with the POST information and save it to 
+	    the database, redirecting to the index() view.</p>
+
+	</li>
+
+	<li><p>Create a template in template/auth/create.html:</p>
+
+{% raw %}
+<pre>
+&lt;b&gt;Create an account:&lt;/b&gt;
+
+{% if error %}&lt;p&gt;&lt;i&gt;{{ error }}&lt;/i&gt;&lt;/p&gt;{% endif %}
+
+&lt;form action="/list/auth/create/" method="post"&gt;
+{% csrf_token %}
+{{ form.as_p }}
+&lt;input type="submit" value="Save" /&gt;
+&lt;/form&gt;
+</pre>
+{% endraw %}
+
+	  <p>This template is similar to the login template.</p>
+
+	</li>
+
+	<li><p>Add the route to urls.py:</p>
+
+<pre>
+                       url(r'^auth/create/$', 'create'),
+</pre>
+
+	</li>
+
+      </ol>
+
+      <p>You should be able to create new accounts now.</p>
+
+      <h2>Linking users to lists</h2>
+
+      <p>Each user should have her own list of items.  Now that we have
+	authentication working, this is fairly easy to do.</p>
+
+      <ol>
+
+	<li><p>Modify models.py so that the Item model uses the User table as
+	    a foreign key:</p>
+
+<pre>
+from django.contrib.auth.models import User
+
+class Item(models.Model):
+    user = models.ForeignKey(User,editable=False)
+    text = models.CharField(max_length=200)
+    created = models.DateTimeField('Date Created',auto_now_add=True)
+</pre>
+
+	  <p>By default, Django uses the primary key of the User model as the
+	    foreign key, which is what we want here. See the
+
+	    <a href="http://docs.djangoproject.com/en/dev/ref/models/fields/">Django Model field reference</a>
+
+	    for details.</p>
+
+	</li>
+
+	<li><p>Django doesn't have a built-in method of database migrations.
+	    So for this new model to take effect, we need to delete the database
+	    and rebuild it:</p>
+
+<pre>
+rm demo/data.db
+python manage.py syncdb
+</pre>
+
+	</li>
+
+	<li><p>With the table relationship created, we need to modify the index(),
+	    item(), and add() views so that they find the right data.</p>
+
+	  <p>First, index():</p>
+
+<pre>
+@login_required
+def index(request):
+    list = Item.objects.filter(user=request.user.id).order_by('-created')
+    return render_to_response('item/index.html',{'list':list})
+</pre>
+
+	  <p>The only line that is modified is the one that looks up the list
+	    from the database.  We now use the filter() method to request only
+	    those objects associated with the user.  Note that the user object is
+	    stored with the request by the authentication module.</p>
+
+	  <p>Now the item() method:</p>
+
+<pre>
+@login_required
+def item(request, id):
+    try:
+        i = Item.objects.get(pk=id)
+    except Item.DoesNotExist:
+        raise Http404
+    if i.user_id != request.user.id:
+        raise Http404
+    return render_to_response('item/item.html', {'item':i})
+</pre>
+
+	  <p>Notice that we have added an additional check to be sure the user
+	    can view only items that belong to her.</p>
+
+	  <p>And then add():</p>
+
+<pre>
+        i = Item()
+        i.user = request.user
+        i.text = form.cleaned_data['text']
+</pre>
+
+	  <p>Note, we're not showing the whole method here, just the one added
+	    line in its context.  This line sets the user associated with this
+	    item to the user that is logged in.</p>
+
+	  <p>Also add the following for edit() and delete():</p>
+
+<pre>
+    try:
+        i = Item.objects.get(pk=id)
+    except Item.DoesNotExist:
+        raise Http404
+    if i.user_id != request.user.id:
+        raise Http404
+</pre>
+
+	</li>
+
+      </ol>
+
+      <p>That's it!  Now each user should be able to view only her own
+	list.</p>
+
+      <p>Next:
+
+	<a href="/fall-2012/django/templates-and-css.html">Templates and CSS</a>
+
+      </p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

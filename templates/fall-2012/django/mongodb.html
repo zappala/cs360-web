@@ -1,0 +1,204 @@
+{% extends "sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Django Tutorial | MongoDB</h1>
+
+      <p>We will now convert the database backend from SQLite
+	to <a href="http://www.mongodb.org/">MongoDB</a>. MongoDB is a
+	document-oriented database, meaning that it stores JSON-like
+	objects instead of relational tables.  MongoDB does not
+	support SQL or transactions.  The advantage of MongoDB is that
+	it is highly scalable, meaning it can be easily used in a
+	distributed environment, taking advantage of multiple
+	processors and disks. It supports indexing, queries,
+	map/reduce and extremely large files. Many web applications
+	are taking advantage of this type of scalability and
+	flexibility.</p>
+
+      <h2>Converting to MongoDB</h2>
+
+      <ol>
+
+	<li><p>Install MongoDB:</p>
+
+<pre>
+sudo apt-key adv --keyserver keyserver.ubuntu.com --recv 7F0CEB10
+deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen
+sudo apt-get update
+sudo apt-get install mongodb-10gen
+</pre>
+
+</li>
+
+	<li><p>Install <a href="http://mongoengine.org/">mongoengine</a>, a
+	    Python object mapper for MongoDB:</p>
+
+<pre>
+pip install mongoengine
+</pre>
+
+</li>
+
+	<li><p>Install <a href="https://github.com/jschrewe/django-mongodbforms">mongodbforms</a>,
+	    which allows you to use forms for mongoengine documents. Download the
+	    zip file using the link at the mongodbforms site, then copy the
+	    mongoforms directory into the demo, so that your Django project looks
+	    like this:</p>
+
+<pre>
+demo
+list
+manage.py
+mongodbforms
+</pre>
+
+	</li>
+
+	<li><p>Edit demo/settings.py file. Place the following lines
+	at the top:</p>
+
+<pre>
+import mongoengine
+mongoengine.connect('list')
+</pre>
+
+	  <p>This will allow Django to connect to MongoDb using the
+	    new 'list' database.</p>
+
+	  <p>Place the following lines at the bottom:</p>
+
+<pre>
+AUTHENTICATION_BACKENDS = (
+    'mongoengine.django.auth.MongoEngineBackend',
+)
+
+SESSION_ENGINE = 'mongoengine.django.sessions'
+</pre>
+
+	  <p>This will setup Django to use MongoDB for the authentication
+	    backend (storing users) and for the session backend.</p>
+
+	</li>
+
+	<li><p>Edit demo/urls.py and remove the administration site
+	information so that it reads as:</p>
+
+<pre>
+from django.conf.urls import patterns, include, url
+
+urlpatterns = patterns('',
+					   url(r'^list/', include('list.urls')),
+)
+</pre>
+
+	  <p>We won't use the administration portion of Django any more.</p>
+
+	</li>
+
+	<li><p>Edit list/urls.py and replace the regular expressions
+	    for an item that use the \d+ pattern and replace them with
+	    a \w+ pattern:</p>
+
+<pre>
+                       url(r'^item/edit/(?P&lt;id&gt;\w+)/$', 'edit'),
+                       url(r'^item/delete/(?P&lt;id&gt;\w+)/$', 'delete'),
+                       url(r'^item/today/(?P&lt;id&gt;\w+)/$', 'today'),
+                       url(r'^item/later/(?P&lt;id&gt;\w+)/$', 'later'),
+</pre>
+
+	  <p>This is necessary because MongoDB uses an alphanumeric key
+	    space.</p>
+
+	</li>
+
+	<li><p>Edit list/models.py so that the import lines and the
+	    Item and ItemForm classes read as follows:</p>
+
+<pre>
+from django import forms
+
+from mongoengine import *
+from mongoengine.django.auth import User
+from mongodbforms import DocumentForm,EmbeddedDocumentForm
+
+import datetime
+
+class Item(Document):
+    user = ReferenceField(User)
+    text = StringField(max_length=200)
+    created = DateTimeField(default=datetime.datetime.now)
+
+class ItemForm(DocumentForm):
+    class Meta:
+        document = Item
+        exclude = ('user', 'created')
+</pre>
+
+	  <p>This changes the Item model so that it uses a Django document
+	    rather than the Django model that maps to a table. The syntax for
+	    the fields is slightly different.</p>
+
+	  <p>This also changes the ItemForm model so that it uses a mongoengine
+	    form. We can use standard Django syntax to indicate which document
+	    fields to exclude when showing the form.</p>
+
+	</li>
+
+	<li><p>Edit list/views.py so that the User model is imported from
+	    mongoengine:</p>
+
+<pre>
+from mongoengine.django.auth import User
+</pre>
+
+	  <p>In addition, replace every instance of:</p>
+
+<pre>
+i.user_id
+</pre>
+
+	  <p>with</p>
+
+<pre>
+i.user.id
+</pre>
+
+	  <p>Finally, in the create() method, replace the call to
+	    User.objects.create_user() with the following:</p>
+
+<pre>
+        user = User.create_user(username=request.POST['username'],
+                                password=request.POST['password'],
+                                email=request.POST['email'])
+</pre>
+
+	  <p>This is the proper syntax for calling create_user() on the
+	    mongoengine User object.</p>
+
+	</li>
+
+      </ol>
+
+      <p>That's it. The application should work exactly as before, but it is now
+	storing all of its data in MongoDB instead.</p>
+
+      <p>Note that we have made the simplest possible changes to use MongoDB
+	with this application. With a document database, it is common to store
+	all of the data needed to display a page on a single document, because
+	this increases the efficiency of the application. In this case, we
+	could have reorganized the model to have a UserList object, with a
+	list field containing the entire list for that user. This would
+	require fetching one document to get the entire list, rather than one
+	document per list item. Likewise, today's list could be stored in the
+	UserList object, instead of in the session.</p>
+
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

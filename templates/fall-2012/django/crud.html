@@ -1,0 +1,543 @@
+{% extends "sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Django Tutorial | CRUD</h1>
+
+      <p>We will first create a basic list application that allows us
+	to create, read, update, and delete items from the list.</p>
+
+      <h2>Start a new application</h2>
+
+      <p>From within your demo directory, create the application files:</p>
+
+<pre>
+python manage.py startapp list
+</pre>
+
+      <p>This will create a directory called list containing several
+      scripts:</p>
+
+<pre>
+__init__.py
+models.py
+tests.py
+views.py
+</pre>
+
+      <p>Edit demo/settings.py and add the list application to the
+	INSTALLED_APPS variable:
+
+<pre>
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.admin',
+    'django.contrib.admindocs',
+    'list'
+)
+</pre>
+
+      <h2>Item model</h2>
+
+      <p>Create a model for items in a list.  Edit the list/models.py file
+	so that it contains the following:</p>
+
+<pre>
+from django.db import models
+
+class Item(models.Model):
+    text = models.CharField('Text',max_length=200)
+    created = models.DateTimeField('Date Created',auto_now_add=True)
+</pre>
+
+      <p>This creates a model for an Item table in the database, where each
+	record in the table contains a text field and the date it was created.
+	The first argument for CharField and DateTimeField is a name that can
+	be used for documentation.  The text field also includes a maximum
+	length.  The DateTime Field uses auto_now_add to automatically insert
+	the current date and time for every record.</p>
+
+      <p>Notice that in Django you need to import the models class from the
+	django codebase.  This is just like how you would do it in normal
+	Python code.  Other frameworks will do this import automatically for
+	you, whereas Django prefers to keep it explicit.</p>
+
+      <p>To see what SQL code Django will run to create this table, use the
+	following command:</p>
+
+<pre>
+python manage.py sql list
+</pre>
+
+      <p>You should see the following:</p>
+
+<pre>
+BEGIN;
+CREATE TABLE "list_item" (
+    "id" integer NOT NULL PRIMARY KEY,
+    "text" varchar(200) NOT NULL,
+    "created" datetime NOT NULL
+)
+;
+COMMIT;
+</pre>
+
+      <p>Notice that the table name is prefaced with the application name,
+	and that the table automatically includes a primary key called
+	"id".</p>
+
+      <p>Create the table by synchronizing the database:</p>
+
+<pre>
+python manage.py syncdb
+</pre>
+
+
+      <p>To view this model with the administrative interface built into
+	Django, create list/admin.py and add the following code:
+
+<pre>
+from list.models import Item
+from django.contrib import admin
+
+admin.site.register(Item)
+</pre>
+
+      <p>You should now be able to see an automatically-generated administration
+	interface for your application.  Run the following command:</p>
+
+<pre>
+python manage.py runserver
+</pre>
+
+      <p>Then visit
+
+	<a href="http://127.0.0.1:8000/admin/">http://127.0.0.1:8000/admin/</a>
+
+	with a browser. You should see an administration interface that will
+	allow you to add and edit items in the Item table.  See the
+
+	<a href="http://docs.djangoproject.com/en/dev/intro/tutorial02/">Django tutorial</a>
+
+	for details on customizing this interface.</p>
+
+      <h2>Viewing items</h2>
+
+      <p>Add functionality to the application so that an ordinary user can
+	view items in the list.</p>
+
+      <ol>
+
+	<li><p>First, we'll write the views that we need.  Edit the list/views.py
+	    file so that it reads as follows:</p>
+
+<pre>
+from django.core.urlresolvers import reverse
+from django.http import HttpResponseRedirect, Http404
+from django.template import RequestContext
+from django.shortcuts import render_to_response
+
+from list.models import *
+
+
+def index(request):
+    list = Item.objects.all().order_by('-created')
+    return render_to_response('item/index.html',{'list':list})
+
+def item(request, id):
+    try:
+        i = Item.objects.get(pk=id)
+    except Item.DoesNotExist:
+        raise Http404
+    return render_to_response('item/item.html', {'item':i})
+</pre>
+
+	  <p>The index() method will list all of the items in the
+	    table.  It uses the Item model to get a list of all of the
+	    objects, sorted by the date they were created.  Then it
+	    passes this list to a template to generate the page.</p>
+
+	  <p>The item() method will list a single item from teh Items
+	    table.  It takes as input an id, looks up the item in the
+	    table, and then passes this item to a template that
+	    generates the page.  If the item doesn't exist, we raise
+	    an HTTP 404 exception.</p>
+
+	<li><p>Next, we need to create a template for each of these views.</p>
+
+	  <p>First, create a directory for the templates for this
+	  application:</p>
+
+<pre>
+mkdir -p list/templates/item
+</pre>
+
+	  <p>Next, create a template in list/templates/item called
+	    index.html containing the following:</p>
+
+{% raw %}
+<pre>
+&lt;b&gt;Items in the list:&lt;/b&gt;
+{% if list %}
+    &lt;ul&gt;
+    {% for item in list %}
+        &lt;li&gt;&lt;a href="/list/item/{{ item.id }}/"&gt;{{ item.text }}&lt;/a&gt;&lt;/li&gt;
+    {% endfor %}
+    &lt;/ul&gt;
+{% else %}
+    &lt;p&gt;No items are available.&lt;/p&gt;
+{% endif %}
+</pre>
+{% endraw %}
+
+	  <p>This template contains the HTML code that you will show for the index
+	    view, mixed with some Python code that will iterate through all of the
+	    items in the list that is passed to the template.</p>
+
+	  <p>In this same directory, create a template called item.html
+	    containing:</p>
+
+{% raw %}
+<pre>
+&lt;p&gt;&lt;a href="/list/item/"&gt;Back to list&lt;/a&gt;&lt;/p&gt;
+
+&lt;table&gt;
+&lt;tr&gt;&lt;th style="text-align:left"&gt;Item&lt;/th&gt;&lt;th style="text-align:left;padding-left:20pt"&gt;Date Created&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+{{ item.text }}
+&lt;/td&gt;
+&lt;td style="padding-left:20pt"&gt;
+{{ item.created }}
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+</pre>
+{% endraw %}
+
+	  <p>This simply dispays the item fields in a table.</p>
+
+	  <p>Because these templates are located in a subdirectory called
+	    "templates" in the list application, Django will automatically find
+	    them. If you want to use a different name, then you will need to add
+	    that path to the TEMPLATE_DIRS variable in the settings.py file.</p>
+
+	</li>
+
+	<li><p>Finally, we need to setup the appropriate routes so
+	    that these views and templates will works.  Edit the file
+	    "demo/urls.py" so that it contains the following route at
+	    the top of the list:</p>
+
+<pre>
+    url(r'^list/', include('list.urls')),
+</pre>
+
+	  <p>This will ensure that any URL starting with /list will get mapped
+	    using patterns in the file list/urls.py.  Now create list/urls.py,
+	    so that it contains:</p>
+
+<pre>
+from django.conf.urls.defaults import *
+
+urlpatterns = patterns('list.views',
+                       url(r'^item/$', 'index'),
+                       url(r'^item/(?P&lt;id&gt;\d+)/$', 'item'),
+                       )
+</pre>
+
+	  <p>The first pattern says that a URL matching /list/item/ will go to
+	    the index() method in list/views.py.  The second pattern says that a
+	    URL matching /list/item/[d]+ will go to the item() method in
+	    list/views.py.</p>
+
+	</li>
+
+	</li>
+      </ol>
+
+      <p>Time to test everything.  Run the server:</p>
+
+<pre>
+python manage.py runserver
+</pre>
+
+      <p>Visit
+
+	<a href="http://127.0.0.1:8000/list/item/">http://127.0.0.1:8000/list/item/</a>
+
+	and you should see a list of any items you entered into the Items
+	table when you used the administrative interface.  You should also be
+	able to click on one of the items to take you to a new view showing
+	that item in detail.</p>
+
+      <h2>Adding items</h2>
+
+      <p>Next we'll add functionality so that a user can add items to the
+	list.</p>
+
+      <ol>
+
+	<li><p>First, let's add a new URL mapping in list/urls.py:</p>
+
+<pre>
+                       url(r'^item/add/$', 'add'),
+</pre>
+
+	  <p>This URL will go to a form that the user can fill in with a new
+	    item.  When submitting the form, it will go to the same add() method,
+	    but using POST instead of GET.</p>
+
+	</li>
+
+	<li><p>Create a form object in models.py:</p>
+
+<pre>
+from django import forms
+
+class ItemForm(forms.ModelForm):
+    class Meta:
+        model = Item
+</pre>
+
+	  <p>We'll use this object to hold the data that the user submits with
+	    the form.</p>
+
+	</li>
+
+	<li><p>Next, we'll create the add() method for the view in views.py:</p>
+
+<pre>
+def add(request):
+    if request.method == 'GET':
+        form = ItemForm()
+        return render_to_response('item/add.html', {'form':form},
+                                  context_instance=RequestContext(request))
+    if request.method =='POST':
+        form = ItemForm(request.POST)
+        if not form.is_valid():
+            return render_to_response('item/add.html', {'form':form},
+                                      context_instance=RequestContext(request))
+
+        i = Item()
+        i.text = form.cleaned_data['text']
+        i.save()
+        return HttpResponseRedirect(reverse('list.views.index'))
+</pre>
+
+	  <p>Notice that we will handle both GET requests and POST requests with
+	    this method.  If it is GET, then we simply create an ItemForm object
+	    and pass this in a dictionary to the item/add.html template.  If it is
+	    POST, then we check that the form is filled out incorrectly, and go
+	    back to the template if it is not.  If the form is correct, then we
+	    create an instance of an Item, copy over the text from the form, and
+	    save it to the database.  We finish by redirecting to the list of
+	    items.</p>
+
+	</li>
+
+	<li><p>Now we need to create the template in templates/item/add.html:</p>
+
+{% raw %}
+<pre>
+&lt;b&gt;Add an item:&lt;/b&gt;
+
+{% if error %}&lt;p&gt;&lt;i&gt;{{ error_message }}&lt;/i&gt;&lt;/p&gt;{% endif %}
+
+&lt;form action="/list/item/add/" method="post"&gt;
+{% csrf_token %}
+{{ form.as_p }}
+&lt;input type="submit" value="Save" /&gt;
+&lt;/form&gt;
+</pre>
+{% endraw %}
+
+	  <p>This view simply displays the form using the form.as_p method,
+	    wrapped in the rest of the HTML form syntax.  The csrf_token is part
+	    of
+
+	    <a href="http://docs.djangoproject.com/en/dev/ref/contrib/csrf/">Django's Cross Site Request Forgery</a>
+
+	    protection.</p>
+
+	</li>
+
+	<li><p>Finally, add a link to the top of the index view in
+	    templates/item/index.html, so that we can link to the add form:</p>
+
+<pre>
+&lt;p&gt;&lt;a href="/list/item/add"&gt;Add an item&lt;/a&gt;&lt;/p&gt;
+</pre>
+
+	</li>
+
+      </ol>
+
+      <p>You should be able to visit
+
+	<a href="http://127.0.0.1:8000/list/item/">http://127.0.0.1:8000/list/item/</a>
+
+	to see the new index view with this link.  If you click the link,
+	you'll be taken to the form for adding a new item.  Filling out this
+	form should result in redirecting to the item view for the item you just
+	added.</p>
+
+      <h2>Editing items</h2>
+
+      <p>We'll make some small modifications to edit items.</p>
+
+      <ol>
+
+	<li><p>Modify the template in item/index.html:</p>
+
+{% raw %}
+<pre>
+&lt;li&gt;&lt;a href="/list/item/{{ item.id }}/"&gt;{{ item.text }}&lt;/a&gt;
+  (&lt;a href="/list/item/edit/{{ item.id }}/"&gt;edit&lt;/a&gt;)&lt;/li&gt;
+</pre>
+{% endraw %}
+
+	  <p>Likewise, modify the template in item/item.html:</p>
+
+{% raw %}
+<pre>
+&lt;td style="padding-left:20pt"&gt;
+(&lt;a href="/list/item/edit/{{ item.id }}/"&gt;edit&lt;/a&gt;)
+&lt;/td&gt;
+</pre>
+{% endraw %}
+
+	  <p>These lines both add an extra link to edit an item.</p>
+
+	</li>
+
+	<li><p>Add the following method to views.py:</p>
+
+<pre>
+def edit(request, id):
+    try:
+        i = Item.objects.get(pk=id)
+    except Item.DoesNotExist:
+        raise Http404
+    if request.method == 'GET':
+        form = ItemForm(instance=i)
+        return render_to_response('item/edit.html', {'form':form,
+                                                     'item':i},
+                                  context_instance=RequestContext(request))
+    if request.method =='POST':
+        form = ItemForm(request.POST)
+        if not form.is_valid():
+            return render_to_response('item/edit.html', {'form':form,
+                                                         'item':i},
+                                      context_instance=RequestContext(request))
+
+        i.text = form.cleaned_data['text']
+        i.save()
+        return HttpResponseRedirect(reverse('list.views.index'))
+</pre>
+
+	  <p>This method will find the item referenced and raise an error if not
+	    found.  If the method is GET it renders a form with this instance.  If
+	    the method is POST then it validates the form and stores the updated
+	    text in the database.</p>
+
+	</li>
+
+	<li><p>Create a new template in item/edit.html:</p>
+
+{% raw %}
+<pre>
+&lt;b&gt;Edit item:&lt;/b&gt;
+
+{% if error %}&lt;p&gt;&lt;i&gt;{{ error_message }}&lt;/i&gt;&lt;/p&gt;{% endif %}
+
+&lt;form action="/list/item/edit/{{item.id}}/" method="post"&gt;
+{% csrf_token %}
+{{ form.as_p }}
+&lt;input type="submit" value="Save" /&gt;
+&lt;/form&gt;
+</pre>
+{% endraw %}
+
+	  <p>This will render the form on the screen.</p>
+
+	</li>
+
+	<li><p>The last step is to add a pattern to urls.py:</p>
+
+<pre>
+                       url(r'^item/edit/(?P&lt;id&gt;\d+)/$', 'edit'),
+</pre>
+
+	</li>
+
+      </ol>
+
+      <p>You should now be able to edit items that are in the list.</p>
+
+      <h2>Deleting items</h2>
+
+      <p>For the last piece of this version, we'll add the ability to delete
+	items.</p>
+
+      <ol>
+
+	<li><p>Modify the template in item/index.html:
+
+{% raw %}
+<pre>
+&lt;li&gt;&lt;a href="/list/item/{{ item.id }}/"&gt;{{ item.text }}&lt;/a&gt;
+  (&lt;a href="/list/item/edit/{{ item.id }}/"&gt;edit&lt;/a&gt;)
+  | &lt;a href="/list/item/delete/{{ item.id }}/"&gt;delete&lt;/a&gt;)&lt;/li&gt;
+</pre>
+{% endraw %}
+
+	  <p>This adds a link after each item to delete it.</p>
+
+	</li>
+
+	<li>Add the delete() method in views.py:
+
+<pre>
+def delete(request, id):
+    try:
+        i = Item.objects.get(pk=id)
+    except Item.DoesNotExist:
+        raise Http404
+    i.delete()
+    return HttpResponseRedirect(reverse('list.views.index'))
+</pre>
+
+	</li>
+
+	<li>Add a route in list/urls.py:
+
+<pre>
+                       url(r'^item/delete/(?P&lt;id&gt;\d+)/$', 'delete'),
+</pre>
+
+	</li>
+
+      </ol>
+
+      <p>You should be able to delete items from the list by clicking
+	on the link next to an item.</p>
+
+      <p>Next:
+
+	<a href="/fall-2012/django/users.html">Users</a>
+
+      </p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

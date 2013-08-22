@@ -1,22 +1,21 @@
 /* General */
 
 body {
-    font-family: 'Lato' !important;
 }
 
 .container {
     width: 94%;
-    max-width: 860px;
+    max-width: 900px;
     margin: 0px auto;
 }
 
 /* Top Bar */
 
 #topbar {
-    background-color: #91b2d2;
     background-color: #abc8e4;
-    padding: 10px 0px;
-    margin: 10px 0;
+    background-color: #d1e4f6;
+    padding-top: 15px;
+    margin: 10px 0px 20px 0px;
 }
 
 .course {
@@ -26,6 +25,11 @@ body {
 
 .university {
     font-size: 1.2em;
+    text-align: right;
+}
+
+.university a {
+    color: #333;
 }
 
 /* Menu */
@@ -35,18 +39,16 @@ body {
     text-align: right;
 }
 
-.logo {
-    float: right;
-    border: none;
-    margin-right: 10px;
-    margin-top: 3px;
-    font-size: 2em;
-    font-weight: bold;
-    line-height: 1em;
+.term {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+    background-color: #990011;
+    background-color: #ee8800;
+    color: white;
+    padding: 5px;
 }
 
 .brand {
-    float: right;
     color: #333;
     font-size: 1.2em;
     font-weight: bold;
@@ -70,24 +72,40 @@ ul.menu li.active {
     font-weight: bold;
 }
 
-#affiliation {
-    margin-top: 18px;
+.btn {
+    background: none;
+    border: none;
+    box-shadow: none;
+    padding: 0px;
 }
 
-.affiliation {
-    font-size: 1.2em;
-    font-weight: bold;
+.btn:hover, .btn:focus, .btn:active {
+    border: none;
+    outline: none;
+    background: none;
+    box-shadow: none;
 }
 
-.affiliation a {
-    color: #333;
+.btn.dropdown-toggle {
+    background-color: white !important;
+    box-shadow: none !important;
+}
+
+.dropdown-menu {
+    text-align: left;
+}
+
+.dropdown-menu>li>a:hover, .dropdown-menu>li>a:focus, .dropdown-submenu:hover>a, .dropdown-submenu:focus>a {
+    background-color: #e4e4e4;
+    background-image: none;
+    color: black;
 }
 
 /* Banner */
 
 .text {
-    font-size: 1.2em;
-    color: #666;
+    font-size: 1em;
+    color: #333;
 }
 
 .banner {
@@ -119,8 +137,11 @@ ul.menu li.active {
 /* Calendar */
 
 .schedule {
-    display: table !important;
-    margin-bottom: 5px;
+    margin-bottom: 10px;
+}
+
+.section {
+    font-weight: bold;
 }
 
 .day {
@@ -128,28 +149,50 @@ ul.menu li.active {
     color: white;
     text-align: center;
     margin-bottom: 5px;
-    display: table-cell !important;
-    vertical-align: middle;
-    height: 20px;
+    padding: 5px;
+    font-size: 0.9em;
+}
+
+.content {
+    background-color: #e4e4e4;
+    padding: 10px;
+    margin-bottom: 5px;
+}
+
+.assignment {
+    background-color: #990011;
+    padding: 10px;
+    color: white;
+}
+
+.assignment a {
+    color: white;
+}
+
+/* Grading */
+
+.box {
+    border: 1px solid #888;
+    height: 10px;
+    width: 10px;
+    margin-top: 3px;
+    margin-right: 5px;
+    float: left;
 }
 
 .item {
-    background: #e4e4e4;
-    color: #333;
-    padding: 5px;
-    font-size: 0.8em;
-    text-align: center;
-    display: table-cell !important;
-    vertical-align: middle;
-    height: 50px;
+    font-weight: bold;
+    float: left;
 }
 
-.time {
+.score {
+    float: right;
     text-align: right;
-    padding-right: 5px;
-    display: table-cell !important;
-    vertical-align: middle;
-    height: 50px;
+}
+
+.criteria {
+    float: clear;
+    padding-right: 20px;
 }
 
 /* Misc */
@@ -159,12 +202,33 @@ ul.menu li.active {
 }
 
 h1 {
-    font-size: 1.2em;
+    font-size: 1.5em;
     color: #333;
     margin-bottom: 0px;
 }
 
 h2 {
+    font-size: 1.2em;
+    background-color: #333;
+    color: white;
+    font-weight: normal;
+    padding: 0px 10px;
+    margin-bottom: 5px;
+}
+
+h2.banner {
+    color: black;
+}
+
+h2.plain {
+    font-size: 1.2em;
+    margin-bottom: 0px;
+    background: none;
+    padding: 0px;
+    color: black;
+}
+
+h3 {
     font-size: 1em;
     margin-bottom: 0px;
 }
@@ -172,6 +236,9 @@ h2 {
 hr {
     margin-left: 120px;
     margin: 10px 0px 10px 120px;
+}
+
+a {
 }
 
 .top {
@@ -190,13 +257,14 @@ hr {
     margin-left: 30px;
 }
 
-.spacing li {
-    margin-top: 20px;
+li {
+    margin-top: 3px;
+    margin-bottom: 3px;
 }
 
-.spacing10 li {
-    margin-top: 10px;
-    margin-bottom: 10px;
+
+.spacing li {
+    margin-top: 20px;
 }
 
 .padbottom20 {
@@ -246,6 +314,8 @@ hr {
 
 .border {
     border: 1px solid #888;
+    padding: 5px;
+    margin-bottom: 10px;
 }
 
 .pad {

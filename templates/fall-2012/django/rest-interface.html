@@ -1,0 +1,170 @@
+{% extends "sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Django Tutorial | REST Interface</h1>
+
+      <p>We will create a REST interface
+	using <a href="http://tastypieapi.org/">TastyPie</a>.</p>
+
+      <h2>TastyPie</h2>
+
+      <p>TastyPie is an API framework for Django. It makes it easy to
+	generate RESTful APIs, and also provides serialization via JSON and
+	XML. Start by installing TastyPie:</p>
+
+
+<pre>
+sudo pip install django-tastypie
+</pre>
+
+      <ol>
+
+	<li><p>Create list/api.py so it includes the following:</p>
+
+<pre>
+from django.contrib.auth.models import User
+from tastypie import fields
+from tastypie.resources import ModelResource
+from tastypie.authentication import BasicAuthentication
+from tastypie.authorization import DjangoAuthorization
+from tastypie.authorization import Authorization
+from list.models import Item
+
+class UserAuthorization(Authorization):
+    def apply_limits(self, request, object_list):
+        if request and hasattr(request, 'user'):
+            return object_list.filter(username=request.user.username)
+        return object_list.none()
+
+class UserResource(ModelResource):
+    class Meta:
+        queryset = User.objects.all()
+        resource_name = 'user'
+        authentication = BasicAuthentication()
+        authorization = UserAuthorization()
+
+class ItemAuthorization(Authorization):
+    def apply_limits(self, request, object_list):
+        if request and hasattr(request, 'user'):
+            return object_list.filter(user__username=request.user.username)
+        return object_list.none()
+
+class ItemResource(ModelResource):
+    user = fields.ForeignKey(UserResource, 'user')
+    class Meta:
+        queryset = Item.objects.all().order_by('-created')
+        resource_name = 'item'
+        authentication = BasicAuthentication()
+        authorization = ItemAuthorization()
+</pre>
+
+	  <p>The first part of this file allows a user to access his own user
+	    record. The UserResource class provides access to the user records in
+	    the database. This returns a list of all the users, but first requires
+	    authentication via HTTP's Basic Authentication method and
+	    authorization via the UserAuthorization class. This class filters the
+	    list of users to include only the one for the authorized user.</p>
+
+	  <p>The second part of this file allows a user to access his own list
+	    of items. The ItemResource class provides access to the item records
+	    in the database. This returns a list of all tiems, ordered by their
+	    creation date, but first requries authentication and authorization as
+	    with the UserResource class. In this case, the ItemAuthorization class
+	    filters the list of items to include only the ones for the authorized
+	    user.</p>
+
+	</li>
+
+	<li><p>Modify demo/urls.py so that it reads:</p>
+
+<pre>
+from django.conf.urls import patterns, include, url
+
+# Uncomment the next two lines to enable the admin:
+from django.contrib import admin
+admin.autodiscover()
+
+# Added for REST API
+from django.conf.urls.defaults import *
+from tastypie.api import Api
+from list.api import ItemResource, UserResource
+
+v1_api = Api(api_name='v1')
+v1_api.register(UserResource())
+v1_api.register(ItemResource())
+
+item_resource = ItemResource()
+
+urlpatterns = patterns('',
+					   url(r'^admin/doc/', include('django.contrib.admindocs.urls')),
+					   url(r'^admin/', include(admin.site.urls)),
+					   url(r'^list/', include('list.urls')),
+					   (r'^api/', include(v1_api.urls)),
+)
+
+</pre>
+
+	  <p>This creates an API object that will automatically map REST URLs
+	    for the UserResource and ItemResource classes created earlier.</p>
+	  
+	  <p>The following URIs should work:</p>
+
+	  <ul>
+
+	    <li>http://localhost:8000/api/v1/?format=json</li>
+	    <li>http://localhost:8000/api/v1/user/?format=json</li>
+	    <li>http://localhost:8000/api/v1/user/1/?format=json</li>
+	    <li>http://localhost:8000/api/v1/user/schema/?format=json</li>
+	    <li>http://localhost:8000/api/v1/item/?format=json</li>
+	    <li>http://localhost:8000/api/v1/item/1/?format=json</li>
+	    <li>http://localhost:8000/api/v1/item/schema/?format=json</li>
+
+	  </ul>
+
+	</li>
+
+      </ol>
+
+      <p>To complete our example, we will write a short Python script to
+	access the REST interface programmatically. Create a file called
+	list/apiexample.py:</p>
+
+<pre>
+import json
+import urllib2
+
+# info about the site
+theurl = 'http://localhost:8000/api/v1/item/?format=json'
+username = 'test'
+password = 'test'
+
+# create a password manager and add a username/password combination
+passman = urllib2.HTTPPasswordMgrWithDefaultRealm()
+passman.add_password(None, theurl, username, password)
+
+# create the AuthHandler and install it
+authhandler = urllib2.HTTPBasicAuthHandler(passman)
+opener = urllib2.build_opener(authhandler)
+urllib2.install_opener(opener)
+
+# open the URL, with automatic authentication
+pagehandle = urllib2.urlopen(theurl)
+
+items = json.loads(pagehandle.read())
+for item in items['objects']:
+        print item['id'], item['text'], item['created']
+</pre>
+
+      <p>This uses the standard urllib2 and json libraries to print all of
+	the items for a user. Note that you will need to change the username
+	and password to match a user you created.</p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

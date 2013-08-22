@@ -1,0 +1,237 @@
+{% extends "sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+
+      <h1 class="top">Syllabus</h1>
+
+      <p>This course covers Internet application programming, including
+	client-server and web applications. At the end of this course,
+	students should be able to:</p>
+      
+      <ul>
+
+	<li>Use the BSD socket API to develop network applications.</li>
+
+	<li>Understand and use concurrent programming to develop a thread-safe
+	  server, including both thread pool and event-driven
+	  architectures.</li>
+
+	<li>Use experiments to conduct an in-depth performance evaluation of
+	  network software to better understand design tradeoffs and operating
+	  system overhead.</li>
+
+	<li>Use a common web application framework to build a web database
+	  application, with both relational and no-SQL databases.</li>
+
+	<li>Understand security issues for network software and be able
+	  to write code that is secure against common attacks.</li>
+
+	<li>Have the confidence and ability to quickly learn a new language
+	  and libraries.</li>
+
+      </ul>
+
+      <h2>Textbooks</h2>
+
+      <p>For the lecture material, I will draw from various books and online
+	materials.  Where possible, I will provide links to online materials.
+	Since there is no good and comprehensive book for this class, I will
+	not require you to buy one.  Instead, I will list a set of good books
+	and you are welcome to buy any you think you may need:</p>
+
+      <h3>General Networking</h3>
+
+      <ul>
+
+	<li>
+	  <a href="http://www.aw-bc.com/kurose-ross/">Computer Networking: A Top-Down Approach Featuring the Internet</a>
+	  <p>This textbook covers the entire network stack from application
+	    layer down to the link layer.  If you want to have a textbook that
+	    explains how the Internet works, this is the one to buy.  We will only
+	    use a small part of this book in this class, but you should buy this
+	    book if you intend to take CS 460 since it is required for that
+	    class.</p>
+	</li>
+
+	<li>
+	  <a href="http://www.awprofessional.com/bookstore/product.asp?isbn=0201710889&rl=1">Web Protocols and Practice: HTTP/1.1, Networking Protocols, Caching, and Traffic Measurement</a>
+	  <p>This is a good book on HTTP and web caching, but has too narrow a
+	    focus to serve as a general textbook for the class.  I will get some
+	    of my lecture material on the Internet, HTTP, web proxies, web server
+	    architectures, and web workload characterization from this
+	    book.</p>
+	</li>
+
+      </ul>
+
+      <h3>Socket Programming</h3>
+
+      <ul>
+
+	<li>
+	  <a href="http://www.awprofessional.com/bookstore/product.asp?isbn=0131411551&rl=1">Unix Network Programming, Volume 1: The Sockets Network API, 3rd Edition</a>
+	  <p>This has been the definitive reference for network programming for
+	    more than a decade, and has been recently updated.  I will provide all
+	    of the necessary information in the lectures, but if you want a
+	    reference on socket programming, this is a great book to buy and one
+	    you will use for many years if you do socket programming.  In addition
+	    to sockets, this book covers threads, concurrent architectures, and
+	    many network programming details.</p>
+	</li>
+
+      </ul>
+
+      <h3>C/C++ Programming</h3>
+
+      <p>We will use C++ for the client-server programming projects, so it
+	will be helpful to have a good reference.  I strongly recommend
+	getting one of these if you don't already have one.</p>
+
+      <ul>
+
+	<li>
+	  <a href="http://www.amazon.com/C-Nutshell-Ray-Lischner/dp/059600298X/ref=pd_sim_b_3">C++ in a Nutshell</a>
+
+	<li>
+	  <a href="http://www.amazon.com/Practical-Programming-Second-Steve-Oualline/dp/0596004192">Practical C++ Programming, 2nd Edition</a>
+	</li>
+
+	<li>
+	  <a href="http://www.amazon.com/Practical-Programming-3rd-Steve-Oualline/dp/1565923065">Practical C Programming, 3rd Edition</a>
+	</li>
+
+      </ul>
+
+      <h3>Python</h3>
+
+      <p>We will use Python for scripting some performance evaluations,
+	processing and graphing data, writing a peer-to-peer program, and for
+	web database programming.  I list some free online references below,
+	plus a book in case you want one.</p>
+
+      <ul>
+
+	<li>
+	  <a href="http://www.python.org/">Python</a>
+	</li>
+
+	<li>
+	  <a href="http://diveintopython.org/">Dive Into Python</a>
+	</li>
+
+	<li>
+	  <a href="http://python.net/~goodger/projects/pycon/2007/idiomatic/handout.html">Code Like a Pythonista: Idiomatic Python</a>
+	</li>
+
+	<li>
+	  <a href="http://openbookproject.net//thinkCSpy/">How to Think Like a Computer Scientist: Learning with Python</a>
+	</li>
+
+	<li>
+	  <a href="http://www.amazon.com/Python-Nutshell-Second-OReilly/dp/0596100469/ref=sr_1_7?s=books&ie=UTF8&qid=1293845142&sr=1-7">Python In A Nutshell, Second Edition</a>
+	</li>
+
+      </ul>
+
+      <h2>Assignments and Grading Policy</h2>
+
+      <p>The assignments for this class will consist of labs and exams.
+	Labs must be written in the assigned language and must compile and run
+	on the department's Linux machines.</p>
+
+      <p>Labs will be graded by the TA or instructor.  For some labs, the
+	scoring will be based on running your code.  In these cases, we will
+	publish a grading sheet before each assignment is due, listing the
+	tests we will run and how many points each test is worth.  For other
+	labs, the scoring will be based on a report you write.  For these
+	labs, the assignment will indicate how the report will be scored.</p>
+
+      <p>Grading for exams will be on a scale of 0 to 10 for each problem,
+	with a final score based on the total possible points.  A score of 10
+	indicates your answer is completely correct (A), and a score of 5
+	indicates your answer is entirely wrong but you made a reasonable
+	effort (E).  Grades in between indicate very good (9), good (8),
+	adequate (7), and poor (6). Failure to make a reasonable effort to
+	answer a question scores a 0.<p>
+
+      <p>Your final grade will be computed by weighting all scores as
+	follows:</p><table>
+	<col class="course">
+	<tr><td>Labs</td><td>70%</td></tr>
+	<tr><td>Exams</td><td>30%</td></tr>
+      </table>
+
+
+      <h2>Late Policy</h2>
+
+      <p>Labs are due on the day and time indicated.  Late work will receive
+	a 10% penalty for the first week, with no late work accepted after
+	then.  If you have a medical or serious personal issue, please see the
+	instructor to make arrangements.  You may always turn in partial work
+	if you are not finished and you will be graded on what you have
+	accomplished.  No work can be turned in after the university's last
+	day of instruction.</p>
+
+      <h2>Collaboration Policy</h2>
+
+      <p>Most assignments for this class <b>must</b> be done
+	individually. You are encouraged to discuss solving the labs and any
+	programming problems you encounter generally, but you must write your
+	own code and should not view any other student's code.  When producing
+	written work, your writing must be your own thoughts.  Your use of
+	sources (ideas, quotations, paraphrases) must be properly acknowledged
+	and documented.</p>
+
+      <p>Group work is permitted only where specified clearly in the
+	assignment.  Group work is meant to be done jointly with a team of two
+	students.  Students in a group should work on problems and programs
+	together, and each student should perform a roughly equal amount of
+	work.  When you turn in group work, turn in a single copy, with each
+	group member signing his or her name.  By signing your name, you are
+	attesting that you have invested an equal amount of time in the
+	assignment.</p>
+
+      <h2>Educational Policies</h2>
+
+      <h3>Honor Code Standards</h3>
+
+      <p>In keeping with the principles of the
+
+	<a href="http://honorcode.byu.edu/">BYU Honor Code</a>
+
+	, students are expected to be honest in all of their academic work.
+	Academic honesty means, most fundamentally, that any work you present
+	as your own must in fact be your own work and not that of
+	another. Violations of this principle may result in a failing grade in
+	the course and additional disciplinary action by the university.</p>
+
+      <h3>Policy on Harassment</h3>
+
+      <p>Harassment of any kind is inappropriate at BYU. Specifically, BYU's
+	policy against sexual harassment extends not only to employees of the
+	university but to students as well. If you encounter sexual
+	harassment, gender-based discrimination, or other inappropriate
+	behavior, please talk to your professor, contact the Equal Employment
+	Office at 422-5895 or 367-5689, or contact the Honor Code Office at
+	422-2847.</p>
+
+      <h3>Students with Disabilities</h3>
+
+      <p>BYU is committed to providing reasonable accommodation to qualified
+	persons with disabilities. If you have any disability that may
+	adversely affect your success in this course, please contact the
+	University Accessibility Center at 422-2767. Services deemed
+	appropriate will be coordinated with the student and instructor by
+	that office.</p>
+
+
+
+    </div>
+  </div>
+</div>
+      
+{% endblock %}

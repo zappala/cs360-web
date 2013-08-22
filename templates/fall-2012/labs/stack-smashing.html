@@ -1,0 +1,136 @@
+{% extends "sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Lab: Stack Smashing</h1>
+
+      <p>You will learn how to exploit a buffer overflow vulnerability to
+	manipulate the stack and gain shell access on a machine.</p>
+
+      <h2>Tutorial</h2>
+
+      <p>For a tutorial on buffer overflow vulnerabilities and exploits, see
+	the
+
+	<a href="http://www.securitytube.net/groups?operation=view&groupId=4">Buffer Overflow Primer</a>
+
+	video lectures and the paper
+
+	<a href="http://www.cs.wright.edu/people/faculty/tkprasad/courses/cs781/alephOne.html">Smashing The Stack For Fun And Profit</a>.</p>
+
+      <h2>Stack Smashing</h2>
+
+      <p>Your task is to demonstrate that you can exploit a buffer overflow
+	in a program by feeding it the appropriate input to start a shell.</p>
+
+      <h3>Preparation</h3>
+
+      <p>Run the following on your machine:</p>
+
+<pre>
+sudo sysctl -w kernel.randomize_va_space=0
+sudo apt-get install execstack
+</pre>
+
+      <p>The first line will turn off address space randomization, and the
+	second will install a program that allows you to make the stack
+	executable in a binary.</p>
+
+      <p>Now, download these files:</p>
+
+      <ul>
+
+	<li>
+	  <a href="/static/fall-2012/call_shellcode.c">call_shellcode.c</a>
+	</li>
+	<li>
+	  <a href="/static/fall-2012/stack.c">stack.c</a>
+	</li>
+	<li>
+	  <a href="/static/fall-2012/exploit.c">exploit.c</a>
+	</li>
+      </ul>
+
+      <p>Compile call_shellcode.c as follows:</p>
+
+<pre>
+gcc -m32 -o call_shellcode -z execstack call_shellcode.c 
+</pre>
+
+      <p>The "-m32" ensures you run the code in 32-bit mode if you are on a
+	64-bit machine, and "-z execstack" uses the execstack program to allow
+	the stack to be executable.  At this point, if you run:</p>
+
+<pre>
+./call_shellcode
+</pre>
+
+      <p>This should create a shell for you. This demonstrates that
+	the shellcode works on your machine.</p>
+
+      <h3>Exploit</h3>
+
+      <p>The stack.c program has a buffer overflow vulnerability that is
+	marked in the comments. This program will read in a file called
+	<i>badfile</i> and copy it into a string using strcpy(). Your job is
+	to generate the contents of <i>badfile</i> so that it exploits the
+	buffer overflow vulnerability and starts a shell.</p>
+
+      <p>Compile stack.c as follows:
+
+<pre>
+gcc -m32 -o stack -fno-stack-protector -z execstack stack.c
+</pre>
+
+      <p>The "-fno-stack-protector" will turn off a feature that prevents
+	stack smashing.</p>
+
+      <p>Now examine exploit.c. You will see that it contains the same
+	shellcode as call_shellcode.c. You need to fill in the missing code in
+	this file so that the appropriate data is written into the character
+	buffer (and ultimately the file called <i>badfile</i>) so that you can
+	exploit the vulnerability in stack.c. You may examine stack.c in gdb
+	to find the appropriate addresses you need. Alternatively, you can use
+	the ESP and a nop sled, as discussed in the links given above.</p>
+
+      <p>Compile exploit.c as follows:</p>
+
+<pre>
+gcc -o exploit -m32 -fno-stack-protector exploit.c
+</pre>
+
+      <p>Now run stack and if you have done the lab correctly you will get a
+	shell prompt.</p>
+
+      <h2>Report</h2>
+
+      <p>Write a detailed report that describes your exploit and how it
+	works. Include a listing of your code and give a line-by-line
+	explanation of what it does and how it works. Include illustrations of
+	the stack to show what you did.  Include a screenshot that shows your
+	exploit working.</p>
+
+      <h2>Submission</h2>
+
+      <p>Turn in your tarball of your code and a PDF of your report:</p>
+
+<pre>
+tar -czvf lab5.tgz lab5
+</pre>
+
+      using
+
+      <a href="http://learningsuite.byu.edu">learningsuite.byu.edu</a>.</p>
+
+      <h2>Grading</h2>
+
+      <p>The total score for this lab is 50 points.</p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

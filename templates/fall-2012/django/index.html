@@ -1,0 +1,204 @@
+{% extends "sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Django Tutorial | Introduction</h1>
+      
+      <p>This is a short tutorial on how to use the
+
+	<a href="http://www.djangoproject.com/">Django web framework</a>
+
+	to write your own web application.</p>
+
+      <h2>Terminology</h2>
+
+      <p>One short word on terminology.  Most web frameworks use a
+
+	<a href="http://en.wikipedia.org/wiki/Model%E2%80%93view%E2%80%93controller">Model-view-controller</a>
+
+	architecture:</p>
+
+      <img class="height-300 right" src="/static/img/model-view-controller.png" alt="Model-view-controller"></img>
+
+      <ul>
+
+	<li>The server uses a set of <i>pattern-matching rules</i> to
+	  map the URL in an HTTP request to a controller method.</li>
+
+	<li>The <i>controller</i> handles the logic of the application and
+	  accesses the model to interact with the database.</li>
+
+	<li>The <i>model</i> creates an object-oriented wrapper around
+	  the database records, so that you can work with a high-level
+	  abstraction of your data. Many web frameworks generalize the
+	  model so that you can plug in a different database driver
+	  (e.g. MySQL, SQLite, PostgreSQL) without changing most of
+	  your code.  Some even allow your application to run on
+	  Google's App Engine with relatively few changes.</li>
+
+	<li>The <i>controller</i> creates a set of objects and hands
+	  these to the view, which renders them to the browser.  This
+	  separation allows you to change the view (e.g. to
+	  accommodate XML, JSON, or new HTML styles) without affecting
+	  the controller.</li>
+
+      </ul>
+
+      <p>Django uses what it calls a
+
+	<a href="http://docs.djangoproject.com/en/dev/faq/general/#django-appears-to-be-a-mvc-framework-but-you-call-the-controller-the-view-and-the-view-the-template-how-come-you-don-t-use-the-standard-names">Model-template-view</a>
+
+	architecture.  You can think of the Django template as a traditional
+	view, and the Django view as a traditional controller.  The
+	distinction here is a subtle one, and comes down to semantics.  It's
+	an unfortunate confusion, because you will often be putting your
+	controllers into a file called "views.py" and your views into a
+	template directory.</p>
+
+      <h2>Installation</h2>
+
+      <p>If you need to install Django on your own machine, I recommend using
+	<a href="http://pypi.python.org/pypi/pip">pip</a>:
+      </p>
+
+      <pre>
+sudo apt-get install python-pip
+sudo pip install django
+</pre>
+
+      <h2>Creating and Configuring an Application</h2>
+
+      <p>Django applications reside inside a project folder.  Generally, the
+	URLs for your server will start with "project/application".  In this
+	tutorial, we'll create a basic list application, inside a demo
+	project, so our URLs will start with "/demo/list".</p>
+
+      <ol>
+
+	<li>Create a project directory to hold your applications:
+
+<pre>
+django-admin.py startproject demo
+</pre>
+
+	  <p>This will create a directory called 'demo', containing
+	  several scripts:</p>
+
+<pre>
+manage.py 
+demo/
+__init__.py
+settings.py
+urls.py
+wsgi.py
+</pre>
+
+	  <p>You will use the manage.py script to administer
+	    Django. The settings.py file contains settings used to
+	    configure the applications in this project.</p>
+
+	</li>
+	
+	<li><p>Edit demo/settings.py for the following:</p>
+
+	  <ol type="a">
+
+	    <li>Add the following lines at the top:
+
+<pre>
+import os
+ROOT = lambda base : os.path.join(os.path.dirname(__file__)+"/../", base)
+</pre>
+
+	      <p>This will allow you to use relative paths in places
+		that normally use absolute paths. In this case, we set
+		the relative path to the project root.</p></li>
+
+	    <li>Modify the database configuration lines to read:
+
+<pre>
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': ROOT('demo/data.db'),
+</pre>
+
+	      <p>This will tell Django to use SQLite and provide a
+		relative path to where this database is
+		located.</p>
+	    </li>
+
+	    <li>Set your time zone:
+
+<pre>
+TIME_ZONE = 'America/Denver'
+</pre>
+
+	    </li>
+
+	    <li>Uncomment several lines that setup installed
+	      applications that are built into Django:
+
+<pre>
+INSTALLED_APPS = (
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.sites',
+    'django.contrib.messages',
+    'django.contrib.admin',
+    'django.contrib.admindocs',
+</pre>
+
+	    </li>
+	  </ol>
+	</li>
+
+	<li>Edit demo/urls.py so that it reads:
+
+<pre>
+from django.conf.urls.defaults import patterns, include, url
+
+from django.contrib import admin
+admin.autodiscover()
+
+urlpatterns = patterns('',
+    (r'^admin/doc/', include('django.contrib.admindocs.urls')),
+    (r'^admin/', include(admin.site.urls)),
+)
+</pre>
+
+	  <p>This will setup a URL mapping from /admin to the
+	    administration interface provided by Django.  The other
+	    URL mapping is for the documentation on the administration
+	    interface.</p>
+
+	</li>
+
+	<li>Run the following command:
+
+<pre>
+python manage.py syncdb
+</pre>
+
+	  <p>This will create the database tables needed for the
+	    included Django applications.  Since we have enabled the
+	    authentication system, Django will prompt us for a
+	    username and password for a superuser.</p></li>
+
+      </ol>
+
+      <p>Next:
+
+	<a href="/fall-2012/django/version1.html">Version 1</a>
+
+      </p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,228 @@
+{% extends "sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Django Tutorial | Session State</h1>
+
+      <p>Now we will use session state to track pages for redirection
+	and to provide a way for users to select a set of things on
+	the list that they want to accomplish today.</p>
+
+      <h2>Redirection</h2>
+
+      <p>The login() method in views.py uses a hidden form field to track
+	which page the user came from before needing to login, so that once
+	the login is complete it can send the user back there.  This is more
+	naturally done with
+
+	<a href="http://docs.djangoproject.com/en/dev/topics/http/sessions/">Django session</a>
+
+	state.</p>
+
+      <p>Modify the login() method so that these lines read as follows:</p>
+
+<pre>
+    if request.method == 'GET':
+        form = LoginForm()
+        request.session['next'] = request.GET['next']
+        return render_to_response('auth/login.html', {'form':form,
+                                                      'login':True},
+                                  context_instance=RequestContext(request))
+
+</pre>
+
+      <p>and</p>
+
+<pre>
+        return HttpResponseRedirect(request.session['next'])
+</pre>
+
+      <p>At this point, you should edit templates/auth/login.html so that it
+	no longer uses the hidden field to keep track of the <u>next</u>
+	parameter.</p>
+
+      <p>Since the session state modules are enabled by default, these are
+	all the changes that are needed.  You won't see any noticeable changes
+	in the application, but you will be using sessions now.</p>
+
+      <h2>Today's List</h2>
+
+      <p>Next we will add the ability to add some of the items to a list of
+	things that the user would like to accomplish today.  This will work a
+	lot like a shopping cart, illustrating how session state works.</p>
+
+      <ol>
+
+	<li><p>Add methods to views.py that will keep track of session state:</p>
+
+<pre>
+def get_today(request):
+    if not request.session.has_key('today'):
+        request.session['today'] = []
+    return request.session['today']
+
+def add_today(request, item):
+    l = get_today(request)
+    if item not in l:
+        l.append(item)
+        request.session.modified = True
+    return l
+
+def remove_today(request, item):
+    l = get_today(request)
+    if item in l:
+        l.remove(item)
+        request.session.modified = True
+    return l
+</pre>
+
+	  <p>These methods allow adding and removing items from today's list.
+	    Notice that in add_today() and remove_today() we must set
+	    request.session.modified to True.  This is necessary because Django
+	    does not know when session state has been indirectly modified, such as
+	    when a list or dictionary stored in session state has been changed.</p>
+
+	</li>
+
+	<li><p>Add two methods to views.py:</p>
+
+<pre>
+@login_required
+def today(request, id):
+    try:
+        i = Item.objects.get(pk=id)
+    except Item.DoesNotExist:
+        raise Http404
+    if i.user_id != request.user.id:
+        raise Http404
+    today = add_today(request, i)
+    return HttpResponseRedirect(reverse('list.views.index'))
+
+@login_required
+def later(request, id):
+    try:
+        i = Item.objects.get(pk=id)
+    except Item.DoesNotExist:
+        raise Http404
+    if i.user_id != request.user.id:
+        raise Http404
+    today = remove_today(request, i)
+    return HttpResponseRedirect(reverse('list.views.index'))
+</pre>
+
+	  <p>The today() method adds items to the list of things the user wants
+	    to do today, and the later() method removes them.</p>
+
+	</li>
+
+	<li><p>Modify the index() method in views.py so that it supplies
+	    today's list to the template:</p>
+
+<pre>
+    return render_to_response('item/index.html',
+                              {'list':list,
+                               'today':get_today(request)})
+</pre>
+
+	</li>
+
+	<li><p>Modify the delete() method in views.py so that it removes the
+	    item from session state before deleting it:</p>
+
+<pre>
+    remove_today(request, i)
+    i.delete()
+</pre>
+
+	</li>
+
+	<li><p>Modify the item/index.html template so that it shows a list of today's
+	    items:</p>
+
+{% raw %}
+<pre>
+&lt;div id="list"&gt;
+&lt;p&gt;&lt;b&gt;Your list:&lt;/b&gt;&lt;/p&gt;
+{% if list %}
+    &lt;ul&gt;
+    {% for item in list %}
+    &lt;li&gt;&lt;a href="/list/item/{{ item.id }}/"&gt;{{ item.text }}&lt;/a&gt; 
+      (&lt;a href="/list/item/edit/{{ item.id }}/"&gt;edit&lt;/a&gt;)
+      | &lt;a href="/list/item/delete/{{ item.id }}/"&gt;delete&lt;/a&gt;)
+      | &lt;a href="/list/item/today/{{ item.id }}/"&gt;today&lt;/a&gt;)&lt;/li&gt;
+    {% endfor %}
+    &lt;/ul&gt;
+{% else %}
+    &lt;p&gt;No items are available.&lt;/p&gt;
+{% endif %}
+&lt;/div&gt;
+
+&lt;div id="today"&gt;
+{% if today %}
+&lt;b&gt;Today:&lt;/b&gt;
+    &lt;ul&gt;
+    {% for item in today %}
+        &lt;li&gt;&lt;a href="/list/item/{{ item.id }}/"&gt;{{ item.text }}&lt;/a&gt;
+          (&lt;a href="/list/item/later/{{ item.id }}/"&gt;later&lt;/a&gt;)&lt;/li&gt;
+    {% endfor %}
+    &lt;/ul&gt;
+{% endif %}
+&lt;/div&gt;
+
+{% endblock %}
+</pre>
+{% endraw %}
+
+	  <p>This wraps the main item list in a div tag, and then adds a
+	    separate div for a list of items that the user has chosen to do today.</p>
+
+	</li>
+
+
+	<li><p>Add two new routes to list/urls.py:</p>
+
+<pre>
+                       url(r'^item/today/(?P&lt;id&gt;\d+)/$', 'today'),
+                       url(r'^item/later/(?P&lt;id&gt;\d+)/$', 'later'),
+</pre>
+
+</li>
+
+	<li><p>Add additional styling to static/style.css:</p>
+
+<pre>
+#list {
+    float: left;
+    width: 50%;
+}
+
+#today {
+    float: right;
+    width: 40%;
+}
+</pre>
+
+	  <p>This will float the list div to the left and the today div to the
+	    right.</p>
+
+	</li>
+
+      </ol>
+
+      <p>The list application will now allow the user to add and remove
+	items from today's list.</p>
+
+      <p>Next:
+
+	<a href="/fall-2012/django/javascript-and-ajax">Javascript and Ajax</a>
+
+      </p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

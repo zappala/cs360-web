@@ -1,0 +1,373 @@
+{% extends "sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Django Tutorial | Templates and CSS</h1>
+
+      <p>Now we will modify the templates so that they have a common
+	look and a more professional appearance.</p>
+
+      <h2>Templates and CSS</h2>
+
+      <p>The
+
+	<a href="http://docs.djangoproject.com/en/dev/topics/templates/">Django Template language</a>
+
+	has a template inheritance system that is fairly easy to use.  We will
+	set up a base template that all the other ones inherit from.  The base
+	template will include the HTML formatting that encloses a page, along
+	with a standard menu system that all the pages will use.  All
+	templates that inherit from the base will override the content section
+	to change what is shown on the page.</p>
+
+      <ol>
+
+	<li><p>Create a base template in templates/base.html:</p>
+
+{% raw %}
+<pre>
+&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"&gt;
+&lt;html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en"&gt;
+&lt;head&gt;
+    &lt;link rel="stylesheet" href="/list/static/style.css" /&gt;
+    &lt;title&gt;{% block title %}Listomatic{% endblock %}&lt;/title&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+
+  &lt;div id="title"&gt;
+    {% block visualtitle %}
+    List-o-matic
+    {% endblock %}
+  &lt;/div&gt;
+
+  &lt;div id="menu"&gt;
+    {% block menu %}
+    &lt;ul&gt;
+      &lt;li&gt;&lt;a href="/list/item/"&gt;Home&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href="/list/item/add/"&gt;Add&lt;/a&gt;&lt;/li&gt;
+      {% if not login %}
+      &lt;li&gt;&lt;a href="/list/auth/logout"&gt;Logout&lt;/a&gt;&lt;/li&gt;
+      {% endif %}
+    &lt;/ul&gt;
+    {% endblock %}
+  &lt;/div&gt;
+
+  &lt;div id="content"&gt;
+    {% block content %}
+    {% endblock %}
+  &lt;/div&gt;
+
+&lt;/body&gt;
+&lt;/html&gt;
+</pre>
+{% endraw %}
+
+	  <p>This template is standard HTML, with several Django tags that
+	    define blocks of content that can be replaced by templates inheriting
+	    from this one.  These blocks include the title of the page, the logo,
+	    the menu, and the page content.</p>
+
+	</li>
+
+	<li><p>Notice that the base template refers to a CSS style file; this
+	    file will control how the HTML is displayed on the page.  Create a
+	    directory called list/static and in that directory create a file called
+	    style.css:</p>
+
+<pre>
+#body {
+    margin-left: 50px;
+}
+
+#title {
+    background:#302b1d;
+    padding: 10px;
+    color: white;
+    font-size: 1.5em;
+}
+
+#menu {
+    padding-left: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    border-bottom: 10px solid #3f522b;
+}
+
+#menu ul /* Primary and secondary links */ {
+  margin: 0;
+  padding: 0;
+  margin-top: 5px;
+}
+
+#menu li /* A simple method to get navigation links to appear in one line. */ {
+/*  float: left; /* LTR */
+    display: inline;
+    padding: 0 20px 0 0; /* LTR */
+    color: #3f522b;
+    font-weight: bold;
+}
+
+
+#menu li a {
+    text-decoration: none;
+    color: #3f522b;
+}
+
+#menu li a:hover {
+    color: #3f522b;
+    border-bottom: 2px solid #423638;
+}
+
+#content {
+    padding: 10px;
+}
+</pre>
+
+	  <p>This style sheet sets some basic properties for the body, logo, and
+	    content portions of the page.  The menu styling converts an ordinary
+	    bulleted list into a horizontal menu, with additional styling for the
+	    links.</p>
+
+	</li>
+
+	<li><p>To serve this style sheet, create a new route at the end of
+	    list/urls.py:</p>
+
+<pre>
+from demo.settings import ROOT
+
+urlpatterns += patterns('',
+                       (r'^static/(?P&lt;path&gt;.*)$',
+                        'django.views.static.serve',
+                        {'document_root': ROOT('list/static/')})
+                       )
+</pre>
+
+	  <p>Notice that this statement uses its own patterns() method, and is
+	    appended to the earlier patterns.  This is necessary because the
+	    previous patterns uses a prefix of "list.views", and this new rule
+	    doesn't share that prefix.  This rule ensures that URLs starting with
+	    "/list/static" get mapped to the list/static directory, and that they
+	    are served by a Django function called serve().</p>
+
+	</li>
+
+	<li><p>Now modify the following templates to inherit from the base
+	    page.  Each of the templates uses an extends tag to inherit from
+	    base.html, plus a content tag to mark the content block that the
+	    template is generating.</p>
+
+	  <ul>
+
+	    <li>item/index.html:
+
+{% raw %}
+<pre>
+{% extends "base.html" %}
+
+{% block content %}
+
+&lt;p&gt;&lt;b&gt;Your list:&lt;/b&gt;&lt;/p&gt;
+{% if list %}
+    &lt;ul&gt;
+    {% for item in list %}
+        &lt;li&gt;&lt;a href="/list/item/{{ item.id }}/"&gt;{{ item.text }}&lt;/a&gt;
+          (&lt;a href="/list/item/edit/{{ item.id }}/"&gt;edit&lt;/a&gt;)
+          | &lt;a href="/list/item/delete/{{ item.id }}/"&gt;delete&lt;/a&gt;)&lt;/li&gt;
+    {% endfor %}
+    &lt;/ul&gt;
+{% else %}
+    &lt;p&gt;No items are available.&lt;/p&gt;
+{% endif %}
+
+{% endblock %}
+</pre>
+{% endraw %}
+
+	    </li>
+
+	    <li>item/item.html:
+
+{% raw %}
+<pre>
+{% extends "base.html" %}
+
+{% block content %}
+
+&lt;table&gt;
+&lt;tr&gt;&lt;th style="text-align:left"&gt;Item&lt;/th&gt;&lt;th style="text-align:left;padding-left:20pt"&gt;Date Created&lt;/th&gt;&lt;/tr&gt;
+&lt;tr&gt;
+&lt;td&gt;
+{{ item.text }}
+&lt;/td&gt;
+&lt;td style="padding-left:20pt"&gt;
+{{ item.created }}
+&lt;/td&gt;
+&lt;/tr&gt;
+&lt;/table&gt;
+
+{% endblock %}
+</pre>
+{% endraw %}
+
+	    </li>
+
+	    <li>item/add.html:
+
+{% raw %}
+<pre>
+{% extends "base.html" %}
+
+{% block content %}
+
+&lt;b&gt;Add an item:&lt;/b&gt;
+
+{% if error %}&lt;p&gt;&lt;i&gt;{{ error_message }}&lt;/i&gt;&lt;/p&gt;{% endif %}
+
+&lt;form action="/list/item/add/" method="post"&gt;
+{% csrf_token %}
+{{ form.as_p }}
+&lt;input type="submit" value="Save" /&gt;
+&lt;/form&gt;
+
+{% endblock %}
+</pre>
+{% endraw %}
+
+	    </li>
+
+	    <li>item/edit.html:
+
+{% raw %}
+<pre>
+{% extends "base.html" %}
+
+{% block content %}
+
+&lt;b&gt;Edit item:&lt;/b&gt;
+
+{% if error %}&lt;p&gt;&lt;i&gt;{{ error_message }}&lt;/i&gt;&lt;/p&gt;{% endif %}
+
+&lt;form action="/list/item/edit/{{item.id}}/" method="post"&gt;
+{% csrf_token %}
+{{ form.as_p }}
+&lt;input type="submit" value="Save" /&gt;
+&lt;/form&gt;
+
+{% endblock %}
+</pre>
+{% endraw %}
+
+	    </li>
+
+	    <li>auth/login.html:
+
+{% raw %}
+<pre>
+{% extends "base.html" %}
+
+{% block content %}
+
+{% if error %}&lt;p&gt;&lt;i&gt;{{ error }}&lt;/i&gt;&lt;/p&gt;{% endif %}
+
+&lt;form action="/list/auth/login/" method="post"&gt;
+{% csrf_token %}
+{{ form.as_p }}
+&lt;input type="submit" value="Login" /&gt;
+&lt;input type="hidden" name="next" value="{{ next }}" /&gt;
+&lt;/form&gt;
+
+&lt;p&gt;&lt;i&gt;or&lt;/i&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;a href="/list/auth/create"&gt;Create an account&lt;/a&gt;&lt;/p&gt;
+
+
+{% endblock %}
+</pre>
+{% endraw %}
+
+	    </li>
+
+	    <li>auth/create.html:
+
+{% raw %}
+<pre>
+{% extends "base.html" %}
+
+{% block content %}
+
+&lt;b&gt;Create an account:&lt;/b&gt;
+
+{% if error %}&lt;p&gt;&lt;i&gt;{{ error }}&lt;/i&gt;&lt;/p&gt;{% endif %}
+
+&lt;form action="/list/auth/create/" method="post"&gt;
+{% csrf_token %}
+{{ form.as_p }}
+&lt;input type="submit" value="Save" /&gt;
+&lt;/form&gt;
+
+{% endblock %}
+</pre>
+{% endraw %}
+
+	    </li>
+
+	  </ul>
+
+	</li>
+
+	<li><p>The base.html template only displays the "Logout" link if the
+	    user is logged in.  To make this work, modify the following lines in
+	    the login() method of views.py:</p>
+
+<pre>
+        return render_to_response('auth/login.html', {'form':form,
+                                                      'next':next,
+                                                      'login':True},
+                                  context_instance=RequestContext(request))
+</pre>
+
+	  <p>and</p>
+
+<pre>
+            return render_to_response('auth/login.html', {'form':form,
+                                                          'login':True},
+                                  context_instance=RequestContext(request))
+</pre>
+
+	  <p>and</p>
+
+<pre>
+            return render_to_response('auth/login.html',
+                                      {'form':form,
+                                       'login':True,
+                                       'error': 'Invalid username or password'},
+                                      context_instance=RequestContext(request))
+</pre>
+
+	  <p>These all add an additional entry in the dictionary that is passed
+	    to the base.html template.</p>
+
+	</li>
+
+      </ol>
+
+      <p>If you visit list/item in the application, you should now see the
+	new styling that we have created for the site.</p>
+
+      <p>Next:
+
+	<a href="/fall-2012/django/session-state.html">Session State</a>
+
+      </p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block term %}
+<div class="term">
+Fall 2012
+</div>
+{% endblock %}
+
+{% block sidebar %}
+
+<ul class="menu">
+  <li><a href={{url_for("show",directory=None,page="index")}}>Course Home</a></li>
+  <li><a href={{url_for("show",directory="fall-2012",page="")}}>Syllabus</a></li>
+  <li><a href={{url_for("show",directory="fall-2012",page="schedule")}} >Schedule</a></li>
+  <li>
+    <div class="btn-group">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+	Labs
+	<span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+	<li><a href="/fall-2012/labs/messaging-service">Messaging Service</a></li>
+	<li><a href="/fall-2012/labs/download-accelerator">Download Accelerator</a></li>
+	<li><a href="/fall-2012/labs/threaded-messaging-service">Threaded Messaging Service</a></li>
+	<li><a href="/fall-2012/labs/web-server">Web Server</a></li>
+	<li><a href="/fall-2012/labs/queueing-theory">Queueing Theory</a></li>
+	<li><a href="/fall-2012/labs/stack-smashing">Stack Smashing</a></li>
+	<li><a href="/fall-2012/labs/web-application">Web Application</a></li>
+	<li><a href="/fall-2012/labs/rest-interface">REST Interface</a></li>
+	<li><a href="/fall-2012/labs/web-application-vulnerabilities">Web Application Vulnerabilities</a></li>
+      </ul>
+    </div>
+  </li>
+  <li><a href={{url_for("show",directory="fall-2012",page="code")}} >Sample Code</a></li>
+    <div class="btn-group">
+      <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+	Django Tutorial
+	<span class="caret"></span>
+      </a>
+      <ul class="dropdown-menu">
+	<li><a href="/fall-2012/django/">Introduction</a></li>
+	<li><a href="/fall-2012/django/crud">CRUD</a></li>
+	<li><a href="/fall-2012/django/users">Users</a></li>
+	<li><a href="/fall-2012/django/templates-and-css">Templates and CSS</a></li>
+	<li><a href="/fall-2012/django/session-state">Session State</a></li>
+	<li><a href="/fall-2012/django/javascript-and-ajax">Javascript and AJAX</a></li>
+	<li><a href="/fall-2012/django/mongodb">MongoDB</a></li>
+	<li><a href="/fall-2012/django/rest-interface">REST Interface</a></li>
+      </ul>
+    </div>
+  </li>
+  <li><a href="https://groups.google.com/d/forum/byu-cs-360-internet-programming">Google Group</a> <i class="icon-share-alt"></i></li>
+</ul>
+
+<hr>
+
+{% endblock %}

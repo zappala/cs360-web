@@ -1,0 +1,134 @@
+{% extends "sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Lab: Web Application</h1>
+
+      <p>In this assignment, you will write a web database application.  The
+	goals of this assignment are to (1) learn how to design an
+	entity-relationship model for a database appliction, and (2) gain
+	experience designing use cases and a user interface for a web
+	application, (3) learn how to program with Django or another Python
+	web framework, and (4) gain experience writing a basic database
+	application that includes queries, inserts, deletes, user sessions,
+	and long term user state.</p>
+
+      <h2>Design</h2>
+
+      <p>You can choose the web application you want to build, but it
+	must include the following components:</p>
+
+      <ul>
+
+	<li>a database backend with at least five tables and several one
+	  one-to-many relationship</li>
+
+	<li>user accounts, including the ability to create new accounts and to
+	  login with a username and password</li>
+
+	<li>ability for users to add and delete their items in the
+	  database</li>
+
+	<li>long-term user state and reports that provide this information to
+	  users</li>
+
+      </ul>
+
+      <h2>Use Cases</h2>
+
+      <p>Design several use cases for your application.  A use case
+	describes the functionality you want your application to have, in
+	terms of how a user might use the program.  For example, one use case
+	might be creating an account on the site.  Describe what the user
+	wants to do and the data required to support this service.  Then
+	describe the actions the user will take to accomplish this function.
+	Refer to your user interface design as you describe the use cases.</p>
+
+      <h2>Interface Design</h2>
+
+      <p>Draw the user interface for your program.  This includes every page
+	on the site, including headers and footers.  Each page should show all
+	the items on the page.  Include on your drawings notation that shows
+	how the user navigates through the pages.  This drawing may be done
+	with a computer program, but I recommend doing it by hand.  On the
+	drawing, show the data that each page accesses or modifies from the
+	database.  Show the flow between pages.
+
+	<h2>Database Design</h2>
+
+      <p>Draw an entity-relationship diagram that includes all entities,
+	attributes, and relationships.  You must use the standard
+	entity-relationship format as shown in class. Use a program
+	to draw this diagram, such as
+
+	<a href="http://www.lucidchart.com">lucidchart</a>
+
+	or
+
+	<a href="http://www.gnome.org/projects/dia/">dia</a>.
+
+      </p>
+
+      <h2>Application</h2>
+
+      <p>Write your application, following your use cases, user interface,
+	and entity-relationship modeling.</p>
+
+      <h2>Report</h2>
+
+      <p>Write a report that describes your application.  The report should
+	consist of the following sections:</p>
+
+      <ul>
+
+	<li><b>Introduction</b>: Give an overview of the application you
+	  have created.</li>
+
+	<li><b>Uses Cases</b>: Write the documentation required for a user to
+	  operate your web site.  Include each of the use cases that you
+	  implemented. Walk through the use case and give detailed instructions
+	  for the user, including screenshots. Be sure to describe how you used
+	  session state and long-term state in your application.</li>
+
+	<li><b>Database Schema</b>: Show your entity-relationship diagram and
+	  explain what is stored in your database.</li>
+
+	<li><b>Conclusion</b>: (1) Describe what you learned from this
+	  project.  (2) If you deviated from your initial design, explain how
+	  and why.  For example, you may have added additional functionality if
+	  the specification wasn't clear or you realized something was missing.
+	  You may also have fallen short of your expectations; explain why. (3)
+	  Describe what else you would add to the application to make it better,
+	  if you had more time.</li>
+
+      </ul>
+
+      <p>Your paper can be any length, as long as you thoroughly describe
+	your application and its components.  The paper must use 11 point
+	type, single spacing, and one column per page.</p>
+
+      <h2>Submission</h2>
+
+      <p>Turn in your code, the name and password of any relevant users
+	needed to use the application, and a PDF of your report using
+	<a href="http://learningsuite.byu.edu">learningsuite.byu.edu</a>.
+      </p>
+
+      <h2>Grading</h2>
+
+      <p>This assignment is worth 150 points, using the
+	following scale:</p>
+
+      <ul>
+	<li>Completeness and quality of application: 100 points</li>
+	<li>Completeness, clarity and quality of report: 50 points</li>
+      </ul>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

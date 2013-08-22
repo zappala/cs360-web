@@ -1,0 +1,277 @@
+{% extends "sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Django Tutorial | Javascript and Ajax with jQuery</h1>
+
+      <p>Next we will use Javascript and Ajax to provide additional
+	polish.</p>
+
+      <p>
+
+	<a href="/fall-2012/django/django-demo-5.tgz">Code for Version 5</a>
+
+      </p>
+
+      <h2>Javascript Menu Highlighting</h2>
+
+      <p>The current application doesn't have any way of indicating which
+	page is currently active in the menu. To fix this, we'll use a small
+	amount of Javascript.</p>
+
+      <ol>
+
+	<li><p>Edit templates/base.html so it includes a link to a javascript file:</p>
+
+{% raw %}
+<pre>
+&lt;head&gt;
+    &lt;link rel="stylesheet" href="/list/static/style.css" /&gt;
+    &lt;title&gt;{% block title %}Listomatic{% endblock %}&lt;/title&gt;
+    &lt;script src="/list/static/menu.js"&gt;&lt;/script&gt;
+&lt;/head&gt;
+</pre>
+{% endraw %}
+
+	  <p>This keeps the Javascript code separate from the rest of the HTML.</p>
+
+	</li>
+
+	<li><p>Create a file called /list/static/menu.js, containing the following:</p>
+
+<pre>
+window.onload=function()
+{
+	setPage();
+}
+
+function setActiveMenu(arr, crtPage)
+{
+    for (var i=0; i &lt; arr.length; i++)
+    {
+	if (arr[i].href == crtPage)
+	{
+	    if (arr[i].parentNode.tagName != "DIV")
+	    {
+		arr[i].className = "current";
+	    }
+	}
+    }
+}
+
+function setPage()
+{
+    hrefString = document.location.href ? document.location.href : document.location;
+    
+    if (document.getElementById("menu") !=null )
+	setActiveMenu(document.getElementById("menu").getElementsByTagName("a"), hrefString);
+}
+</pre>
+
+	  <p>The setActiveMenu() function takes an array of HTML links and loops
+	    through them, looking for one whose href element (the link URL) is the
+	    same as the URL of the current page. If it finds it, then it sets the
+	    class name of this link to be equal to "current".</p>
+
+	  <p>Note, a better way to do this is to use a Javascript library like
+
+	    <a href="http://www.prototypejs.org/">prototype</a>
+
+	    or
+
+	    <a href="http://jquery.com/">jQuery</a>
+
+	    that have methods to append and remove class names from a list.</p>
+
+	  <p>The setPage() method is called when the page is loaded. It finds
+	    the links in the "menu" div and then calls setActiveMenu() on
+	    them.</p>
+
+	</li>
+
+	<li><p>To set a different style for the current link, add this to the
+	    /list/static/style.css file:</p>
+
+<pre>
+#menu li a.current {
+    color: #3f522b;
+    border-bottom: 2px solid #423638;
+}
+</pre>
+
+	  <p>Note that you can use any styling here, but for simplicity we underline
+	    the current menu item.</p>
+
+	</li>
+
+      </ol>
+
+      <p>That's it! You should now be able to use Javascript to highlight the
+	current menu item.</p>
+
+      <h2>Ajax with jQuery</h2>
+
+      <p>One drawback of the current list application is that the entire
+	page must be reloaded every time today's list changes. We can avoid
+	this by using an Ajax request to separately get the HTML for today's
+	list and then dynamically changing the content of the "div" tag
+	containing the list.</p>
+
+      <ol>
+
+	<li><p>Download the latest version of
+
+	    <a href="http://jquery.com/">jQuery</a>
+
+	    and place it in the '/list/static' directory.</p>
+
+	</li>
+
+	<li><p>In templates/base.html, add the following script lines:</p>
+
+<pre>
+    &lt;script src="/list/static/today.js"&gt;&lt;/script&gt;
+    &lt;script src="/list/static/jquery-1.7.2.min.js"&gt;&lt;/script&gt;
+</pre>
+
+<p>This will load two additional Javascript files.</p>
+
+	</li>
+
+	<li><p>Create the /list/static/today.js file with the following content:</p>
+
+<pre>
+function getToday(url) {
+        $.ajax({
+	    url: url,
+	    success: function(list){
+		$("#today").html(list);
+	    }
+	});
+}
+</pre>
+
+	  <p>The getToday() function will take as input a URL and then make an
+
+	    <a href="http://api.jquery.com/jQuery.ajax/">Ajax</a>
+
+	    call using jQuery. This will send a GET request to the URL you
+	    specify, then gather the results and use them as input to a success
+	    function you define. In our case, this function will find the element
+	    with the CSS tag of "#today" and update its HTML to be whatever was
+	    returned from the AJAX request.</p>
+
+	  <p>The URLS we call on the server are called
+
+	    <a href="http://en.wikipedia.org/wiki/Representational_state_transfer">REST endpoints</a>
+
+	    because they define a web service that can be called by any program
+	    over the web. A REST service can return XML, JSON, HTML, or any other
+	    format. The key idea is that the service uses standard HTTP requests
+	    for data transfer.</p>
+
+	</li>
+
+	<li><p>To call this function, modify the link for "today" in
+	    /templates/item/index.html so that it reads as follows:</p>
+
+{% raw %}
+<pre>
+      | &lt;a href="#" onclick="getToday('/list/item/today/{{ item.id }}/')"&gt;today&lt;/a&gt;)&lt;/li&gt;
+</pre>
+{% endraw %}
+
+	  <p>This will change the link so that instead of visiting a page it
+	    will issue the Ajax request using the Javascript we've written.</p>
+
+	  <p>In this same file, modify the "today" div so that it reads as follows:</p>
+
+{% raw %}
+<pre>
+&lt;div id="today"&gt;
+{% include "item/today.html" %}
+&lt;/div&gt;
+</pre>
+{% endraw %}
+
+	  <p>This will put the code for the list in a separate template.</p>
+
+	</li>
+
+	<li><p>Create the list/template/item/today.html file with the following:</p>
+
+{% raw %}
+<pre>
+{% if today %}
+&lt;b&gt;Today:&lt;/b&gt;
+    &lt;ul&gt;
+    {% for item in today %}
+        &lt;li&gt;&lt;a href="/list/item/{{ item.id }}/"&gt;{{ item.text }}&lt;/a&gt;
+	  (&lt;a href="#" onclick="getToday('/list/item/later/{{ item.id }}/')"&gt;later&lt;/a&gt;)&lt;/li&gt;
+    {% endfor %}
+    &lt;/ul&gt;
+{% endif %}
+</pre>
+{% endraw %}
+
+	  <p>This is the same code as before, but with a modified link so that it
+	    calls a Javascript function to remove items from the list.</p>
+
+	</li>
+
+	<li><p>The last step is to modify list/views.py so that the calls
+	    to our REST endpoints will return just the HTML for the list and
+	    not the entire page.</p>
+
+	  <p>Modify the today() method so that it supplies today's list to the
+	    template:</p>
+
+<pre>
+    today = add_today(request, i)
+    return render_to_response('item/today.html',{'today':today})
+</pre>
+
+	  <p>The same for later():</p>
+
+<pre>
+    today = remove_today(request, i) return
+    render_to_response('item/today.html',{'today':today})
+</pre>
+
+	</li>
+
+      </ol>
+
+      <p>You should now have an application that calls Javascript to add and
+	remove items from today's list, using the jQuery library to make an
+	Ajax request rather than reloading the entire page each time the list
+	changes.</p>
+
+      <p>Additional topics:</p>
+
+      <ul>
+	<li>
+	  <a href="http://docs.djangoproject.com/en/dev/topics/forms/">Using forms</a>
+	</li>
+	<li>
+	  <a href="http://docs.djangoproject.com/en/dev/topics/db/queries/">Making queries</a>
+	</li>
+	<li>
+	  <a href="http://docs.djangoproject.com/en/dev/topics/http/file-uploads/?from=olddocs">Uploading files</a>
+	</li>
+      </ul>
+
+      <p>Next:
+
+	<a href="/fall-2012/django/mongodb">MongoDB</a>
+
+      </p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

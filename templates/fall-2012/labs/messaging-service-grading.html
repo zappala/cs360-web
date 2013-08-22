@@ -1,0 +1,75 @@
+{% extends "sidebar.html" %}
+
+{% macro item(text,score,criteria) -%}
+<div class="box"></div>
+<div class="item">{{ text }}</div>
+<div class="score">{{ score }}</div>
+<div class="clear"></div>
+<div class="criteria">{{ criteria }}</div>
+{%- endmacro %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Messaging Service Grading Sheet</h1>
+
+      <p><i>The TA will fill out this sheet when grading your program.</i></p>
+
+      <div class="border">
+	Student Name:
+      </div>
+
+      <p><b>TA:</b> <i>Check the boxes below to indicate which tests pass
+	  successfully.  Circle the boxes that do not work correctly and
+	  include a written statement explaining the error that occured.</i></p>
+
+      <h2>Student Client and Server</h2>
+
+      {{ item("Command line parsing",10,"The server starts on the
+	supplied port and can be contacted by clients using the host
+	and port information.") }}
+
+      {{ item("Message Protocol",50,"The client is able to send, list,
+      and read multiple messages for a variety of users.  Multiple
+      clients can access the server, but one at a time.") }}
+
+      {{ item("User Interface",10,"The user interface works as
+      specified.") }}
+
+      {{ item("Error handling",10,"Using telnet, the server is able to
+	return errors for improperly formatted messages.") }}
+
+      <h2>Interoperability</h2>
+
+      {{ item("Solution client with student server",5,"Check that the
+	solution client interacts with a student server for the
+	message protocol test shown above.  Students do not have
+	access to the solution code, so they should do
+	interoperability testing with each other.") }}
+
+      {{ item("Student client with solution server",5,"Check that
+	several student clients can interact with a solution server
+	for the message protocol test shown above.  Students do not
+	have access to the solution code, so they should do
+	interoperability testing with each other.") }}
+
+      {{ item("Handling partial data",10,"Check that the student
+	client can interact with a solution server that sends parts of
+	messages rather than sending the whole message at once.") }}
+
+      <p></p>
+      <p><b>TA:</b> <i>Fill in the information below when testing is
+	  complete and then turn the sheet in to the professor.</i></p>
+
+      <div class="border">TA Name:</div>
+      <div class="border">Score:</div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
