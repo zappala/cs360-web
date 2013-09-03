@@ -1,4 +1,4 @@
-BYU CS 660 Web Pages
+BYU CS 360 Web Pages
 ====================
 
 These are the web pages used by the BYU Open Source Lab. They are
