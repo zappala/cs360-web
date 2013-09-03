@@ -1,0 +1,119 @@
+{% extends "fall-2013/sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Sample Code</h1>
+
+      <h2>Socket Programming</h2>
+
+      <p>Code to demonstrate DNS name resolution and simple
+	client-server networking.</p>
+
+      <ul>
+	<li>
+	  <a href="/static/code/sockets.tgz">Sockets</a>
+	</li>
+      </ul>
+
+      <h2>HTTP</h2>
+
+      <p>Code to help parse HTTP.</p>
+
+      <ul>
+	<li>
+	  <a href="/static/code/http.tgz">HTTP and URL Parser</a>
+	</li>
+      </ul>
+
+      <h2>Thread Programming</h2>
+
+      <p>Code that shows how to create threads using the pthreads
+	library and how to do synchronize threads using mutexes and
+	semaphores.</p>
+
+      <ul>
+	<li>
+	  <a href="/static/code/threads.tgz">Thread Test</a>
+	</li>
+	<li>
+	  <a href="/static/code/thread-sync.tgz">Thread Synchronization</a>
+	</li>
+      </ul>
+
+      <h2>Server Architecture</h2>
+
+      <p>Code that demonstrates different server architectures --
+	single thread, a thread per client, multiplexing with poll(),
+	and multiplexing with epoll().</p>
+
+      <ul>
+	<li>
+	  <a href="/static/code/server.tgz">Server</a>
+	</li>
+      </ul>
+
+      <h2>Web Server</h2>
+
+      <p>Code to help create a web server.</p>
+
+      <ul>
+	<li>
+	  <a href="/static/code/http.tgz">HTTP and URL Parser</a>
+	</li>
+	<li>
+	  <a href="/static/code/config.tgz">Configuration File Parsing</a>
+	</li>
+	<li>
+	  <a href="/static/code/exec.tgz">Executing External Programs</a>
+	</li>
+      </ul>
+
+      <h2>Python Plotting Examples</h2>
+
+      <p>Running an experiment and parsing the data to create graphs
+	with matplotlib.</p>
+
+      <ul>
+	<li>
+	  <a href="/static/code/plotting.tgz">Plotting</a>
+	</li>
+      </ul>
+
+      <p><b>Note:</b> If you are using your own machine, install the
+	python-matplotlib package.  If you are using the lab Linux
+	machines, it is installed in my home directory.  Add the
+	following to your .bashrc and .bash_profile files:</p>
+
+<pre>
+export PYTHONPATH=.:/users/faculty/zappala/lib64/python2.7:/users/faculty/zappala/lib64/python2.7/site-packages
+</pre>
+
+      <p>Once you log out and then log back in, the plotting script
+	should work.</p>
+
+      <h2>Python Threading and Networking</h2>
+
+      <p>Code demonstrating how to use Python for threading,
+	synchronization, and networking.</p>
+
+      <ul>
+	<li>
+	  <a href="/static/code/python-threading.tgz">Threading</a>
+	</li>
+	<li>
+	  <a href="/static/code/python-network.tgz">Network</a>
+	</li>
+	<li>
+	  <a href="/static/code/echo-broadcast.py">UDP Broadcast</a>
+	</li>
+
+      </ul>
+      
+    </div>
+  </div>
+</div>
+
+{% endblock %}

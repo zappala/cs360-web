@@ -23,6 +23,10 @@ body {
     margin-bottom: 5px;
 }
 
+.course a {
+    color: black;
+}
+
 .university {
     font-size: 1.2em;
     text-align: right;

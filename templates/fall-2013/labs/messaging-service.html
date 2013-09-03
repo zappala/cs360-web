@@ -1,0 +1,241 @@
+{% extends "fall-2013/sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Lab: Messaging Service</h1>
+
+      <p>The goals of this lab are (1) to learn how to write a
+	client-server application using the BSD socket API, (2) to
+	understand how to process and parse data when reading from a
+	network socket, and (3) to understand how to implement a
+	protocol.</p>
+
+      <p>In this assignment, you will create a server that can store and
+	retrieve messages for people.  You will also create a client that
+	users can use to send and read messages.</p>
+
+      <h2>Messaging Protocol</h2>
+
+      <p>The messaging protocol defines the communication between the client
+	and the server.  Message fields are separated by whitespace and lines
+	are ended by the newline character (\n).</p>
+
+      <h3>Storing Messages</h3>
+
+<pre>
+<b>Message</b>
+put [name] [subject] [length]\n[message]
+
+<b>Responses</b>
+OK\n
+error [description]\n
+</pre>
+
+      <p>Store a message for a user identified by [name].  The message
+	consists of a [subject] and [length] characters.  The entire message
+	comes after the newline character.  The server returns the <i>OK</i>
+	response if the message is stored successfully.  Otherwise, the server
+	returns the <i>error</i> response, including a descriptive message
+	explaining the error.</p>
+
+      <h3>Listing Messages</h3>
+
+<pre>
+<b>Message</b>
+list [name]\n
+
+<b>Responses</b>
+list [number]\n[index] [subject]\n...[index] [subject]\n
+error [description]\n
+</pre>
+
+      <p>Get a list of messages for a user identified by [name].  The server
+	returns the <i>list</i>response if the query is formatted
+	properly.  The [number] returned may be zero if no messages are stored
+	for that user.  The subsequent lines list a numeric [index] and the
+	associated [subject] for each message stored for the user.  Otherwise,
+	the server returns the <i>error</i> response, including a descriptive
+	message explaining the error. The [index] should count starting at 1 and
+	should be unique for each user.</p>
+
+      <h3>Retrieving Messages</h3>
+
+<pre>
+<b>Message</b>
+get [name] [index]\n
+
+<b>Responses</b>
+message [subject] [length]\n[message]
+error [description]\n
+</pre>
+
+      <p>Get a message given by [index] for a user identified by [name].
+	The server returns the <i>message</i> response if the query is
+	formatted properly and a message with the given index exists for the
+	listed user.  The message consists of a [subject] and [length]
+	characters.  The entire message comes after the newline character.
+	Otherwise, the server returns the <i>error</i> response, including a
+	descriptive message explaining the error.</p>
+
+      <h2>Server</h2>
+
+      <p>The messaging server implements the server side of the messaging
+	protocol and handles one client at a time.  Once connected, a client
+	should be able to issue as many commands as it wants, and the server
+	will only close the connection if the client closes it first. You are
+	welcome to use the echo server distributed on the class web site as a
+	starting point.</p>
+
+      <h2>Client User Interface</h2>
+
+      <p>The messaging client performs two functions: it implements
+      the client side of the messaging protocol and it provides a user
+      interface. <u>The user interface is not identical to the
+      messaging protocol.</u> The user interface defines what the user
+      sees, which hides some of the detail of the underlying
+      protocol.</p>
+
+      <p>The messaging client provides a user interface and implements the
+	client side of the messaging protocol.  The user interface should provide
+	a prompt of the form "% " (percent sign and a space) and should support
+	the following commands:
+
+<pre>
+% send [user] [subject]
+- Type your message. End with a blank line -
+[message]
+...
+[message]
+[blank line]
+% 
+</pre>
+
+      <p>This sends a message to the server for the identified [user] with
+	the given [subject] and [message].  The client should only print a
+	response from the server if it returns an error.</p>
+
+<pre>
+% list [user]
+[index] [subject]
+...
+[index] [subject]
+% 
+</pre>
+
+      <p>This sends a request to the server to list all the messages for
+	[user].  The client should print the list of indexes and subjects, or
+	an error message. The [index] should start counting at 1 and should be
+	unique for each user.</p>
+
+<pre>
+% read [user] [index]
+[subject]
+[message]
+% 
+</pre>
+
+      <p>This sends a request to the server to read the message at [index] for
+	the indentified [user].  The client should print the subject and the
+	message, or an error message.</p>
+
+<pre>
+% quit
+</pre>
+
+      <p>This should quit the program.</p>
+
+      <h2>Command Line Arguments</h2>
+
+      <p>The messaging server should be called <i>msgd</i> and take the
+	following arguments:</p>
+
+<pre>
+Argument           Definition
+---------------------------------------------------------
+-p [port]          port number of the messaging server
+-d                 print debugging information
+</pre>
+
+
+      <p>The port number is required; it indicates the port your server will
+	bind on.  You may code a default value for this option so that you do
+	not have to type it every time when you test your code.</p>
+
+      <p>The messaging client should be called <i>msg</i> and take the
+	following arguments:</p>
+
+<pre>
+Argument           Definition
+---------------------------------------------------------
+-s [server]        machine name of the messaging server (e.g. hiking.cs.byu.edu)
+-p [port]          port number of the messaging server
+-d                 print debugging information
+</pre>
+
+      <p>The user must specify the server and port options so that the
+	client can connect to the instant messaging server.  You may code a
+	default value for these options so that you do not have to type them
+	every time when you test your code.</p>
+
+      <p>For both the client and server, the user may also specify a
+	debugging flag.  In this case, you should print out any helpful
+	debugging information you want, but you should never print debugging
+	lines if the flag is not specified on the command line.</p>
+
+      <p>You should use the <i>getopt</i> API for parsing the command line
+	options; see <i>man 3 getopt</i>.  This is a powerful parser that is
+	easy to use and enables many of the standard command-line behaviors
+	that are familiar to Linux users.</p>
+
+      <h2>Submission</h2>
+
+      <p>Put all of your code into a single directory. Be sure to
+	create a tar file of your code, not a zip file. Be sure the
+	tar file creates the directory when it is untarred, and
+	doesn't put all of the files in the current directory. Follow
+	the instructions below.</p>
+
+      <ol>
+
+	<li>Create a tgz of your program directory.  Remove any binaries and
+	  send only the source code and your Makefile.  For example, if your
+	  code is in the directory called lab1, then you would type this:
+
+<pre>
+cd lab1
+make realclean
+cd ..
+tar -czvf lab1.tgz lab1
+</pre>
+
+	</li>
+
+	<li>Submit the tgz file using
+	  <a href="http://learningsuite.byu.edu">learningsuite.byu.edu</a>.
+	</li>
+
+      </ol>
+
+      <h2>Grading</h2>
+
+      <p>Your lab will be tested as specified in the
+
+	<a href="/fall-2013/labs/messaging-service-grading">grading sheet</a>.
+      </p>
+
+      <p>If you wish to receive help with your code, then you should print
+	out clear and concise debugging information when the debugging flag is
+	given on the command line. The more helpful and clear your debugging
+	information is, the better your chances for getting useful help. You
+	should apply this same standard to how you document your code.</p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+

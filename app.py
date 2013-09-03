@@ -1,21 +1,19 @@
 import sys
 
 from views import fall2012
+from views import fall2013
 
 from flask import Flask, render_template
 from flask_frozen import Freezer
 
-from config import app
+from config import app, freezer
 
 @app.route('/',defaults={'directory':None,'page':'index'})
-@app.route('/<directory>',defaults={'page':''})
 @app.route('/<path:directory>/',defaults={'page':'index'})
 @app.route('/<path:directory>/<page>')
 def show(directory,page):
     if not directory:
         return render_template(page + '.html')
-    if not page:
-        return render_template(directory+'.html')
     return render_template(directory+"/" + page + '.html')
     
 

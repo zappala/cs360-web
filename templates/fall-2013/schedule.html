@@ -1,0 +1,47 @@
+{% extends "fall-2013/sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Schedule</h1>
+
+      This schedule is <u>subject to change</u>. Assignments may be
+      changed up until the day they are assigned.
+
+
+      {% for week in weeks %}
+      <h2 class="plain">Week {{ week.number }}</h2>
+
+      {% for day in week.days %}
+      <div class="row-fluid schedule">
+
+	<div class="span2 day">{{ day.date }}</div>
+
+	<div class="span10">
+	  {% if day.section %}
+	  <div class="content">
+	    <span class="section">{{ day.section }}</span> | <span class="topic">{{ day.topic }}</span>
+	    <ul>
+	      {% for reading in day.readings %}
+	      <li>{{ reading|safe }}</li>
+	      {% endfor %}
+	    </ul>
+	  </div>
+	  {% endif %}
+	  {% for assignment in day.assignments %}
+	  <div class="assignment">{{ assignment|safe }}</div>
+	  {% endfor %}
+	</div>
+      </div>
+	
+      {% endfor %}
+
+      {% endfor %}
+
+    </div>
+  </div>
+</div>
+      
+{% endblock %}
