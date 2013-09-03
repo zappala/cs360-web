@@ -1,7 +1,8 @@
 BYU CS 360 Web Pages
 ====================
 
-These are the web pages used by the BYU Open Source Lab. They are
+These are the web pages used by the CS 360 Internet Programming course
+taught by [Daniel Zappala](http://zappala.byu.edu) at BYU. They are
 built using:
 
 - [Flask](http://flask.pocoo.org/)
