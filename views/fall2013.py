@@ -14,6 +14,7 @@ def fall2013schedule():
     d = s.day("September 4")
     d.lecture('Introduction','The Internet and its Architecture')
     d.reading('The Internet and its Architecture',static + 'lectures/the-internet-and-its-architecture.pdf')
+    d.reading('Neal Stephenson on laying undersea fiber-optic cables','http://www.wired.com/wired/archive/4.12/ffglass.html')
 
     d = s.day("September 6")
     d.lecture('Introduction','The Internet and its Architecture, Lab Discussion')
