@@ -52,14 +52,15 @@ list [number]\n[index] [subject]\n...[index] [subject]\n
 error [description]\n
 </pre>
 
-      <p>Get a list of messages for a user identified by [name].  The server
-	returns the <i>list</i>response if the query is formatted
-	properly.  The [number] returned may be zero if no messages are stored
-	for that user.  The subsequent lines list a numeric [index] and the
-	associated [subject] for each message stored for the user.  Otherwise,
-	the server returns the <i>error</i> response, including a descriptive
-	message explaining the error. The [index] should count starting at 1 and
-	should be unique for each user.</p>
+      <p>Get a list of messages for a user identified by [name].  The
+	server returns the <i>list</i> response if the query is
+	formatted properly.  The [number] returned may be zero if no
+	messages are stored for that user.  The subsequent lines list
+	a numeric [index] and the associated [subject] for each
+	message stored for the user.  Otherwise, the server returns
+	the <i>error</i> response, including a descriptive message
+	explaining the error. The [index] should count starting at 1
+	and should be unique for each user.</p>
 
       <h3>Retrieving Messages</h3>
 
@@ -79,6 +80,19 @@ error [description]\n
 	characters.  The entire message comes after the newline character.
 	Otherwise, the server returns the <i>error</i> response, including a
 	descriptive message explaining the error.</p>
+
+      <h3>Reset</h3>
+
+<pre>
+<b>Message</b>
+reset\n
+
+<b>Responses</b>
+OK\n
+</pre>
+
+      <p>Remove all stored messages for all users. This is used for
+      testing purposes.</p>
 
       <h2>Server</h2>
 
@@ -223,7 +237,7 @@ tar -czvf lab1.tgz lab1
 
       <p>Your lab will be tested as specified in the
 
-	<a href="/fall-2013/labs/messaging-service-grading">grading sheet</a>.
+	<a href={{url_for("show",directory="fall-2013/labs",page="messaging-service-grading")}}>grading sheet</a>.
       </p>
 
       <p>If you wish to receive help with your code, then you should print

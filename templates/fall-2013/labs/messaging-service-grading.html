@@ -5,7 +5,7 @@
 <div class="item">{{ text }}</div>
 <div class="score">{{ score }}</div>
 <div class="clear"></div>
-<div class="criteria">{{ criteria }}</div>
+<div class="criteria">{{ criteria|safe }}</div>
 {%- endmacro %}
 
 {% block page %}
@@ -38,27 +38,20 @@
       {{ item("User Interface",10,"The user interface works as
       specified.") }}
 
-      {{ item("Error handling",10,"The server is able to return errors
-	for improperly formatted messages and continue functioning
-	normally.") }}
-
       <h2>Interoperability</h2>
 
-      {{ item("Solution client with student server",5,"Check that the
-	solution client interacts with a student server for the
-	message protocol test shown above.  Students do not have
-	access to the solution code, so they should do
-	interoperability testing with each other.") }}
+      {{ item("Message Protocol",5,"Passes the Message Protocol tests
+      in the testing script.") }}
 
-      {{ item("Student client with solution server",5,"Check that
-	several student clients can interact with a solution server
-	for the message protocol test shown above.  Students do not
-	have access to the solution code, so they should do
-	interoperability testing with each other.") }}
+      {{ item("Errors",5,"Passes the Errors test in the testing
+      script.") }}
 
-      {{ item("Handling partial data",10,"Check that the student
-	client can interact with a solution server that sends parts of
-	messages rather than sending the whole message at once.") }}
+      {{ item("Large Messages",10,"Passes the Large Message test in the
+      testing script.") }}
+
+      {{ item("Partial Messages",10,"Passes the Partial Messages test in
+      the testing script. The student's code is efficient and does NOT
+      read one byte at a time when calling recv().") }}
 
       <p></p>
       <p><b>TA:</b> <i>Fill in the information below when testing is
