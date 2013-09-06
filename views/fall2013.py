@@ -5,7 +5,7 @@ from schedule import *
 
 @app.route('/fall-2013/schedule')
 def fall2013schedule():
-    static = '/static/2013f/'
+    static = '/static/fall-2013/'
     term = '/fall-2013/'
     s = Schedule()
 
