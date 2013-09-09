@@ -33,14 +33,13 @@ def fall2013schedule():
     d.reading('Programming Threads in C',static+'lectures/programming-threads-in-c.pdf')
     d.reading('Pthreads Tutorial','http://www.llnl.gov/computing/tutorials/pthreads/')
 
-    d = s.day("September 14")
-    d.assignment('Lab: Messaging Service',term + 'labs/messaging-service')
-
     s.week()
 
     d = s.day("September 16")
     d.lecture('Systems','Socket Pool Architecture, Lab Discussion')
 
+    d = s.day("September 17")
+    d.assignment('Lab: Messaging Service',term + 'labs/messaging-service')
 
     d = s.day('September 18')
     d.lecture('Concurrent Programming','Synchronization, Semaphores')
