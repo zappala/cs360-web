@@ -163,6 +163,31 @@ ul.menu li.active {
     margin-bottom: 5px;
 }
 
+.office {
+    margin-bottom: 2px;
+}
+
+.office .day {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    margin-bottom: 0px;
+    padding: 5px;
+    font-size: 0.9em;
+}
+.hours {
+    background-color: #e4e4e4;
+    padding: 5px;
+    margin-bottom: 1px;
+}
+
+
+.padded {
+    padding: 5px;
+    margin-bottom: 1px;
+}
+
+
 .assignment {
     background-color: #990011;
     padding: 10px;
