@@ -17,6 +17,8 @@
 	retrieve messages for people.  You will also create a client that
 	users can use to send and read messages.</p>
 
+      <p>Your code must be written in C++.</p>
+
       <h2>Messaging Protocol</h2>
 
       <p>The messaging protocol defines the communication between the client
@@ -40,6 +42,11 @@ error [description]\n
 	response if the message is stored successfully.  Otherwise, the server
 	returns the <i>error</i> response, including a descriptive message
 	explaining the error.</p>
+
+      <p>Messages are stored in memory and are not written to
+	disk. This means that multiple clients can connect over time
+	and read all messages stored on the server, but once the
+	server quits all messages are lost.</p>
 
       <h3>Listing Messages</h3>
 
@@ -96,11 +103,12 @@ OK\n
 
       <h2>Server</h2>
 
-      <p>The messaging server implements the server side of the messaging
-	protocol and handles one client at a time.  Once connected, a client
-	should be able to issue as many commands as it wants, and the server
-	will only close the connection if the client closes it first. You are
-	welcome to use the echo server distributed on the class web site as a
+      <p>The messaging server implements the server side of the
+	messaging protocol and handles one client at a time.  It is
+	singly-threaded. Once connected, a client should be able to issue
+	as many commands as it wants, and the server will only close
+	the connection if the client closes it first. You are welcome
+	to use the echo server distributed on the class web site as a
 	starting point.</p>
 
       <h2>Client User Interface</h2>
@@ -204,6 +212,12 @@ Argument           Definition
 	easy to use and enables many of the standard command-line behaviors
 	that are familiar to Linux users.</p>
 
+      <h2>Example Code</h2>
+
+      <p>There are
+	  some <a href="https://github.com/zappala/socket-programming-examples-c">
+	  socket programming examples in C++</a> on GitHub.</p>
+
       <h2>Submission</h2>
 
       <p>Put all of your code into a single directory. Be sure to
@@ -240,6 +254,10 @@ tar -czvf lab1.tgz lab1
 	<a href={{url_for("show",directory="fall-2013/labs",page="messaging-service-grading")}}>grading sheet</a>.
       </p>
 
+      <P>As a part of testing, we will use
+	the <a href="https://github.com/zappala/messaging-service-python">Python
+	testing script</a> posted at Github.</p>
+
       <p>If you wish to receive help with your code, then you should print
 	out clear and concise debugging information when the debugging flag is
 	given on the command line. The more helpful and clear your debugging
@@ -251,5 +269,3 @@ tar -czvf lab1.tgz lab1
 </div>
 
 {% endblock %}
-
-
