@@ -27,6 +27,7 @@ def fall2013schedule():
 
     d = s.day("September 11")
     d.lecture('Systems','Sockets and the OS')
+    d.reading('Sockets and the OS',static + 'lectures/sockets-and-the-os.pdf')
 
     d = s.day("September 13")
     d.lecture('Concurrent Programming','Threads and the OS, Programming Threads in C')
