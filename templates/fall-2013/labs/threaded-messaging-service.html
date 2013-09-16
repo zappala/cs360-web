@@ -1,4 +1,4 @@
-{% extends "fall-2012/sidebar.html" %}
+{% extends "fall-2013/sidebar.html" %}
 
 {% block page %}
 
@@ -75,8 +75,14 @@ tar -czvf lab2.tgz lab2
       <h2>Grading</h2>
 
       <p>Your lab will be tested as specified in the
-	<a href="/fall-2013/labs/threaded-messaging-service-grading">grading sheet</a>.
+
+	<a href={{url_for("show",directory="fall-2013/labs",page="threaded-messaging-service-grading")}}>grading sheet</a>.
+
       </p>
+
+      <P>As a part of testing, we will use
+	the <a href="https://github.com/zappala/messaging-service-python">load
+	testing script</a> posted at Github.</p>
 
       <p>If you wish to receive help with your code, then you should print
 	out clear and concise debugging information when the debugging flag is
