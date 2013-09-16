@@ -30,14 +30,15 @@ def fall2013schedule():
     d.reading('Sockets and the OS',static + 'lectures/sockets-and-the-os.pdf')
 
     d = s.day("September 13")
-    d.lecture('Concurrent Programming','Threads and the OS, Programming Threads in C')
-    d.reading('Programming Threads in C',static+'lectures/programming-threads-in-c.pdf')
+    d.lecture('Concurrent Programming','Threads and the OS')
+    d.reading('Threads and the OS',static+'lectures/threads-and-the-os.pdf')
     d.reading('Pthreads Tutorial','http://www.llnl.gov/computing/tutorials/pthreads/')
 
     s.week()
 
     d = s.day("September 16")
-    d.lecture('Systems','Socket Pool Architecture, Lab Discussion')
+    d.lecture('Systems','Thread Pool Architecture, Lab Discussion')
+    d.reading('Thread Pool Architecture',static+'lectures/thread-pool-architecture.pdf')
 
     d = s.day("September 17")
     d.assignment('Lab: Messaging Service',term + 'labs/messaging-service')
