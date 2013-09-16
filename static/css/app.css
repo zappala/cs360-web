@@ -351,6 +351,14 @@ li {
     padding: 5px;
 }
 
+.pad10 {
+    padding: 10px;
+}
+
+.pad20 {
+    padding: 20px;
+}
+
 .pad-left-10 {
     padding-left: 10px;
 }

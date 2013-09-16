@@ -1,0 +1,91 @@
+{% extends "fall-2012/sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Lab: Threaded Messaging Service</h1>
+
+      <p>The goals of this assignment are (1) to learn how to use the
+	pthreads library to manage threads, (2) to understand how to create
+	a multi-threaded server, (3) to understand how and where to use basic
+	thread synchronization, and (4) to gain practice with client software
+	that can issue multiple requests over a socket.</p>
+
+      <p>In this assignment, you will convert your singly-threaded messaging
+	server from
+
+	<a href="/fall-2013/lab1.html">Lab 1</a>
+
+	into a multithreaded server.</p>
+
+      <h2>Messaging Server</h2>
+
+      <img class="right height-400" src="/static/figures/thread-pool-architecture.png">
+
+      <p>Modify your server so that it creates a thread pool with 10
+	threads.  When a new client arrives, the server should add it to a
+	queue of connections.  The threads in the pool should remove one
+	connection from the queue, handle all of its requests until the client
+	closes the socket, and then go back to the queue. If the queue does
+	not have a connection available, the thread should sleep until a
+	connection is ready.
+      </p>
+
+      <p>Because the server is multi-threaded, you will need to ensure that
+	your code uses shared memory synchronization to protect access to the
+	queue and to other data structures you are using to keep track of
+	messages that have been stored on the server. A good way to do
+	this is to use a sempahore and to follow the producer-consumer
+	pattern for the shared queue.</p>
+
+      <h2 class="clear">Report</h2>
+
+      <p>When you turn in your program, include a text file called
+	README that lists the data structures where you used
+	synchronization and the location of these data structures in
+	your code.  This should be enough information for the TA to
+	find the relevant sections of your code and verify that you
+	have used memory synchronization.</p>
+
+      <h2>Submission</h2>
+
+      <ol>
+
+	<li>Create a tgz of your program directory.  Remove any binaries and
+	  send only the source code and your Makefile.  For example, if your
+	  code is in the directory called lab2, then you would type this:
+
+<pre>
+cd lab2
+make realclean
+cd ..
+tar -czvf lab2.tgz lab2
+</pre>
+
+	</li>
+
+	<li>Submit your report and the tgz file using
+	  <a href="http://learningsuite.byu.edu">learningsuite.byu.edu</a>.
+	</li>
+
+      </ol>
+
+      <h2>Grading</h2>
+
+      <p>Your lab will be tested as specified in the
+	<a href="/fall-2013/labs/threaded-messaging-service-grading">grading sheet</a>.
+      </p>
+
+      <p>If you wish to receive help with your code, then you should print
+	out clear and concise debugging information when the debugging flag is
+	given on the command line. The more helpful and clear your debugging
+	information is, the better your chances for getting useful help. You
+	should apply this same standard to how you document your code.</p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}

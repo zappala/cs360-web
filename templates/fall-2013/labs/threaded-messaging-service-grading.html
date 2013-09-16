@@ -1,0 +1,63 @@
+{% extends "fall-2012/sidebar.html" %}
+
+{% macro item(text,score,criteria) -%}
+<div class="box"></div>
+<div class="item">{{ text }}</div>
+<div class="score">{{ score }}</div>
+<div class="clear"></div>
+<div class="criteria">{{ criteria }}</div>
+{%- endmacro %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Threaded Messaging Service Grading Sheet</h1>
+
+      <p><i>The TA will fill out this sheet when grading your program.</i></p>
+
+      <div class="border">
+	Student Name:
+      </div>
+
+      <p><b>TA:</b> <i>Check the boxes below to indicate which tests pass
+	  successfully.  Circle the boxes that do not work correctly and
+	  include a written statement explaining the error that occured.</i></p>
+
+      <h2>Threading</h2>
+
+      {{ item("Code Review: Threads and Sockets",15,"We will examine
+      your server to determine whether you have used a thread pool for
+      multithreading.") }}
+
+      {{ item("Code Review: Shared Memory Synchronization",15,"We will
+      examine your code to determine whether you have used shared
+      memory synchronization properly. We will use your README file
+      to verify that you have used mutexes or semaphores to protect
+      the connection queue and critical data structures.") }}
+
+      {{ item("Multithreading Test: Low Load",10,"We will use the
+      testing script to ensure that your server can handle a
+      continuous load of 10 threads busy for 10 repetitions.") }}
+
+      {{ item("Multithreading Test: High Load",10,"We will use the
+      testing script to ensure that your server can handle a
+      continuous load of 100 threads busy for 100 repetitions. This
+      will ensure that your server is written well and avoids any
+      serious errors.") }}
+
+      <p></p>
+      <p><b>TA:</b> <i>Fill in the information below when testing is
+	  complete and then turn the sheet in to the professor.</i></p>
+
+      <div class="border">TA Name:</div>
+      <div class="border">Score:</div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+
