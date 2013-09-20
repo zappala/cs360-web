@@ -44,13 +44,12 @@ def fall2013schedule():
     d.assignment('Lab: Messaging Service',term + 'labs/messaging-service')
 
     d = s.day('September 18')
-    d.lecture('Concurrent Programming','Synchronization, Semaphores')
+    d.lecture('Concurrent Programming','Thread Synchronization')
     d.reading('Thread Synchronization',static+'lectures/thread-synchronization.pdf')
-    d.reading('Java Monitors','http://java.sun.com/developer/Books/performance2/chap4.pdf')
 
     d = s.day('September 20')
-    d.lecture('Concurrent Programming','Producer/Consumer Problem')
-
+    d.lecture('Concurrent Programming','Semaphores')
+    d.reading('Semaphores',static+'lectures/semaphores.pdf')
 
     s.week()
 

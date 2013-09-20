@@ -1,3 +1,8 @@
+{% macro do_term() -%}
+{% block term %}
+{% endblock %}
+{%- endmacro %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -23,10 +28,16 @@
       </div>
     </div>
     <div class="container">
+      <div id="term" class="row-fluid">
+	<div class="span12">
+	  {{ do_term() }}
+	</div>
+      </div>
+    </div>
+    <div class="container">
       <div class="row-fluid">
-	<div id="sidebar" class="span3">
-	  {% block term %}
-	  {% endblock %}
+	<div id="sidebar" class="span3 no-print">
+	  {{ do_term() }}
 	  {% block sidebar %}
 	  {% endblock %}
 	  <div class="brand">Daniel Zappala<br><span class="title">Associate Professor</span></div>
@@ -62,8 +73,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.0/jquery.min.js"></script>
 
     <script src="/static/js/bootstrap.min.js"></script>
-    
-
 
   </body>
 </html>
