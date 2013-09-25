@@ -55,12 +55,15 @@ def fall2013schedule():
 
     d = s.day('September 23')
     d.lecture('Concurrent Programming','Mutexes and Monitors')
+    d.reading('Mutexes and Monitors',static+'lectures/mutexes-and-monitors.pdf')
 
     d = s.day('September 25')
-    d.lecture('Concurrent Programming','Message Passing')
+    d.lecture('Concurrent Programming and Systems','Deadlock and UNIX Domain Sockets')
+    d.reading('Deadlock',static+'lectures/deadlock.pdf')
+    d.reading('UNIX Domain Sockets',static+'lectures/unix-domain-sockets.pdf')
 
     d = s.day('September 27')
-    d.lecture('Concurrent Programming','Deadlock')
+    d.lecture('Concurrent Programming','Help With Lab 2')
 
     d = s.day('September 28')
     d.assignment('Lab: Threaded Messaging Service',term + '/labs/threaded-messaging-service')
