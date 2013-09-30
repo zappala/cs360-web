@@ -72,9 +72,9 @@ def fall2013schedule():
 
     d = s.day('September 30')
     d.lecture('Systems','Introduction to Python Programming')
-    d.reading('Python Introduction',static+'lectures/python-introduction.pdf')
+    d.reading('Introduction to Python',static+'lectures/introduction-to-python.pdf')
     d.reading('Python Documentation','http://www.python.org/')
-    d.reading('Dive Into Python','http://diveintopython.org/')
+    d.reading('Dive Into Python','http://www.diveinto.org/python3/')
 
     d = s.day('October 2')
     d.assignment('Exam | Weeks 1 - 4','')
