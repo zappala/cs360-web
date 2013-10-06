@@ -1,0 +1,60 @@
+{% extends "fall-2013/sidebar.html" %}
+
+{% macro item(text,score,criteria) -%}
+<div class="box"></div>
+<div class="item">{{ text }}</div>
+<div class="score">{{ score }}</div>
+<div class="clear"></div>
+<div class="criteria">{{ criteria }}</div>
+{%- endmacro %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Download Accelerator Grading Sheet</h1>
+
+      <p><i>The TA will fill out this sheet when grading your program.</i></p>
+
+      <div class="border">
+	Student Name:
+      </div>
+
+      <p><b>TA:</b> <i>Check the boxes below to indicate which tests pass
+	  successfully.  Circle the boxes that do not work correctly and
+	  include a written statement explaining the error that occured.</i></p>
+
+      <h2>Download Accelerator</h2>
+
+      {{ item("Basic downloads",25,"Downloads small and medium files
+      correctly, with 1 thread.") }}
+
+      {{ item("Threaded downloads",50,"Downloads small and medium
+      files correctly, with 2 and 5 threads.") }}
+
+      <h2>Report</h2>
+
+      {{ item("Graphs",10,"All graphs included. Should include a
+      graph for small and medium download, 1 to 10 threads, both on
+      campus and off campus, for a minium of 4 graphs. May also
+      include a graph for a large download.") }}
+
+      {{ item("Report",15,"Well written report, describing
+      methodology and discussing graphs, explaining what they
+      show.") }}
+
+      <p></p>
+      <p><b>TA:</b> <i>Fill in the information below when testing is
+	  complete and then turn the sheet in to the professor.</i></p>
+
+      <div class="border">TA Name:</div>
+      <div class="border">Score:</div>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+
+

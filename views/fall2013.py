@@ -66,7 +66,7 @@ def fall2013schedule():
     d.lecture('Concurrent Programming','Help With Lab 2')
 
     d = s.day('September 28')
-    d.assignment('Lab: Threaded Messaging Service',term + '/labs/threaded-messaging-service')
+    d.assignment('Lab: Threaded Messaging Service',term + 'labs/threaded-messaging-service')
 
     s.week()
 
@@ -80,8 +80,8 @@ def fall2013schedule():
     d.assignment('Exam | Weeks 1 - 4','')
 
     d = s.day('October 4')
-    d.lecture('Systems','Introduction to Python Programming, Lab Discussion')
-
+    d.lecture('Systems','Python Networking and Threading, Lab Discussion')
+    d.reading('Python Networking and Threading',static+'lectures/python-networking-and-threading.pdf')
     s.week()
 
     d = s.day('October 7')
@@ -96,7 +96,7 @@ def fall2013schedule():
     d = s.day('October 11')
 
     d = s.day('October 12')
-    d.assignment('Lab: Download Accelerator',term + '/labs/download-accelerator')
+    d.assignment('Lab: Download Accelerator',term + 'labs/download-accelerator')
 
     s.week()
 
@@ -128,7 +128,7 @@ def fall2013schedule():
     d.lecture('Security','Network Security')
 
     d = s.day('October 26')
-    d.assignment('Lab: Web Server',term + '/labs/web-server')
+    d.assignment('Lab: Web Server',term + 'labs/web-server')
 
     s.week()
 
