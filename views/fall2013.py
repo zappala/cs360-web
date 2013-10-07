@@ -85,15 +85,15 @@ def fall2013schedule():
     s.week()
 
     d = s.day('October 7')
-    d.lecture('Systems','HTTP, Python Network Programming')
+    d.lecture('Systems','HTTP')
     d.reading('HTTP',static+'lectures/http.pdf')
-    d.reading('HTTP -- The Gory Details',static+'lectures/http-the-gory-details.pdf')
   
     d = s.day('October 9')
     d.lecture('Systems','DNS')
     d.reading('DNS',static+'lectures/dns.pdf')
 
     d = s.day('October 11')
+    d.reading('No Class','')
 
     d = s.day('October 12')
     d.assignment('Lab: Download Accelerator',term + 'labs/download-accelerator')
