@@ -1,0 +1,274 @@
+{% extends "fall-2013/sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Lab: Web Server</h1>
+
+      <p>The goals of this assignment are (1) to understand how to
+	create an event-driven server and (2) to use POSIX system
+	calls for the file system and time.</p>
+
+      <p>In this assignment, you will write a web server in Python
+	that implements some of the HTTP 1.1 specification given in
+	<a href="http://www.faqs.org/rfcs/rfc2616.html">RFC 2616</a>.
+	You will implement enough of HTTP to demonstrate that you can
+	write a substantial server application and understand
+	fundamental POSIX system calls.  In addition, you will use a
+	scalable event-driven server architecture.</p>
+
+      <h2>Event-Driven Server Architecture</h2>
+
+      <p>An event-driven web server uses the <i>epoll</i> interface to
+	manage a set of sockets in a single thread.  <i>epoll</i>
+	allows your server to go to sleep until a socket I/O event
+	occurs, then wakes the server up with a list of sockets that
+	have I/O events ready. The server loops through these sockets
+	and handles them one at a time.  The echo server code in this
+
+	<a href="https://github.com/zappala/python-networking-and-threading">GitHub repository</a>
+
+	shows you how to use <i>epoll</i>.</p>
+
+      <p>When handling clients with this architecture, you should
+	configure each client to use non-blocking socket I/O. Then the
+	server should continue to call recv() for that client until it
+	either receives a complete message or the socket returns an
+	error code indicating that no data is available. Your server
+	should handle all messages it has received so far and then
+	move on to the next client.</p>
+
+      <p>The server must maintain a separate message cache for each
+	socket to store partial messages. In addition, the server
+	times out any sockets that have been idle for a sufficient
+	period of time, using a mark-and-sweep algorithm.</p>
+
+      <p>The server must be implemented using the low level socket
+	routines in the Python socket library, which provide a Python
+	style interface to the BSD socket API.</p>
+
+      <h2>Server Functionality</h2>
+
+      <p>Your web server should handle multiple client requests on a
+	single socket, subject to a timeout process using a
+	mark-and-sweep algorithm. If the socket has not been idle, you
+	must continue to handle any requests the client sends, using
+	the polling system to multiplex all the active clients.</p>
+
+      <h3>Methods</h3>
+
+      <p>Your server should implement the GET method.  Because it
+	uses HTTP 1.1, your server should support multiple requests on one
+	TCP connection and multiple hosts on one web server.</p>
+
+      <p>If the URI given is "/" your server should default to serving
+	"/index.html".</p>
+
+      <h3>Headers</h3>
+
+      <p>You should implement the following headers:</p>
+
+      <ul>
+
+	<li>General Headers
+	  <ul>
+	    <li>Date</li>
+	  </ul>
+	</li>
+
+	<li>Response Headers
+	  <ul>
+	    <li>Server</li>
+	  </ul>
+	</li>
+
+	<li>Entity Headers
+	  <ul>
+	    <li>Content-Type</li>
+	    <li>Content-Length</li>
+	    <li>Last-Modified</li>
+	  </ul>
+	</li>
+      </ul>
+
+      <p>Both the Date and Last-Modified headers should use RFC 822 / RFC
+	1123 format dates.</p>
+
+      <p>Your server can determine the Content-Type of a file using its
+	extension, based on the configuration file discussed below.<p>
+
+      <p>Note that your server should be able to parse any headers not
+	listed and ignore them.</p>
+
+      <h3>Response Codes</h3>
+
+      <p>You should implement the following response codes and use them as
+	appropriate:</p>
+
+      <ul>
+	<li>200 OK</li>
+
+	<li>400 Bad Request : if the web server parses the request and the
+	  method or URI is empty, or if the request contains a host that this
+	  server doesn't handle</li>
+
+	<li>403 Forbidden: if the web server does not have permission to open
+	  the requested file</li>
+
+	<li>404 Not Found: if the web server cannot find the requested
+	  file</li>
+
+	<li>500 Internal Server Error: if the web server encounters any other
+	  error when trying to open a file</li>
+
+	<li>501 Not Implemented: if the web server does not implement the requested
+	  method</li>
+
+      </ul>
+
+      <h3>Extra Credit</h3>
+
+      <p>For extra credit, you can make your web server work with the
+	download accelerator from the previous lab. This requires
+	supporting HEAD requests and Range requests.</p>
+
+      <h2>Web Server Configuration</h2>
+
+      <p>Your web server should be configured by reading in a file called
+	<i>web.conf</i>.  This file will determine where resources are located
+	and what types of files the server supports.  The configuration file
+	can contain multiple lines, with each line following one of the
+	following formats:</p>
+
+<pre>
+host [name] [path]
+media [ext] [type]
+parameter [name] [value]
+</pre>
+
+      <p>An example configuration file could contain:</p>
+
+<pre>
+host default /tmp/web1
+host carmelo.cs.byu.edu /tmp/web2
+
+media txt text/plain
+media html text/html
+media jpg image/jpeg
+media gif image/gif
+media png image/png
+media pdf application/pdf
+
+parameter timeout 1
+</pre>
+
+      <p>A host line tells the server where the document root is
+	located for a given host.  This path can be either relative
+	"web1" or absolute "/tmp/web1".  A relative path starts in the
+	current directory, whereas an absolute path starts in the root
+	directory. The keyword "default" gives the path for any other
+	host not listed in the configuration file.</p>
+
+      <p>A media line tells the server the MIME type to use in the Content-Type
+	header for a document that ends in the given extension.  If a document
+	has no extension, or if its extension is not listed in the
+	configuration file, then your server should treat it as a text/plain
+	file.</p>
+
+      <p>The parameter line tells the server the time, in seconds, that a
+	socket is allowed to be idle before it will be closed.</p>
+
+      <p>When you start your web server, you should parse this configuration
+	file.</p>
+
+      <h2>Command Line Arguments and Error Checking</h2>
+
+      <p>Your server should be called <i>web.py</i> and must take the following
+	arguments:</p>
+
+<pre>
+-p [port]
+-d
+</pre>
+
+      <p>The port argument gives the port the web server should bind to, by
+	default 8080.  The debug flag turns debugging on for your server.</p>
+
+      <p>You should check for errors for all system calls and exit
+	gracefully if an error occurs, printing out an appropriate error
+	message with <i>perror()</i>.</p>
+
+      <h2>Testing</h2>
+
+      <p>To test your web server, use the files located in the
+	<a href="https://github.com/zappala/web-server-testing">Web
+	Server Testing</a> GitHub repository. Be sure to change the
+	permissions of the file test.txt so you get a 403 code when
+	accessing it:</p>
+      
+<pre>
+chmod ugo-rwx static/files/test.txt
+</pre>
+
+      <p>Use the <a href="https://github.com/zappala/web-server-testing/blob/master/load/stress-test.py">stress.py
+	</a> Python script in the same GitHub repository to test how
+      your web server responds to different levels of load. For
+      example:</p>
+
+<pre>
+python stress-test.py localhost:8000/static/files/largefile.txt -t 10 -d 10
+</pre>
+
+      <p>will keep 10 threads active for 10 seconds. Each thread will
+      constantly download the URL given on the command line</p>
+
+      <h2>Report</h2>
+
+      <p>When you turn in your program, include a text file called
+	README that gives a short guide to your code, sufficient for
+	the TA to do a code review and verify that you have
+	implemented the architecture properly. Describe how you handle
+	non-blocking I/O, timeouts and caching. Be sure to mention
+	where the code is located in your files.</p>
+
+      <h2>Submission</h2>
+
+      <ol>
+
+	<li>Create a tgz of your program directory. Be sure to include
+	  a PDF of your report. For example, if your code is in the
+	  directory called web-server, then you would type this:
+
+<pre>
+tar -czvf web-server.tgz web-server
+</pre>
+
+	</li>
+
+	<li>Submit your report and the tgz file using
+	  <a href="http://learningsuite.byu.edu">learningsuite.byu.edu</a>.
+	</li>
+
+      </ol>
+
+      <h2>Grading</h2>
+
+      <p>Your web server will be tested as specified in the
+
+	<a href={{url_for("show",directory="fall-2013/labs",page="web-server-grading")}}>grading sheet</a>.
+
+      </p>
+
+      <p>If you wish to receive help with your code, then you should print
+	out clear and concise debugging information when the debugging flag is
+	given on the command line. The more helpful and clear your debugging
+	information is, the better your chances for getting useful help. You
+	should apply this same standard to how you document your code.</p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
