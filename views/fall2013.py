@@ -93,22 +93,23 @@ def fall2013schedule():
     d.reading('DNS',static+'lectures/dns.pdf')
 
     d = s.day('October 11')
-    d.reading('No Class','')
-
-    d = s.day('October 12')
-    d.assignment('Lab: Download Accelerator',term + 'labs/download-accelerator')
+    d.lecture('No Class','')
 
     s.week()
 
     d = s.day('October 14')
-    d.lecture('Concurrent Programming','Event Driven Architecture, Lab Discussion')
-    d.reading('Event-Driven Server Architecture',static+'lectures/event-driven.pdf')
+    d.lecture('No Class','')
+
+    d = s.day('October 15')
+    d.assignment('Lab: Download Accelerator',term + 'labs/download-accelerator')
 
     d = s.day('October 16')
-    d.lecture('Systems','Python Network Programming')
+    d.lecture('Concurrent Programming','Python Socket Programming, Event Driven Architecture')
+    d.reading('Python Socket Programming',static+'lectures/python-socket-programming.pdf')
+    d.reading('Event-Driven Architecture',static+'lectures/event-driven-architecture.pdf')
 
     d = s.day('October 18')
-    d.lecture('Systems','System Calls')
+    d.lecture('Systems','Lab Discussion, System Calls')
     d.reading('System Calls',static+'lectures/system-calls.pdf')
 
     s.week()
