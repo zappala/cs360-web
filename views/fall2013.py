@@ -104,19 +104,18 @@ def fall2013schedule():
     d.assignment('Lab: Download Accelerator',term + 'labs/download-accelerator')
 
     d = s.day('October 16')
-    d.lecture('Concurrent Programming','Python Socket Programming, Event Driven Architecture')
+    d.lecture('Concurrent Programming','Python Socket Programming, Lab Discussion')
     d.reading('Python Socket Programming',static+'lectures/python-socket-programming.pdf')
-    d.reading('Event-Driven Architecture',static+'lectures/event-driven-architecture.pdf')
 
     d = s.day('October 18')
-    d.lecture('Systems','Lab Discussion, System Calls')
-    d.reading('System Calls',static+'lectures/system-calls.pdf')
+    d.lecture('Systems','Event Driven Architecture, Lab Discussion')
+    d.reading('Event-Driven Architecture',static+'lectures/event-driven-architecture.pdf')
 
     s.week()
 
     d = s.day('October 21')
-    d.lecture('Systems','Web Proxies and Caching')
-    d.reading('Web Proxies and Caching',static+'/lectures/web-proxies-and-caching')
+    d.lecture('Systems','Web Proxies, Caching, and CDNs')
+    d.reading('Web Proxies, Caching, and CDNs',static+'lectures/web-proxies-caching-and-cdns.pdf')
     d.reading("O'Reilly Web Caching Chapter",'http://www.oreilly.com/catalog/webcaching/chapter/ch05.html')
 
 
