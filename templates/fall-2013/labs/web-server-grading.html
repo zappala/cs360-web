@@ -59,9 +59,9 @@
       the same port number and check whether a bind error is handled
       gracefully.") }}
 
-      {{ item("400 Bad Request",2,"Start two servers with the same
-      port number and check whether a bind error is handled
-      gracefully.") }}
+      {{ item("400 Bad Request",2,"Check that the server returns a 400
+      error for the case when the client issues a request with the
+      method or URI empty.") }}
 
       {{ item("403 Forbidden",2,"Place a file in the server's document
       root that has no read permissions for anyone. Check that the
