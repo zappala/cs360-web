@@ -41,17 +41,17 @@
       I-Have-A-Dream.pdf. The file should open properly in a PDF
       reader.") }}
 
-      {{ item("Persistent Connection",20,"Use telnet to verify that
-      the server uses a persistent TCP connection, allowing the client
-      to fetch multiple objects during one connection. The server
-      should also timeout an idle connection based on the timeout
-      period given in the configuration file.") }}
+      {{ item("Persistent Connection",20,"Use test script to verify
+      that the server uses a persistent TCP connection, allowing the
+      client to fetch multiple objects during one connection. The
+      server should also timeout an idle connection based on the
+      timeout period given in the configuration file.") }}
 
-      {{ item("Headers",10,"Check that the server always returns a
-      Date header with the correct date format and a Server header
-      identifying the name of the server. Check that the server
-      includes a valid Content-Length, Content-Type, and Last-Modified
-      header.") }}
+      {{ item("Headers",10,"Use test script to check that the server
+      always returns a Date header with the correct date format and a
+      Server header identifying the name of the server. Check that the
+      server includes a valid Content-Length, Content-Type, and
+      Last-Modified header.") }}
 
       <h2>Error Checking and Response Codes</h2>
 
@@ -59,20 +59,21 @@
       the same port number and check whether a bind error is handled
       gracefully.") }}
 
-      {{ item("400 Bad Request",2,"Check that the server returns a 400
-      error for the case when the client issues a request with the
-      method or URI empty.") }}
+      {{ item("400 Bad Request",2,"Use test script to check that the
+      server returns a 400 error for the case when the client issues a
+      request with the method or URI empty.") }}
 
-      {{ item("403 Forbidden",2,"Place a file in the server's document
-      root that has no read permissions for anyone. Check that the
-      server returns a 403 error when the client requests this file.")
-      }}
+      {{ item("403 Forbidden",2,"Use the test script to check that the
+      server returns a 403 error when the client requests a file with
+      no read permissions.")  }}
       
-      {{ item("404 Not Found",2,"Check that the server returns a 404
-      error when the client asks for a file that does not exist.") }}
+      {{ item("404 Not Found",2,"Use the test script to check that the
+      server returns a 404 error when the client asks for a file that
+      does not exist.") }}
 
-      {{ item("501",2,"Check that the server returns a 501 error when
-      the client uses a method that does not exist.") }}
+      {{ item("501",2,"Use the test script to check that the server
+      returns a 501 error when the client uses a method that does not
+      exist.") }}
 
       <h2>Architecture</h2>
 
@@ -80,20 +81,22 @@
       compare it to your report to determine whether you have properly
       implemented the event-driven architecture.") }}
 
-      {{ item("Load Test, Low Rate",25,"The TA will use the Python
-      testing script to create a steady stream of requests at a low
-      rate (10 threads busy for 10 seconds). Your server should handle
-      this load well.") }}
+      {{ item("Load Test, Low Rate",25,"Use the stress test script to
+      create a steady stream of requests at a low rate (10 threads
+      busy for 10 seconds). Your server should handle this load
+      well.") }}
 
-      {{ item("Load Test, Moderate Rate",25,"Repeat the previous test
-      using a stream of requests at a moderate rate (100 threads busy
-      for 10 seconds). Your server should handle this load well.") }}
+      {{ item("Load Test, Moderate Rate",25,"Use the stress test
+      script to create a steady stream of requests a moderate rate
+      (100 threads busy for 10 seconds). Your server should handle
+      this load well.") }}
 
       <h2>Extra Credit</h2>
 
       {{ item("HEAD and Range Requests",15,"Make your web server work
       with your download accelerator. This involves support HEAD
-      requests and Range requests.") }}
+      requests and Range requests. Using the '-e' flag on the test script
+      checks this functionality.") }}
 
       <p></p>
       <p><b>TA:</b> <i>Fill in the information below when testing is
