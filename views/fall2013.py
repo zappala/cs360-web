@@ -147,13 +147,13 @@ def fall2013schedule():
     s.week()
 
     d = s.day('November 4')
-    d.lecture('Performance Measurement','Performance Measurement and Workload Models')
-
-    d = s.day('November 5')
-    d.assignment('Lab: Queueing Theory',term + '/labs/queueing-theory')
+    d.lecture('Security','Network Security')
 
     d = s.day('November 6')
     d.lecture('Web Programming','Team Formation and Agile Development')
+
+    d = s.day('November 7')
+    d.assignment('Lab: Queueing Theory',term + '/labs/queueing-theory')
 
     d = s.day('November 8')
     d.lecture('Web Programming','Introduction to Web Frameworks and MVC')
