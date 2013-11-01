@@ -142,7 +142,7 @@ def fall2013schedule():
     d = s.day('November 1')
     d.lecture('Performance Measurement','Performance Measurement and Workload Models')
     d.reading('Performance Measurement',static+'/lectures/performance-measurement.pdf')
-    d.assignment('Web Application Proposals','')
+    d.assignment('Web Application Proposals','https://drive.google.com/folderview?id=0B09H8qp1t9fAdzgwaTg1aERpems&usp=sharing')
 
     s.week()
 
