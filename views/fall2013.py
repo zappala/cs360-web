@@ -157,6 +157,7 @@ def fall2013schedule():
 
     d = s.day('November 8')
     d.lecture('Web Programming','Introduction to Web Frameworks and MVC')
+    d.reading('Web Frameworks and MVC',static+'/lectures/web-frameworks-and-mvc.pdf')
 
     s.week()
 
