@@ -166,6 +166,7 @@ def fall2013schedule():
 
     d = s.day('November 13')
     d.lecture('Web Programming','Web Design')
+    d.reading('Web Design',static+'/lectures/web-design.pdf')
 
     d = s.day('November 15')
     d.assignment('Web Application Idea, Features, and Architecture','')
