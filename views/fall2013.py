@@ -169,16 +169,15 @@ def fall2013schedule():
     d.reading('Web Design',static+'/lectures/web-design.pdf')
 
     d = s.day('November 15')
-    d.assignment('Web Application Idea, Features, and Architecture','')
-
-    d = s.day('November 16')
     d.lecture('Web Programming','Designing Relational Database Models')
+
     s.week()
 
     d = s.day('November 18')
     d.lecture('Web Programming','Designing Document Database Models')
     d.reading('Why MongoDB Is Awesome','http://www.slideshare.net/jnunemaker/why-mongodb-is-awesome')
     d.reading('Starbucks Does Not Use Two-Phase Commit','http://eaipatterns.com/ramblings/18_starbucks.html')
+    d.assignment('Web Application Idea, Features, and Architecture','')
 
     d = s.day('November 20')
     d.lecture('Web Programming','Users and Authentication')
@@ -187,13 +186,11 @@ def fall2013schedule():
     d.lecture('Web Programming','Templates and CSS')
     d.reading('Javascript',static+'/lectures/javascript.pdf')
 
-    d = s.day('November 23')
-    d.assignment('Web Application Layout','')
-
     s.week()
 
     d = s.day('November 25')
     d.lecture('Web Programming','Javascript')
+    d.assignment('Web Application Layout','')
 
     d = s.day('November 26')
     d.lecture('Web Programming','Javascript')
