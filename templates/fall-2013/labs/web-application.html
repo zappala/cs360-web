@@ -1,0 +1,165 @@
+{% extends "fall-2013/sidebar.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Lab: Web Application
+
+In this assignment, you will write a web database application.  The
+goals of this assignment are to (1) learn how to design a model for a
+database appliction, and (2) gain experience designing a user
+interface for a web application, and (3) learn how to program a web
+application using a modern framework.
+
+## Requirements
+
+Your application must meet these general requirements:
+
+* Meets a need you have identified or that benefits society in some way. Examples include:
+
+    * family history
+    * open government
+    * a startup or business idea
+
+* Has a back end that stores data in a relational (e.g. MySQL) or
+document database (e.g. MongoDB).
+
+* Has a front end that follows good [web design
+principles](http://cs360.byu.edu/static/fall-2013/lectures/web-design.pdf).
+
+* Supports a REST interface as an API that can be used for third-party
+applications.
+
+* Uses some kind of cutting-edge framework, or a framework you haven’t
+used before. Good choices are:
+
+    * Javascript: node.js and Express for the backend, Ember or
+    Angular for the front end
+
+    * Python: Flask or DJango (in increasing level of complexity)
+
+    * Ruby: Sinatra, Padrino, Rails (in increasing level of complexity)
+
+    * PHP: Yii
+
+    You might consider using Flask since you know some Python already. I
+    would also encourage you to try node/Ember/Angular, since these are
+    rapidly becoming very popular and many jobs are available for them.
+
+* Has the code stored in GitHub using the open source license of your
+choice Host the final project on a web site. 
+
+* The final project and each part of the assignment is hosted on a
+web site. Each of the reports listed below should be hosted on
+a GitHub Wiki, GitHub Pages, or similar site.
+
+## Idea, Features, and Architecture.
+
+Describe the idea for your application. This can be the same text in
+your proposal. This should include:
+
+* Your pitch. Explain what need this application meets. Why will anyone 
+want to use it?
+
+* A brief description of what your application will do to meet this need.
+
+Describe the features of your application. This should include:
+
+* All of the features you would ideally implement if you had the time
+to create your ideal application.
+
+* The list of features you will implement this semester. This could be
+a minimal viable product, if you were going to market. Larger teams
+should have more features.
+
+Describe the architecture of your application. This includes the
+technologies you will use for a database, a back-end server, and a
+front end.  You may design a mobile application instead of or in
+addition to a web site.
+
+Submit the URL of your web site where this report is located.
+
+## Interface Design
+
+Draw the user interface for your program.  This includes every page on
+the site. You can separately draw headers and footers if they are
+consistent on every page.  Your drawings may be done with a computer
+program or by hand, but should be of a quality you would be comfortable
+showing to your supervisor at work.
+
+Put these drawings onto a web page for your site. Explain how the user
+will navigate through these pages.
+
+Submit the URL of your web site where the design is located.
+
+## Milestones
+
+For each milestone, write a short report of your current
+progress. Explain what you have accomplished so far and what
+features are implemented. Host this report on the same web site.
+
+Submit the URL of your web site where the milestones are located.
+
+## Final Report
+
+When you are finished with your application, write a report following
+this outline:
+
+* **Description**: Explain the purpose of the site and what
+functionality you implemented.
+
+* **Database Schema**: Describe how data is stored in your database.
+If you used a relational database, show your entity-relationship
+diagram that includes all entities, attributes, and relationships, and
+explain what it contains.  You should use the standard
+entity-relationship format as shown in class. Use a program to draw
+this diagram, such as [lucidchart](http://www.lucidchart.com) or
+[dia](http://www.gnome.org/projects/dia). If you used a document
+databse, show your JSON document structure and explain what it
+contains.
+
+* **Future Work**: Describe a roadmap for future development, with
+additional features you could add or changes to the interface.
+
+Submit the URL of your web site where the report is hosted.
+
+## Final Submission
+
+When finished with your final project, submit the URL where your
+application is hosted, along with any login information needed for an
+administrative user, and any other information needed for evaluating
+the application
+
+On this site, be sure there is a URL for your GitHub code and a URL for
+the Wiki or other pages where the additional reports are hosted.
+
+## Grading
+
+This assignment is worth 250 points, using the following scale:
+
+* Idea, Features, and Architecture: 10 points. Judged based on
+completeness.
+
+* Interface Design: 20 points. Initial design of the application. Judged
+on usability.
+
+* Milestone #1: 20 points. Judged based on progress and effort.
+
+* Milestone #2: 20 points. Judged based on progress and effort.
+
+* Report: 30 points. Judged based on the clarity and quality of your
+report.
+
+* Utility of the application: 100 points. Judged based on the features
+completed, how useful this site would be to your target audience. The
+size of your group will be taken into consideration.
+
+* Design of the application: 50 points. Judged based on the overall
+design, how well it follows web design principles and practice. We
+will evaluate your front page experience in addition to the
+application itself.
+
+{% endfilter %}
+
+{% endblock %}

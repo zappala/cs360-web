@@ -5,8 +5,11 @@ from views import fall2013
 
 from flask import Flask, render_template
 from flask_frozen import Freezer
+from flaskext.markdown import Markdown
 
 from config import app, freezer
+
+Markdown(app)
 
 @app.route('/',defaults={'directory':None,'page':'index'})
 @app.route('/<page>',defaults={'directory':None})

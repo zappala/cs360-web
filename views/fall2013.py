@@ -177,7 +177,7 @@ def fall2013schedule():
     d.lecture('Web Programming','Designing Document Database Models')
     d.reading('Why MongoDB Is Awesome','http://www.slideshare.net/jnunemaker/why-mongodb-is-awesome')
     d.reading('Starbucks Does Not Use Two-Phase Commit','http://eaipatterns.com/ramblings/18_starbucks.html')
-    d.assignment('Web Application Idea, Features, and Architecture','')
+    d.assignment('Web Application Idea, Features, and Architecture',term+'/labs/web-application')
 
     d = s.day('November 20')
     d.lecture('Web Programming','Users and Authentication')
@@ -190,7 +190,7 @@ def fall2013schedule():
 
     d = s.day('November 25')
     d.lecture('Web Programming','Javascript')
-    d.assignment('Web Application Layout','')
+    d.assignment('Web Application Layout',term+'/labs/web-application')
 
     d = s.day('November 26')
     d.lecture('Web Programming','Javascript')
@@ -211,7 +211,7 @@ def fall2013schedule():
     d.reading('Google Custom Search API','https://developers.google.com/custom-search/v1/overview')
     d.reading('REST for Amazon','http://scripts.incutio.com/amazon/')
     d.reading('Microsoft Bing JSON Interface','http://msdn.microsoft.com/en-us/library/dd250846.aspx')
-    d.assignment('Web Application Milestone','')
+    d.assignment('Web Application Milestone',term+'/labs/web-application')
 
     d = s.day('December 4')
     d.lecture('Web Programming','Web Services')
@@ -224,7 +224,7 @@ def fall2013schedule():
 
     d = s.day('December 9')
     d.lecture('Security','Web Vulnerabilities')
-    d.assignment('Web Application Milestone','')
+    d.assignment('Web Application Milestone',term+'/labs/web-application')
 
     d = s.day('December 11')
     d.assignment('Exam | Weeks 11 - 15','')
