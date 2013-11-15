@@ -141,7 +141,7 @@ def fall2013schedule():
 
     d = s.day('November 1')
     d.lecture('Performance Measurement','Performance Measurement and Workload Models')
-    d.reading('Performance Measurement',static+'/lectures/performance-measurement.pdf')
+    d.reading('Performance Measurement',static+'lectures/performance-measurement.pdf')
     d.assignment('Web Application Proposals','https://drive.google.com/folderview?id=0B09H8qp1t9fAdzgwaTg1aERpems&usp=sharing')
 
     s.week()
@@ -157,7 +157,7 @@ def fall2013schedule():
 
     d = s.day('November 8')
     d.lecture('Web Programming','Introduction to Web Frameworks and MVC')
-    d.reading('Web Frameworks and MVC',static+'/lectures/web-frameworks-and-mvc.pdf')
+    d.reading('Web Frameworks and MVC',static+'lectures/web-frameworks-and-mvc.pdf')
 
     s.week()
 
@@ -166,10 +166,11 @@ def fall2013schedule():
 
     d = s.day('November 13')
     d.lecture('Web Programming','Web Design')
-    d.reading('Web Design',static+'/lectures/web-design.pdf')
+    d.reading('Web Design',static+'lectures/web-design.pdf')
 
     d = s.day('November 15')
     d.lecture('Web Programming','Designing Relational Database Models')
+    d.reading('Designing Relational Database Models',static+'lectures/designing-relational-database-models.pdf')
 
     s.week()
 
