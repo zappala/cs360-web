@@ -176,7 +176,7 @@ def fall2013schedule():
 
     d = s.day('November 18')
     d.lecture('Web Programming','Designing Document Database Models')
-    d.reading('Designing Relational Database Models',static+'lectures/designing-document-database-models.pdf')
+    d.reading('Designing Document Database Models',static+'lectures/designing-document-database-models.pdf')
     d.reading('Starbucks Does Not Use Two-Phase Commit','http://eaipatterns.com/ramblings/18_starbucks.html')
     d.assignment('Web Application Idea, Features, and Architecture',term+'/labs/web-application')
 
