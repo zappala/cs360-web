@@ -73,6 +73,7 @@ def fall2013schedule():
     d = s.day('September 30')
     d.lecture('Systems','Introduction to Python Programming')
     d.reading('Introduction to Python',static+'lectures/introduction-to-python.pdf')
+    d.reading('Python at Codecademy','http://www.codecademy.com/tracks/python')
     d.reading('Python Documentation','http://www.python.org/')
     d.reading('Dive Into Python','http://www.diveinto.org/python3/')
 
@@ -185,17 +186,28 @@ def fall2013schedule():
     d.reading('Users and Authentication',static+'lectures/users-and-authentication.pdf')
 
     d = s.day('November 22')
-    d.lecture('Web Programming','Templates and CSS')
-    d.reading('Javascript',static+'/lectures/javascript.pdf')
+    d.lecture('Web Programming','CSS')
+    d.reading('HTML and CSS Tutorial','http://www.codecademy.com/tracks/web')
+    d.reading('CSS Tutorial','http://www.htmldog.com/guides/css/')
+    d.reading('Test HTML',static+'css/test.html')
+    d.reading('Test CSS',static+'css/style.css')
+    d.reading('Learn CSS Layout','http://learnlayout.com/')
+    d.reading('SASS','http://alistapart.com/article/why-sass')
+    d.reading('Design Process in the Responsive Age','http://uxdesign.smashingmagazine.com/2012/05/30/design-process-responsive-age/')
+    d.reading('Twitter Bootstrap','http://getbootstrap.com/')
+    d.reading('Responsive Grid System','http://www.responsivegridsystem.com/')
 
     s.week()
 
     d = s.day('November 25')
     d.lecture('Web Programming','Javascript')
+    d.reading('Javascript',static+'lectures/javascript.pdf')
+    d.reading('Javascript at Codecademy','http://www.codecademy.com/tracks/javascript?jump_to=4fa836e5996b00000302064a')
+    d.reading('JQuery at Codecademy','http://www.codecademy.com/tracks/jquery')
     d.assignment('Web Application Layout',term+'/labs/web-application')
 
     d = s.day('November 26')
-    d.lecture('Web Programming','Javascript')
+    d.lecture('Web Programming','Group Meetings')
 
     d = s.day('November 27')
     d.lecture('No Class','Thanksgiving Holiday')
