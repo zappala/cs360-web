@@ -182,6 +182,7 @@ def fall2013schedule():
 
     d = s.day('November 20')
     d.lecture('Web Programming','Users and Authentication')
+    d.reading('Users and Authentication',static+'lectures/users-and-authentication.pdf')
 
     d = s.day('November 22')
     d.lecture('Web Programming','Templates and CSS')
