@@ -220,12 +220,8 @@ def fall2013schedule():
 
     d = s.day('December 2')
     d.lecture('Web Programming','Web Services')
+    d.reading('Web Services',static+'lectures/web-services.pdf')
     d.reading('Interactive REST Tutorial','http://phprestsql.sourceforge.net/')
-    d.reading('How I Explained REST to My Wife','http://tomayko.com/writings/rest-to-my-wife')
-    d.reading('Google Custom Search API','https://developers.google.com/custom-search/v1/overview')
-    d.reading('REST for Amazon','http://scripts.incutio.com/amazon/')
-    d.reading('Microsoft Bing JSON Interface','http://msdn.microsoft.com/en-us/library/dd250846.aspx')
-    d.assignment('Web Application Milestone',term+'/labs/web-application')
 
     d = s.day('December 4')
     d.lecture('Web Programming','Web Services')
