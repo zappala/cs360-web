@@ -235,6 +235,7 @@ def fall2013schedule():
     d = s.day('December 9')
     d.lecture('Security','Web Vulnerabilities')
     d.assignment('Web Application Milestone',term+'/labs/web-application')
+    d.reading('Web Vulnerabilities',static+'lectures/web-vulnerabilities.pdf')
 
     d = s.day('December 11')
     d.assignment('Exam | Weeks 11 - 15','')
