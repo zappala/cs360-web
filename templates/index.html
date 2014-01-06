@@ -2,28 +2,26 @@
 
 {% block page %}
 
-<div class="text">
-  <div class="row-fluid">
-    <div class="span12">
+{% filter markdown %}
 
-      <h1 class="top">Course Description</h1>
-      <p>This course covers Internet application programming in depth,
-      including client-server and web applications. Topics include
-      sockets, concurrency, thread-pool and event-driven
-      architectures, experimental performance evaluation, web database
-      application design, security issues. Languages include C++,
-      Python, CSS, and Javascript.</p>
+# Course Description
 
-      <h1>Prerequisites</h1>
-      <p>CS 240</p>
+This course covers Internet application programming in depth,
+including client-server and web applications. Topics include sockets,
+concurrency, thread-pool and event-driven architectures, experimental
+performance evaluation, web database application design, security
+issues. Languages include C++, Python, CSS, and Javascript.
 
-      <h1>Course Materials</h1>
-      <ul>
-	<li><a href={{url_for("show",directory="fall-2013")}}>2013 Fall</a></li>
-	<li><a href={{url_for("show",directory="fall-2012")}}>2012 Fall</a></li>
-      </ul>
-    </div>
-  </div>
-</div>
+# Prerequisites
+
+CS 240
+
+# Course Materials
+
+* [2014 Winter]({{url_for("show",directory="winter-2014")}})
+* [2013 Fall]({{url_for("show",directory="fall-2013")}})
+* [2012 Fall]({{url_for("show",directory="fall-2012")}})
+
+{% endfilter %}
       
 {% endblock %}
