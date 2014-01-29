@@ -38,13 +38,13 @@ def schedule():
     d.lecture('Systems','Thread Pool Architecture, Lab Discussion')
     d.reading('Thread Pool Architecture',static+'thread-pool-architecture.pdf')
 
-    d = s.day("January 18")
-    d.assignment('Lab: Messaging Service',term + 'labs/messaging-service')
-
     s.week()
 
     d = s.day("January 20")
     d.lecture('No Class','Martin Luthor King Jr. Holiday')
+
+    d = s.day("January 21")
+    d.assignment('Lab: Messaging Service',term + 'labs/messaging-service')
 
     d = s.day("January 22")
     d.lecture('Concurrent Programming','Thread Synchronization')
