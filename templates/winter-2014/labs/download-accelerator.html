@@ -1,0 +1,136 @@
+{% extends "winter-2014/sidebar.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Lab: Download Accelerator
+
+In this assignment, you will create an HTTP downloader that can
+download a file in parallel using a number of concurrent number of
+threads. You will use Python for this assignment.
+
+The goals of this assignment are (1) to gain additional familiarity
+with using Python for writing networking code, (2) to learn how to use
+threading in Python, and (3) to understand the tradeoffs of
+parallelism in network programming.
+
+## Downloader
+
+The downloader uses the following command line syntax:
+
+    downloadAccelerator.py [-n threads] url
+
+On starting, the downloader first sends a HEAD request to the web
+server specified in the URL, to determine the size of the object. If
+the object has a valid Content-Length field, it then downloads the
+object in parallel, using the specified number of threads. Each thread
+sends a GET request with a Range header that gives the range of bytes
+desired. The response should have a Content-Range header indicating
+the byte range of the response.
+
+The downloader saves the file in the current directory, using the same
+name as given in the URL. If the URL ends with "/", then the name
+"index.html" is implied.
+
+The downloader also reports, to standard output, the following:
+
+    [URL] [threads] [bytes] [seconds]
+
+where [URL] is the URL given on the command line, [bytes] is the
+number of total bytes in the object, and [seconds] is a floating point
+number indicating the time taken to download the object, starting from
+when the threads are created and ending when the last thread
+finishes.
+
+## Experiments
+
+Several scripts for experiments are located in the 
+[Python	Networking and Threading GitHub repository](https://github.com/zappala/python-networking-and-threading).
+Use the	[experiments.py](https://github.com/zappala/python-networking-and-threading/blob/master/download-accelerator/experiments.py)
+script to run a set of experiments using your downloader on large
+files of sizes that are approximately 1 MB, 10 MB, and 100 MB. This
+script will vary the number of threads from 1 to 10 and repeat each
+experiment 10 times. Run the experiments both while on campus and
+while off campus.  If the 100MB file takes too long while off campus,
+you can skipt that part of the experiment.
+
+With the data you collect, use the
+[plot.py](https://github.com/zappala/python-networking-and-threading/blob/master/download-accelerator/plot.py)
+script to graph the results. This script will create a series of box
+plots showing the median and the distribution of the download time
+versus the number of threads, for each file.</p>
+
+## Python Setup
+
+To run these scripts on your machine, you can install the Python
+dependencies into your system:
+
+    sudo apt-get install python-pip
+    sudo pip install requests
+    sudo pip install numpy
+    sudo pip install scipy
+    sudo pip install matplotlib
+
+Alternatively, you can install them in a virtual
+environment. This method also works to run these scripts on
+the CS machines. First install dependencies:
+
+    sudo apt-get install python-pip
+    sudo pip install virtualenv
+
+Or on the CS Linux machines:
+
+    easy_install pip
+    easy_install virtualenv
+
+Then create a virtual environment:
+
+    mkdir ~/virtualenvs
+    virtualenv ~/virtualenvs/cs360
+    source ~/virtualenvs/cs360/bin/activate
+
+You now are in a Python virtual environment, and you will be able
+to install packages in your home directory:
+
+    pip install requests
+    pip install numpy
+    pip install scipy
+    pip install matplotlib
+
+To deactivate the virtual environment:
+
+    deactivate
+
+## Report
+
+Write a report that explains your methodology (how you ran the
+experiments and collected data), shows your graphs, and discusses what
+they show. Be sure to refer to the graphs in your report, for example
+"Figure 1 shows that ...". Explain whether there are benefits to
+downloading in parallel and discuss any tradeoffs.
+
+## Submission
+
+Create a tgz of your program directory. Be sure to include a PDF
+of your report. For example, if your code is in the directory called
+download-accelerator, then you would type this:
+
+    tar -czvf download-accelerator.tgz download-accelerator
+
+Submit your report and the tgz file using [learningsuite.byu.edu](http://learningsuite.byu.edu).
+
+## Grading
+
+Your lab will be tested as specified in the
+[grading sheet]({{url_for("show",directory="fall-2013/labs",page="download-accelerator-grading")}}).
+If you wish to receive help with your code, then you should print out
+clear and concise debugging information when the debugging flag (-d)
+is given on the command line. The more helpful and clear your
+debugging information is, the better your chances for getting useful
+help. You should apply this same standard to how you document your
+code.
+
+{% endfilter %}
+
+{% endblock %}
