@@ -104,6 +104,7 @@ def schedule():
     d.lecture('No Class','Presidents Day Holiday')
 
     d = s.day('February 18')
+    d.lecture('Lab Discussion')
     d.assignment('Lab: Download Accelerator',term + 'labs/download-accelerator')
 
     d = s.day('February 19')
