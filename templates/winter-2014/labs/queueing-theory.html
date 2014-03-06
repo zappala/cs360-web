@@ -1,0 +1,303 @@
+{% extends "winter-2014/sidebar.html" %}
+
+{% block page %}
+
+<div class="text">
+  <div class="row-fluid">
+    <div class="span12">
+      <h1 class="top">Lab: Queueing Theory and Web Server Performance</h1>
+
+      <p>In this assignment, you will use queuing theory and experiments to
+	examine the performance of your web server.  The goals of this
+	assignment are to (1) learn how to apply queueing theory to the study
+	of a networked system, (2) to learn how to use experiments to study
+	the performance of a networked system, and (3) to gain experience with
+	the scientific method when running experiments, collecting data, and
+	analyzing results.</p>
+
+      <p>For this assignment, you will be writing a report, rather than
+	turning in code.  The report will consist of three parts: (1) basic
+	queueing theory, (2) queueing theory analysis of an open source web
+	server and your web server, and (3) experimental performance
+	evaluation of an open source web server and your web server.</p>
+
+      <h2>1. Queuing Theory</h2>
+
+      <p>For the first part of your report, answer the following
+	questions. Show all of your work. You are welcome to use a calculator
+	or write a Python script to do the calculations.</p>
+
+      <ol>
+
+	<li>You are entering the Marriott Center to watch a basketball game.
+	  There is only one ticket line to purchase tickets.  Each ticket
+	  purchase takes an average of 18 seconds. The average arrival rate is 3
+	  persons/minute.
+	  
+	  <p>Find the average length of queue and average waiting time in queue
+	    assuming M/M/1 queuing.</p>
+
+	</li>
+
+	<li>You are now in line to get into the arena.  There are 3 operating
+	  turnstiles with one ticket-taker each.  On average it takes 3 seconds
+	  for a ticket-taker to process your ticket and allow entry. The average
+	  arrival rate is 40 persons/minute.
+
+	  <p>Find the average length of queue, average waiting time in queue
+	    assuming M/M/N queuing.</p>
+
+	  <p>What is the probability of having exactly 5 people in the system?</p>
+	  
+	</li>
+
+	<li>You are now inside the arena.  They are passing out Cosmo the
+	  Cougar bobblehead dolls as a free giveaway.  There is only one person
+	  passing these out and a line has formed behind her.  It takes her
+	  exactly 6 seconds to hand out a doll and the arrival rate averages 9
+	  people/minute.
+
+	  <p>Find the average length of queue, average waiting time in queue,
+	    and average time spent in the system assuming M/D/1 queuing.</p>
+
+	</li>
+
+      </ol>
+
+      <h2>2. Queueing Analysis</h2>
+
+      <h3>Lighttpd</h3>
+
+      <p>Install the lighttpd web server:</p>
+
+<pre>
+sudo apt-get install lighttpd
+</pre>
+
+      or on the lab machines:
+
+<pre>
+wget http://download.lighttpd.net/lighttpd/releases-1.4.x/lighttpd-1.4.28.tar.gz
+tar -xf lighttpd-1.4.28.tar.gz
+cd lighttpd-1.4.28
+./configure --prefix=$HOME
+make
+make install
+</pre>
+
+      <p>The server binaries will be installed in ~/sbin and the libraries
+	will be in ~/lib.</p>
+
+      <p>See this
+
+	<a href="http://redmine.lighttpd.net/projects/lighttpd/wiki/TutorialConfiguration">configuration tutorial</a>
+
+	to learn how to configure lighttpd to serve files.</p>
+
+      <p>To run the server:</p>
+
+<pre>
+sudo service lighttpd start
+</pre>
+
+      or on the lab machines
+
+<pre>
+cd ~/sbin
+~/sbin/lighttpd -f lighttpd.conf -m ~/lib
+</pre>
+
+      <h3>Analysis</h3>
+
+      <p>Measure the average response time for both lighttpd and your own web server. You can do this
+	by writing a small Python script that measures how long it takes for the server to handle a single request.
+	Do this 100 times in a row and take the average.</p>
+
+      <p>Because you are sending one response at a time, this test
+	eliminates any queueing delay and gives you a measure of the average
+	service rate (the number of requests your server can handle per
+	second).  Using this value, graph the theoretical average response
+	time as a function of utilization for each of the two servers. The
+	average response time is equivalent to the average time in the system
+	for an M/M/1 queue.</p>
+
+      <h3>Report</h3>
+
+      <p>For this part of the report, explain your methodology (how you
+	collected the data on service rate for the two web servers), show your
+	graphs, and discuss what they show.</p>
+
+      <p>You should clone
+	the <a href="https://github.com/zappala/web-server-testing">Web
+	Server Testing</a> GitHub repository to get access to the
+	scripts and data for testing.</p>
+
+      <h2>3. Performance Evaluation</h2>
+
+      <p>Run performance measurements on your web server using this
+
+	<a href="https://github.com/zappala/web-server-testing/blob/master/tests/generator.py">workload
+	generator</a>
+
+	written in Python.</p>
+
+      <h3>Syntax</h3>
+
+      <p>Call the workload generator using the following syntax:</p>
+
+<pre>
+python generator.py --server [host] --port [port] -l [load] -d [duration]
+</pre>
+
+      <p>where:</p>
+
+<pre>
+[host]     -- the hostname where your server is running (default localhost)
+[port]     -- the port your server is listening on (default 80)
+[load]     -- the average load in clients per second (default 1)
+[duration] -- the duration of the test in seconds (default 1)
+</pre>
+
+      <p>For example:</p>
+
+<pre>
+python generator.py --port 8000 -l 10 -d 30
+</pre>
+
+      <p>will generate 10 clients per second, for 30 seconds, accessing
+	the web server on localhost at port 8000.</p>
+
+      <h3>Web Server Configuration</h3>
+
+      <p>The generator will make requests for a set of 1000 files
+	stored in the root directory configured for your web server.
+	
+	Use the files in
+	the <a href="https://github.com/zappala/web-server-testing/tree/master/www">www
+	directory</a> for load testing. Use
+	this <a href="https://github.com/zappala/web-server-testing/blob/master/tests/web.conf">web.conf</a>
+	configuration file, which sets <u>default</u> to use the www
+	directory, assuming your web server handles relative paths
+	properly.</p>
+
+      <h3>How The Generator Works</h3>
+
+      <p>The workload generator creates sessions that access the web server;
+	each session represents one user downloading one object from the web
+	server. The number of sessions the generator creates is determined by
+	the load parameter you supply. The load is an average of an
+	exponential distribution, given in units of sessions per second. The
+	generator will continually spawn threads, one per session, at the rate
+	given by the load parameter, for the duration specified.</p>
+
+      <p>Each time a session starts, it chooses a file to download from the
+	server, named /file000.txt to /file999.txt. The session chooses a file
+	from a Zipf popularity matrix, with alpha equal to 1. The sizes of the
+	1000 files are generated by the
+
+	<a href="https://github.com/zappala/web-server-testing/blob/master/tests/files.py">files.py</a>
+
+	Python script, which uses a Pareto distribution with alpha equal to 3
+	and beta equal to 5 KB (5120 bytes).</p>
+
+      <h3>Output</h3>
+
+      <p>When the script runs, each session generates output with the format:</p>
+
+<pre>
+[sessionID] [URI] [status] [bytes] [seconds]
+</pre>
+
+      <p>where:</p>
+
+      <ul>
+	<li>[sessionID] is a unique identifier for the session</li>
+	<li>[URI] is the URI of the file downloaded</li>
+	<li>[status] is the status phrase returned by the server</li>
+	<li>[bytes] is the number of bytes downloaded</li>
+	<li>[seconds] is the time it took to download the URI, in seconds</li>
+      </ul>
+
+      <h3>Experiments</h3>
+
+      <p>Run a set of experiments using the workload generator on both your
+	web server and lighttpd.  See if you can get the same result as
+	the theoretical graph you created in part 2.</p>
+
+      <ol>
+
+	<li>Setup your web server and lighttpd so that they are running
+	  on the same machine. Run the workload generator.</li>
+
+	<li>Using the workload generator, run separate experiments with ten
+	  different loads on both your web server and lighttpd.  Use
+	  loads that are spread across different regions of the graph from part
+	  2.  Have each experiment last 30 seconds.</li>
+
+	<li>Collect the output of each experiment into a separate file.  Be
+	  sure to name them properly, e.g. web-[server]-[load].txt, where
+	  [server] is the name of the server, and [load] is the load used.</li>
+
+      </ol>
+
+      <h3>Analysis</h3>
+
+      <p>Using the data you collect, write a Python script to create a
+	box plot of the response time as a function of utilization.
+	On the same graph, plot the theoretical line from Part 2.</p>
+
+      <p>When creating graphs, do not use any data that includes errors, for
+	example a connection timed out or socket errors.  Use load levels for
+	which there are no errors.</p>
+
+      <h3>Report</h3>
+
+      <p>For this part of the report, explain your methodology (how you ran
+	the experiments and collected data), show your graphs, and discuss
+	what they show. Be sure to refer to the graphs in your report, for
+	example "Figure 1 shows that ..."  Explain how well the experiments
+	match the theoetical results, and discuss any differences you see.
+	Discuss the difference in performance between the two servers.</p>
+
+      <h2>4. Conclusion</h2>
+
+      <p>Write a one or two paragraph conclusion, explaining what you have
+	learned and what you could do in the future to explore this topic
+	further.</p>
+
+      <h2>Extra Credit</h2>
+
+      <p>For extra credit, include the same comparision for
+      the <a href="http://wiki.nginx.org/Main">nginx</a> web server.</p>
+
+      <h2>Submission</h2>
+
+      <p>Submit a PDF of your report using
+	<a href="http://learningsuite.byu.edu">learningsuite.byu.edu</a>.
+      </p>
+
+      <h2>Grading</h2>
+
+      <p>The report for this assignment is worth 150 points, using the
+	following scale:</p>
+
+      <ul>
+	<li>Theory: 30 points</li>
+	<li>Analysis: 30 points</li>
+	<li>Experiments: 60 points</li>
+	<li>Overall Clarity of Report: 30 points</li>
+	<li>Extra Credit: 15 points</li>
+      </ul>
+
+      <p>Be sure to use a clear, scientific style. Each paragraph
+      should begin with a topic sentence, and the remaining sentences
+      should support this topic. Use "we" and not "I". Use the active
+      voice, e.g. "Figure 1 shows...". Label each figure and refer to
+      the figure by number when discussing your results. Be sure all
+      graphs have accurate labels.</p>
+
+    </div>
+  </div>
+</div>
+
+{% endblock %}
