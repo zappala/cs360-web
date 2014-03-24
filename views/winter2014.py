@@ -146,7 +146,6 @@ def schedule():
     d = s.day('March 7')
     d.lecture('Performance Measurement','Performance Measurement and Workload Models')
     d.reading('Performance Measurement',static+'performance-measurement.pdf')
-    d.assignment('Web Application Proposals','https://drive.google.com/folderview?id=0B09H8qp1t9fAdzgwaTg1aERpems&usp=sharing')
 
     s.week()
 
@@ -154,23 +153,23 @@ def schedule():
     d.lecture('Security','Network Security')
 
     d = s.day('March 12')
-    d.lecture('Web Programming','Team Formation and Agile Development')
-
-    d = s.day('March 13')
-    d.assignment('Lab: Queueing Theory',term + '/labs/queueing-theory')
+    d.assignment('Exam | Weeks 5 - 8','')
 
     d = s.day('March 14')
-    d.lecture('Web Programming','Introduction to Web Frameworks and MVC')
-    d.reading('Web Frameworks and MVC',static+'web-frameworks-and-mvc.pdf')
+    d.lecture('No Class','')
+
+    d = s.day('March 15')
+    d.assignment('Lab: Queueing Theory',term + '/labs/queueing-theory')
 
     s.week()
 
     d = s.day('March 17')
-    d.assignment('Exam | Weeks 5 - 10','')
+    d.lecture('Web Programming','Team Formation and Agile Development')
+    d.assignment('Web Application: Proposals','https://docs.google.com/document/d/1_nfHF3iQEdm4diifVBGUQ3OGI1peHRopp-nK3pb0x3Q/edit?usp=sharing')
 
     d = s.day('March 19')
-    d.lecture('Web Programming','Web Design')
-    d.reading('Web Design',static+'web-design.pdf')
+    d.lecture('Web Programming','Introduction to Web Frameworks and MVC')
+    d.reading('Web Frameworks and MVC',static+'web-frameworks-and-mvc.pdf')
 
     d = s.day('March 21')
     d.lecture('Web Programming','Designing Relational Database Models')
@@ -182,11 +181,11 @@ def schedule():
     d.lecture('Web Programming','Designing Document Database Models')
     d.reading('Designing Document Database Models',static+'designing-document-database-models.pdf')
     d.reading('Starbucks Does Not Use Two-Phase Commit','http://eaipatterns.com/ramblings/18_starbucks.html')
-    d.assignment('Web Application Idea, Features, and Architecture',term+'/labs/web-application')
+    d.assignment('Web Application: Idea, Features, and Architecture',term+'/labs/web-application')
 
     d = s.day('March 26')
-    d.lecture('Web Programming','Users and Authentication')
-    d.reading('Users and Authentication',static+'users-and-authentication.pdf')
+    d.lecture('Web Programming','Web Design')
+    d.reading('Web Design',static+'web-design.pdf')
 
     d = s.day('March 28')
     d.lecture('Web Programming','CSS')
@@ -203,16 +202,18 @@ def schedule():
     s.week()
 
     d = s.day('March 31')
+    d.lecture('Web Programming','Users and Authentication')
+    d.reading('Users and Authentication',static+'users-and-authentication.pdf')
+    d.assignment('Web Application: Interface Design',term+'/labs/web-application')
+
+    d = s.day('April 2')
     d.lecture('Web Programming','Javascript')
     d.reading('Javascript',static+'javascript.pdf')
     d.reading('Javascript at Codecademy','http://www.codecademy.com/tracks/javascript?jump_to=4fa836e5996b00000302064a')
     d.reading('JQuery at Codecademy','http://www.codecademy.com/tracks/jquery')
-    d.assignment('Web Application Layout',term+'/labs/web-application')
-
-    d = s.day('April 2')
-    d.lecture('Web Programming','Group Meetings')
 
     d = s.day('April 4')
+    d.lecture('Web Programming','Group Meetings')
 
     s.week()
 
@@ -220,6 +221,7 @@ def schedule():
     d.lecture('Web Programming','Web Services')
     d.reading('Web Services',static+'web-services.pdf')
     d.reading('Interactive REST Tutorial','http://phprestsql.sourceforge.net/')
+    d.assignment('Web Application: Milestone 1',term+'/labs/web-application')
 
     d = s.day('April 9')
     d.lecture('Web Programming','Web Services')
@@ -227,18 +229,18 @@ def schedule():
 
     d = s.day('April 11')
     d.lecture('Security','Web Vulnerabilities')
-    d.assignment('Web Application Milestone',term+'/labs/web-application')
     d.reading('Web Vulnerabilities',static+'web-vulnerabilities.pdf')
 
     s.week()
 
     d = s.day('April 14')
-    d.assignment('Exam | Weeks 11 - 15','')
+    d.assignment('Exam | Weeks 9 - 14','')
+    d.assignment('Web Application: Milestone 2',term+'/labs/web-application')
 
     s.week()
 
-    d = s.day('April 23')
-    d.assignment('Lab: Web Application',term+'/labs/web-application')
+    d = s.day('April 21')
+    d.assignment('Lab: Web Application: Final Report and Submission',term+'/labs/web-application')
 
     return render_template('winter-2014/schedule.html',active='schedule',
                            weeks=s.weeks)
