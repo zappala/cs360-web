@@ -211,6 +211,10 @@ def schedule():
     d.reading('Javascript',static+'javascript.pdf')
     d.reading('Javascript at Codecademy','http://www.codecademy.com/tracks/javascript?jump_to=4fa836e5996b00000302064a')
     d.reading('JQuery at Codecademy','http://www.codecademy.com/tracks/jquery')
+    d.reading('AngularJS in 20ish Minutes','https://www.youtube.com/watch?v=tnXO-i7944M')
+    d.reading('10 Reasons Why You Should Use AngularJS','http://www.sitepoint.com/10-reasons-use-angularjs/')
+    d.reading('Why Does Angular.js Rock?','http://angular-tips.com/blog/2013/08/why-does-angular-dot-js-rock/')
+    d.reading('Ember.js Guides','http://emberjs.com/guides/')
 
     d = s.day('April 4')
     d.lecture('Web Programming','Group Meetings')
