@@ -1,0 +1,69 @@
+{% extends "fall-2014/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Tutorial: Linux Command Line
+
+The Linux command line is a power tool. Linux is the OS of choice for
+cloud computing and web servers. Usually, you will administer these
+machines remotely, so you'll need to use a shell and the command line
+to get anything done. I also use the command line frequently on my
+desktop and laptop, because it helps me to be more productive
+to keep my hands on the keyboard as much as possible.
+
+Learning to use the command line isn't very difficult. I use about
+twenty commands regularly. In addition, the basic commands haven't
+changed in decades, so once you're familiar with the command line, you
+will have that skill for a long time.
+
+## Resources
+
+There are a couple of good web sites where you can learn to use the
+command line:
+
+* [The Command Line Crash Course](http://cli.learncodethehardway.org/book/)
+
+* [LinuxCommand.org](http://linuxcommand.org/)
+
+## Recommended Commands
+
+These are the commands I recommend you learn:
+
+* Navigation and Files
+    * pwd
+    * mkdir
+    * cd
+    * ls
+    * cp
+    * mv
+    * less
+    * cat
+    * tail
+    * chmod
+* Job Control
+    * ps
+    * top
+    * kill
+    * jobs
+    * control-z
+    * bg
+    * fg
+    * history
+* I/O Redirection
+* Searching
+    * grep
+    * find
+    * sort
+* Miscellaneous
+    * tab completion
+    * wildcard matching
+* Help
+    * man
+
+I also recommend understanding [the file system](http://linuxcommand.org/lc3_lts0040.php).
+
+{% endfilter %}
+
+{% endblock %}
