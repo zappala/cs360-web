@@ -1,0 +1,204 @@
+{% extends "fall-2014/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Syllabus
+
+This course covers Internet application programming, including
+client-server and web applications. At the end of this course,
+students should be able to:
+
+* Use the BSD socket API to develop network applications.
+
+* Understand and use concurrent programming to develop a thread-safe
+  server, including both thread pool and event-driven architectures.
+
+* Use experiments to conduct an in-depth performance evaluation of
+  network software to better understand design tradeoffs and operating
+  system overhead.
+
+* Use a common web application framework to build a web database
+  application, with both relational and no-SQL databases.
+
+* Understand security issues for network software and be able to write
+  code that is secure against common attacks.
+
+* Have the confidence and ability to quickly learn a new language and
+  libraries.
+
+## Textbooks
+
+You do not need to buy a textbook for this class. Instead, you should
+be able to learn everything from lecture notes and online
+materials.
+
+In case you are interested in books, here are some sources I use for
+the material in this class:
+
+### Socket Programming
+
+* [The Linux Programming Interface](http://www.amazon.com/Linux-Programming-Interface-System-Handbook/dp/1593272200/)
+
+    A great book that explains everything you need to know about
+    programming with the Linux operating system. This includes file
+    I/O, threads, sockets, signals, and much more.
+
+* [Unix Network Programming, Volume 1: The Sockets Network API, 3rd Edition](http://www.amazon.com/Unix-Network-Programming-Volume-Networking/dp/0131411551)
+
+    This has been the definitive reference for network programming for
+    more than a decade, and has been recently updated. In addition to
+    sockets, this book covers threads, concurrent architectures, and
+    many network programming details.
+
+### C/C++ Programming
+
+We will use C++ for some labs, so it will be helpful to have a good
+reference.  I strongly recommend getting one of these if you don't
+already have one.
+
+* [LearnCpp](http://www.learncpp.com/)
+
+* [C++ Primer](http://www.amazon.com/Primer-5th-Stanley-B-Lippman/dp/0321714113/)
+
+* [A Tour of C++](http://www.amazon.com/dp/0321958314/)
+
+### Python
+
+We will use Python for some labs, for processing and graphing data,
+and possibly for web application programming.  I list some free online
+references below, plus a book in case you want one.
+
+* [Codecademy Python course](http://www.codecademy.com/tracks/python)
+
+* [Learn Python Interactive Tutorial](http://www.learnpython.org/)
+
+* [Think Python: How to Think Like a Computer Scientist](http://www.greenteapress.com/thinkpython/)
+
+* [Learning Python, 5th Edition](http://www.amazon.com/Learning-Python-Edition-Mark-Lutz/dp/1449355730/)
+
+I also suggest that you become familiar with the official [Python documentation](http://www.python.org/doc/).
+
+## Computing Environment
+
+We will be using a Linux environment for this class. You can use the
+Linux labs, setup your laptop to boot into Linux, or setup a virtual
+machine running Linux. We will be using Python 2.7, along with various
+packages such as matplotlib and LaTeX.  You are strongly encouraged to
+become familiar with Linux, its software, and the command-line
+environment. Being fluent in multiple computing environments is an
+important part of a CS education.
+
+You may, if you are talented and persistent, figure out how to setup a
+Mac OS machine with the required software. I cannot provide help with
+this, and your code will be expected to run on a Linux machine when
+you submit it. Be sure to test your code in a Linux environment.
+
+## Code Editor
+
+I personally use emacs, and know many others use vim. If these are not for you,
+then I recommend:
+
+* [Sublime Text](http://www.sublimetext.com/)
+
+* [Brackets](http://brackets.io/)
+
+## Source Control
+
+Regardless of the computing environment you use, you should become
+familiar with [Git](http://git-scm.com/book) and
+[GitHb](https://github.com/).
+
+You should store your code in a *private* Git
+repository. [Bitbucket](http://bitbucket.org) provides free private
+repositories.
+
+## Assignments and Grading Policy
+
+The assignments for this class will consist of labs and exams.  Labs
+must be written in the assigned language and must compile and run on
+the department's Linux machines.
+
+Labs will be graded by the TA or instructor.  For some labs, the
+scoring will be based on running your code.  In these cases, we will
+publish a grading sheet before each assignment is due, listing the
+tests we will run and how many points each test is worth.  For other
+labs, the scoring will be based on a report you write.  For these
+labs, the assignment will indicate how the report will be scored.
+
+Grading for exams will be on a scale of 0 to 10 for each problem, with
+a final score based on the total possible points.  A score of 10
+indicates your answer is completely correct (A), and a score of 5
+indicates your answer is entirely wrong but you made a reasonable
+effort (E).  Grades in between indicate very good (9), good (8),
+adequate (7), and poor (6). Failure to make a reasonable effort to
+answer a question scores a 0.
+
+Your final grade will be computed by weighting all scores as follows:
+
+> Labs 70%
+
+> Exams 30%
+
+## Late Policy
+
+Labs are due on the day indicated. To accommodate difficulties in your
+schedule, you can turn in work late, but you will be penalized 10% for
+being late by 1 to 3 days, and 20% from 4 to 7 days. No late work
+will be accepted after 7 days. Weekends and holidays are counted.
+
+You may avoid late penalties due to a medical excuse by making an
+arrangement in advance with the instructor. Exceptions can also be
+made for a learning disability.
+
+## Collaboration Policy
+
+Most assignments for this class **must** be done individually. You
+are encouraged to discuss solving the labs and any programming
+problems you encounter generally, but you must write your own code and
+should not view any other student's code.  When producing written
+work, your writing must be your own thoughts.  Your use of sources
+(ideas, quotations, paraphrases) must be properly acknowledged and
+documented.
+
+Group work is permitted only where specified clearly in the
+assignment.  Group work is meant to be done jointly with a team of two
+to five students.  Students in a group should work on problems and
+programs together, and each student should perform a roughly equal
+amount of work.
+
+## Educational Policies
+
+### Honor Code Standards
+
+In keeping with the principles of the [BYU Honor
+Code](http://honorcode.byu.edu/), students are expected to be honest
+in all of their academic work.  Academic honesty means, most
+fundamentally, that any work you present as your own must in fact be
+your own work and not that of another. Violations of this principle
+may result in a failing grade in the course and additional
+disciplinary action by the university.
+
+### Policy on Harassment
+
+Harassment of any kind is inappropriate at BYU. Specifically, BYU's
+policy against sexual harassment extends not only to employees of the
+university but to students as well. If you encounter sexual
+harassment, gender-based discrimination, or other inappropriate
+behavior, please talk to your professor, contact the Equal Employment
+Office at 422-5895 or 367-5689, or contact the Honor Code Office at
+422-2847.
+
+### Students with Disabilities
+
+BYU is committed to providing reasonable accommodation to qualified
+persons with disabilities. If you have any disability that may
+adversely affect your success in this course, please contact the
+University Accessibility Center at 422-2767. Services deemed
+appropriate will be coordinated with the student and instructor by
+that office.
+
+{% endfilter %}
+      
+{% endblock %}

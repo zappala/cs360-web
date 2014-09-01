@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% set term = 'fall-2012' %}
+
+{% macro render(directory,page,name) -%}
+{% set path = term %}
+{% if directory %}
+{% set path = term + '/' + directory %}
+{% endif %}
+{% set target = page %}
+{% if page == '' %}
+{% set target = 'index' %}
+{% endif %}
+<li {% if active == target %}class="active"{% endif %}>
+<a href={{url_for("show",directory=path, page=page)}} >{{name}}</a></li>
+{%- endmacro %}
+
+{% block term %}
+Fall 2012
+{% endblock %}
+
+{% block menu %}
+
+{{ render('','','Syllabus') }}
+{{ render('','schedule','Schedule') }}
+<li class="has-dropdown {% if previous == "labs" %}active{% endif %}">
+  <a href="#">Labs</a>
+  <ul class="dropdown">
+    {{ render('labs','messaging-service','Messaging Service') }}
+    {{ render('labs','threaded-messaging-service','Threaded Messaging Service') }}
+    {{ render('labs','download-accelerator','Download Accelerator') }}
+    {{ render('labs','web-server','Web Server') }}
+    {{ render('labs','queueing-theory','Queueing Theory') }}
+    {{ render('labs','stack-smashing','Stack Smashing') }}
+    {{ render('labs','web-application','Web Application') }}
+    {{ render('labs','rest-interface','REST Interface') }}
+    {{ render('labs','web-application-vulnerabilities','Web Application Vulnerabilities') }}
+  </ul>
+</li>
+{{ render('','code','Sample Code') }}
+<li class="has-dropdown {% if previous == "labs" %}active{% endif %}">
+  <a href="#">Django Tutorial</a>
+  <ul class="dropdown">
+    {{ render('django','','Introduction') }}
+    {{ render('django','crud','CRUD') }}
+    {{ render('django','users','Users') }}
+    {{ render('django','templates-and-css','Templates and CSS') }}
+    {{ render('django','session-state','Session State') }}
+    {{ render('django','javascript-and-ajax','Javascript and AJAX') }}
+    {{ render('django','mongodb','MongoDB') }}
+    {{ render('django','rest-interface','Rest Interface') }}
+  </ul>
+</li>
+<li><a href="https://groups.google.com/d/forum/byu-cs-360-internet-programming">Discussion</a> <i class="icon-share-alt"></i></li>
+</ul>
+
+{% endblock %}

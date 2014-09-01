@@ -4,6 +4,7 @@ class Day:
         self.section = ''
         self.topic = ''
         self.readings = []
+        self.tutorials = []
         self.assignments = []
 
     def lecture(self,section,topic=None):
@@ -15,6 +16,12 @@ class Day:
             self.readings.append('<a href="%s">%s</a>' % (link,text))
         else:
             self.readings.append(text)
+
+    def tutorial(self,text,link=None):
+        if link:
+            self.tutorials.append('<a href="%s">%s</a>' % (link,text))
+        else:
+            self.tutorials.append(text)
 
     def assignment(self,text,link=None):
         if link:

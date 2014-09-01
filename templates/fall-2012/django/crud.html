@@ -1,25 +1,22 @@
-{% extends "fall-2012/sidebar.html" %}
+{% extends "fall-2012/menu.html" %}
 
 {% block page %}
 
-<div class="text">
-  <div class="row-fluid">
-    <div class="span12">
-      <h1 class="top">Django Tutorial | CRUD</h1>
+<h1>Django Tutorial | CRUD</h1>
 
-      <p>We will first create a basic list application that allows us
-	to create, read, update, and delete items from the list.</p>
+<p>We will first create a basic list application that allows us
+  to create, read, update, and delete items from the list.</p>
 
-      <h2>Start a new application</h2>
+<h2>Start a new application</h2>
 
-      <p>From within your demo directory, create the application files:</p>
+<p>From within your demo directory, create the application files:</p>
 
 <pre>
 python manage.py startapp list
 </pre>
 
-      <p>This will create a directory called list containing several
-      scripts:</p>
+<p>This will create a directory called list containing several
+  scripts:</p>
 
 <pre>
 __init__.py
@@ -28,8 +25,8 @@ tests.py
 views.py
 </pre>
 
-      <p>Edit demo/settings.py and add the list application to the
-	INSTALLED_APPS variable:
+<p>Edit demo/settings.py and add the list application to the
+  INSTALLED_APPS variable:
 
 <pre>
 INSTALLED_APPS = (
@@ -44,10 +41,10 @@ INSTALLED_APPS = (
 )
 </pre>
 
-      <h2>Item model</h2>
+<h2>Item model</h2>
 
-      <p>Create a model for items in a list.  Edit the list/models.py file
-	so that it contains the following:</p>
+<p>Create a model for items in a list.  Edit the list/models.py file
+  so that it contains the following:</p>
 
 <pre>
 from django.db import models
@@ -535,9 +532,5 @@ def delete(request, id):
 	<a href="/fall-2012/django/users">Users</a>
 
       </p>
-
-    </div>
-  </div>
-</div>
 
 {% endblock %}

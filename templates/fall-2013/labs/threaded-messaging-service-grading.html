@@ -1,4 +1,4 @@
-{% extends "fall-2013/sidebar.html" %}
+{% extends "fall-2013/menu.html" %}
 
 {% macro item(text,score,criteria) -%}
 <div class="box"></div>
@@ -10,10 +10,7 @@
 
 {% block page %}
 
-<div class="text">
-  <div class="row-fluid">
-    <div class="span12">
-      <h1 class="top">Threaded Messaging Service Grading Sheet</h1>
+      <h1>Threaded Messaging Service Grading Sheet</h1>
 
       <p><i>The TA will fill out this sheet when grading your program.</i></p>
 
@@ -53,10 +50,6 @@
 
       <div class="border">TA Name:</div>
       <div class="border">Score:</div>
-
-    </div>
-  </div>
-</div>
 
 {% endblock %}
 

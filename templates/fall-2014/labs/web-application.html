@@ -1,0 +1,182 @@
+{% extends "fall-2014/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Lab: Web Application
+
+In this assignment, you will write a web database application.  The
+goals of this assignment are to (1) learn how to design a model for a
+database appliction, and (2) gain experience designing a user
+interface for a web application, and (3) learn how to program a web
+application using a modern framework.
+
+## Requirements
+
+Your application must meet these general requirements:
+
+* Meets a need you have identified or that benefits society in some way. Examples include:
+
+    * family history
+    * open government
+    * a startup or business idea
+
+* Has a back end that stores data in a relational (e.g. MySQL) or
+document database (e.g. MongoDB).
+
+* Has a front end that follows good [web design
+principles](http://cs360.byu.edu/static/fall-2014/lectures/web-design.pdf).
+
+* Supports a REST interface as an API that can be used for third-party
+applications.
+
+* Uses some kind of cutting-edge framework, or a framework you haven’t
+used before. Good choices are:
+
+    * Javascript: node.js and Express for the backend, Ember or
+    Angular for the front end
+
+    * Python: Flask or DJango (in increasing level of complexity)
+
+    * Ruby: Sinatra, Padrino, Rails (in increasing level of complexity)
+
+    * PHP: Yii
+
+    You will be highly productive using Flask since you know some
+    Python already. I would also encourage you to try
+    node/Ember/Angular, since these are rapidly becoming very popular
+    and many jobs are available for them.
+
+* Has the code stored in GitHub using the open source license of your
+choice Host the final project on a web site. 
+
+* The final project is hosted on a web site.
+
+## Idea, Features, and Architecture.
+
+Describe the idea for your application. This can be the same text in
+your proposal. This should include:
+
+* Your pitch. Explain what need this application meets. Why will anyone 
+want to use it?
+
+* A brief description of what your application will do to meet this need.
+
+Describe the features of your application. This should include:
+
+* All of the features you would ideally implement if you had the time
+to create your ideal application.
+
+* The list of features you will implement this semester. This could be
+a minimal viable product, if you were going to market. Larger teams
+should have more features.
+
+Describe the architecture of your application. This includes the
+technologies you will use for a database, a back-end server, and a
+front end.  You may design a mobile application instead of or in
+addition to a web site.
+
+This report must be hosted on your GitHub Wiki.
+
+Each group member must submit the URL of your GitHub Wiki page to get
+credit.
+
+## Interface Design
+
+Draw the user interface for your program.  This includes every page on
+the site. You can separately draw headers and footers if they are
+consistent on every page.  Your drawings may be done with a computer
+program or by hand, but should be of a quality you would be comfortable
+showing to your supervisor at work.
+
+Put these drawings onto a web page for your site. Explain how the user
+will navigate through these pages.
+
+This report must be hosted on your GitHub Wiki, even if it is just a link
+to some other mockup site.
+
+Each group member must submit the URL of your GitHub Wiki page to get
+credit.
+
+## Milestones
+
+For each milestone, write a report detailing your overall team
+progress in meeting your planned features. Put this in the GitHub
+Wiki.
+
+In addition, for each milestone, every group member writes an
+individual report of his or her current progress. Explain what you
+have accomplished so far and what features you helped to implement.
+
+Submit a PDF of this report and include a link to your Wiki in the
+Text submission area.
+
+## Final Report
+
+When you are finished with your application, write a report. Put this
+on your GitHub Wiki. Include
+the following:
+
+* **Description**: Explain the purpose of the site and what
+functionality you implemented. Include a few relevant screenshots
+showing what the site can do, and write a short paragraph describing
+each one.
+
+* **Database Schema**: Describe how data is stored in your database.
+If you used a relational database, show your entity-relationship
+diagram that includes all entities, attributes, and relationships, and
+explain what it contains.  You should use the standard
+entity-relationship format as shown in class. Use a program to draw
+this diagram, such as [lucidchart](http://www.lucidchart.com) or
+[dia](http://www.gnome.org/projects/dia). If you used a document
+database, show your JSON document structure and explain what it
+contains.
+
+* **Future Work**: Describe a roadmap for future development, with
+additional features you could add or changes to the interface.
+
+In addition, each group member should write an individual, separate
+report, describing in detail the contributions he or she made to
+the project.
+
+Submit a PDF of your individual report and include a link to your Wiki
+in the Text submission area.
+
+## Final Submission
+
+When finished with your final project, submit the URL where your
+application is hosted, along with any login information needed for an
+administrative user, and any other information needed for evaluating
+the application
+
+On this site, be sure there is a URL for your GitHub code and a URL for
+the Wiki or other pages where the additional reports are hosted.
+
+## Grading
+
+This assignment is worth 250 points, using the following scale:
+
+* Idea and Features: 20 points. Judged based on
+completeness.
+
+* Interface Design: 20 points. Initial design of the application. Judged
+on usability.
+
+* Milestone #1: 30 points. Judged based on progress and effort.
+
+* Report: 30 points. Judged based on the clarity and quality of your
+report.
+
+* Utility of the application: 100 points. Judged based on the features
+completed, how useful this site would be to your target audience. The
+size of your group will be taken into consideration.
+
+* Design of the application: 50 points. Judged based on the overall
+design, how well it follows web design principles and practice. We
+will evaluate your front page experience in addition to the
+application itself.
+
+{% endfilter %}
+
+{% endblock %}

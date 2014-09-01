@@ -1,0 +1,38 @@
+{% extends "fall-2014/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Sample Code
+
+## Socket Programming
+
+Code to demonstrate simple client-server networking in C++, using an
+echo client and server:
+
+[Socket programming examples in C++](https://github.com/zappala/socket-programming-examples-c)
+
+## Thread Programming
+
+C++ code that shows how to create threads using the pthreads library
+and how to synchronize threads using semaphores and mutexes.
+
+[pthreads examples in C/C++](https://github.com/zappala/pthreads-examples-c)
+
+## Python Networking and Threading
+
+Python code that shows how to use Python Requests, a client-side HTTP
+library, threading, and low-level socket programming.
+
+[Python Networking and Threading](https://github.com/zappala/python-networking-and-threading)
+
+## Python Plotting Examples
+
+Python code that shows how to create graphs with matplotlib.
+
+[Python Plotting](https://github.com/zappala/python-plotting)
+
+{% endfilter %}
+
+{% endblock %}

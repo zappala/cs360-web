@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% set term = 'fall-2013' %}
+
+{% macro render(directory,page,name) -%}
+{% set path = term %}
+{% if directory %}
+{% set path = term + '/' + directory %}
+{% endif %}
+{% set target = page %}
+{% if page == '' %}
+{% set target = 'index' %}
+{% endif %}
+<li {% if active == target %}class="active"{% endif %}>
+<a href={{url_for("show",directory=path, page=page)}} >{{name}}</a></li>
+{%- endmacro %}
+
+{% block term %}
+Fall 2013
+{% endblock %}
+
+{% block menu %}
+
+{{ render('','','Syllabus') }}
+{{ render('','schedule','Schedule') }}
+{{ render('','officehours','Office Hours') }}
+<li class="has-dropdown {% if previous == "labs" %}active{% endif %}">
+  <a href="#">Labs</a>
+  <ul class="dropdown">
+    {{ render('labs','messaging-service','Messaging Service') }}
+    {{ render('labs','threaded-messaging-service','Threaded Messaging Service') }}
+    {{ render('labs','download-accelerator','Download Accelerator') }}
+    {{ render('labs','web-server','Web Server') }}
+    {{ render('labs','queueing-theory','Queueing Theory') }}
+    {{ render('labs','web-application','Web Application') }}
+  </ul>
+</li>
+{{ render('','code','Sample Code') }}
+<li><a href="https://groups.google.com/d/forum/byu-cs-360-internet-programming">Discussion</a> <i class="icon-share-alt"></i></li>
+</ul>
+
+{% endblock %}

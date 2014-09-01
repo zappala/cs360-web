@@ -4,7 +4,7 @@ from config import app
 from schedule import *
 
 @app.route('/winter-2014/schedule')
-def schedule():
+def winter2014schedule():
     static = '/static/lectures/winter-2014/'
     term = '/winter-2014/'
     s = Schedule()

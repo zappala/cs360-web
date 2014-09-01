@@ -1,11 +1,8 @@
-{% extends "fall-2012/sidebar.html" %}
+{% extends "fall-2012/menu.html" %}
 
 {% block page %}
 
-<div class="text">
-  <div class="row-fluid">
-    <div class="span12">
-      <h1 class="top">Django Tutorial | REST Interface</h1>
+      <h1>Django Tutorial | REST Interface</h1>
 
       <p>We will create a REST interface
 	using <a href="http://tastypieapi.org/">TastyPie</a>.</p>
@@ -162,9 +159,5 @@ for item in items['objects']:
       <p>This uses the standard urllib2 and json libraries to print all of
 	the items for a user. Note that you will need to change the username
 	and password to match a user you created.</p>
-
-    </div>
-  </div>
-</div>
 
 {% endblock %}

@@ -1,112 +1,105 @@
-{% extends "fall-2012/sidebar.html" %}
+{% extends "fall-2012/menu.html" %}
 
 {% block page %}
 
-<div class="text">
-  <div class="row-fluid">
-    <div class="span12">
-      <h1 class="top">Lab: Web Application Vulnerabilities</h1>
+<h1>Lab: Web Application Vulnerabilities</h1>
 
-      <p>In this lab you will learn how to conduct and protect against two
-	common attacks on web servers -- cross-site scripting (XSS) and
-	corss-site request forgery (XSRF).</p>
+<p>In this lab you will learn how to conduct and protect against two
+  common attacks on web servers -- cross-site scripting (XSS) and
+  corss-site request forgery (XSRF).</p>
 
-      <h2>Gruyere</h2>
+<h2>Gruyere</h2>
 
-      <p>A good way to learn about these two attacks is to use the Google
-	Code project called
+<p>A good way to learn about these two attacks is to use the Google
+  Code project called
 
-	<a href="http://google-gruyere.appspot.com/">Gruyere</a>.
+  <a href="http://google-gruyere.appspot.com/">Gruyere</a>.
 
-	This project will walk you through several different
-	vulnerabilities, showing you both how to exploit the
-	vulnerability with a certain kind of attack, as well as how to
-	create a secure server.</p>
+  This project will walk you through several different
+  vulnerabilities, showing you both how to exploit the
+  vulnerability with a certain kind of attack, as well as how to
+  create a secure server.</p>
 
-      <p>Read through the first few sections of the lab, dealing with XSS
-	and XSRF. Carry out these attacks on the Gruyere web application and
-	be sure you understand how they work.</p>
+<p>Read through the first few sections of the lab, dealing with XSS
+  and XSRF. Carry out these attacks on the Gruyere web application and
+  be sure you understand how they work.</p>
 
-      <h2>Attack!</h2>
+<h2>Attack!</h2>
 
-      <p>Use the Django list demo application we built in class to
-	demonstrate both an XSS attack and an XSRF attack. Note, because
-	Django comes with some built-in protections against these attacks, you
-	may need to disable its security precautions to get the attacks to
-	work. See for example these pages:</p>
+<p>Use the Django list demo application we built in class to
+  demonstrate both an XSS attack and an XSRF attack. Note, because
+  Django comes with some built-in protections against these attacks, you
+  may need to disable its security precautions to get the attacks to
+  work. See for example these pages:</p>
 
-      <ul>
+<ul>
 
-	<li>
-	  <a href="https://docs.djangoproject.com/en/dev/topics/security/">security in Django</a>
-	</li>
+  <li>
+    <a href="https://docs.djangoproject.com/en/dev/topics/security/">security in Django</a>
+  </li>
 
-	<li>
-	  <a href="https://docs.djangoproject.com/en/dev/topics/templates/">autoescape in Django templates</a>
-	</li>
+  <li>
+    <a href="https://docs.djangoproject.com/en/dev/topics/templates/">autoescape in Django templates</a>
+  </li>
 
-	<li>
-	  <a href="https://docs.djangoproject.com/en/dev/ref/contrib/csrf/">CSRF protection in Django</a>
-	</li>
+  <li>
+    <a href="https://docs.djangoproject.com/en/dev/ref/contrib/csrf/">CSRF protection in Django</a>
+  </li>
 
-      </ul>
+</ul>
 
-      <h2>Report</h2>
+<h2>Report</h2>
 
-      <p>Write a report in the form of a tutorial, explaining how to
-	exploit the XSS and XSRF vulnerabilities in the Django list
-	demo application, as well as how to fix or avoid them. Your
-	report should have the following organization:</p>
+<p>Write a report in the form of a tutorial, explaining how to
+  exploit the XSS and XSRF vulnerabilities in the Django list
+  demo application, as well as how to fix or avoid them. Your
+  report should have the following organization:</p>
 
-      <ol>
+<ol>
 
-	<li>Introduction: Short introduction to the tutorial (goals,
-	  what the reader needs to know before starting the
-	  tutorial).</li>
+  <li>Introduction: Short introduction to the tutorial (goals,
+    what the reader needs to know before starting the
+    tutorial).</li>
 
-	<li>XSS Attack: Explain what an XSS attack is. Show how you
-	  can make this attack work on the list application, walking
-	  through all the steps required. Then explain how to protect
-	  against this attack, again walking carefully through all the
-	  steps. Include screenshots for both the case where the
-	  attack works and where the attack doesn't work.</li>
+  <li>XSS Attack: Explain what an XSS attack is. Show how you
+    can make this attack work on the list application, walking
+    through all the steps required. Then explain how to protect
+    against this attack, again walking carefully through all the
+    steps. Include screenshots for both the case where the
+    attack works and where the attack doesn't work.</li>
 
-	<li>XSRF Attack: Explain what an XSRF attack is. Show how you
-	  can make this attack work on the list application, walking
-	  through all the steps required. Then explain how to protect
-	  against this attack, again walking carefully through all the
-	  steps. Include screenshots for both the case where the
-	  attack works and where the attack doesn't work.</li>
+  <li>XSRF Attack: Explain what an XSRF attack is. Show how you
+    can make this attack work on the list application, walking
+    through all the steps required. Then explain how to protect
+    against this attack, again walking carefully through all the
+    steps. Include screenshots for both the case where the
+    attack works and where the attack doesn't work.</li>
 
-      </ol>
+</ol>
 
-      <h2>Precautions</h2>
+<h2>Precautions</h2>
 
-      <p>Because this is a security lab, some precautions are in
-      order:</p>
+<p>Because this is a security lab, some precautions are in
+  order:</p>
 
-      <ul>
+<ul>
 
-	<li>You should never attack a site unless you have permission of the
-	  owner.</li>
+  <li>You should never attack a site unless you have permission of the
+    owner.</li>
 
-	<li>You should not use what you learn in this lab to attack any
-	  applications other than your own.</li>
+  <li>You should not use what you learn in this lab to attack any
+    applications other than your own.</li>
 
-	<li>Before conducting an attack, always get permission from the
-	  appropriate authority or organization, for example your company's
-	  security team.</li>
+  <li>Before conducting an attack, always get permission from the
+    appropriate authority or organization, for example your company's
+    security team.</li>
 
-      </ul>
+</ul>
 
-      <h2>Submission</h2>
+<h2>Submission</h2>
 
-      <p>Turn in PDF of your report using
-	<a href="learningsuite.byu.edu">learningsuite.byu.edu</a>.
-      </p>
-      
-    </div>
-  </div>
-</div>
+<p>Turn in PDF of your report using
+  <a href="learningsuite.byu.edu">learningsuite.byu.edu</a>.
+</p>
 
 {% endblock %}

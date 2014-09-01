@@ -1,0 +1,242 @@
+{% extends "fall-2014/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Lab: Web Server
+
+The goals of this assignment are (1) to understand how to
+create an event-driven server and (2) to use POSIX system
+calls for the file system and time.
+
+In this assignment, you will write a web server in Python that
+implements some of the HTTP 1.1 specification given in [RFC
+2616](http://www.faqs.org/rfcs/rfc2616.html).  You will implement
+enough of HTTP to demonstrate that you can write a substantial server
+application and understand fundamental POSIX system calls.  In
+addition, you will use a scalable event-driven server architecture.
+
+## Event-Driven Server Architecture
+
+An event-driven web server uses the *epoll* interface to manage a set
+of sockets in a single thread.  *epoll* allows your server to go to
+sleep until a socket I/O event occurs, then wakes the server up with a
+list of sockets that have I/O events ready. The server loops through
+these sockets and handles them one at a time.  The echo server code in
+this [GitHub
+repository](https://github.com/zappala/python-networking-and-threading)
+shows you how to use *epoll*.
+
+When handling sockets with this architecture, you should configure
+each client to use non-blocking socket I/O. Then the server should
+continue to call recv() for that client until it either receives a
+complete message or the socket returns an error code indicating that
+no data is available. Your server should handle all messages it has
+received so far and then move on to the next client.
+
+The server must maintain a separate message cache for each
+socket to store partial messages. In addition, the server
+times out any sockets that have been idle for a sufficient
+period of time, using a mark-and-sweep algorithm.
+
+The server must be implemented using the low level socket routines in
+the Python socket library, which provide a Python style interface to
+the BSD socket API.
+
+## Server Functionality
+
+Your web server should handle multiple client requests on a single
+socket, subject to a timeout process using a mark-and-sweep
+algorithm. If the socket has not been idle, you must continue to
+handle any requests the client sends, using the polling system to
+multiplex all the active clients.
+
+### Methods
+
+Your server should implement the GET method.  Because it
+uses HTTP 1.1, your server should support multiple requests on one
+TCP connection and multiple hosts on one web server.
+
+If the URI given is `/` your server should default to serving
+`/index.html`.
+
+### Headers
+
+You should implement the following headers:
+
+* General Headers
+    * Date
+* Response Headers
+    * Server
+* Entity Headers
+    * Content-Type
+    * Content-Length
+    * Last-Modified
+
+Both the Date and Last-Modified headers should use RFC 822 / RFC 1123
+format dates. Your server can determine the Content-Type of a file
+using its extension, based on the configuration file discussed below.
+Note that your server should be able to parse any headers not listed
+and ignore them.
+
+### Response Codes
+
+You should implement the following response codes and use them as
+appropriate:
+
+* 200 OK
+
+* 400 Bad Request : if the web server parses the request and the
+method or URI is empty
+
+* 403 Forbidden: if the web server does not have permission to open
+the requested file
+
+* 404 Not Found: if the web server cannot find the requested file
+
+* 500 Internal Server Error: if the web server encounters any other
+error when trying to open a file
+
+* 501 Not Implemented: if the web server does not implement the
+requested method
+
+All responses should include an entity body (the file being sent),
+even errors. The entity body in an error response allows the browser
+to display an error to the user.
+
+### Extra Credit
+
+For extra credit, you can make your web server work with the
+download accelerator from the previous lab. This requires
+supporting HEAD requests and Range requests.
+
+## Web Server Configuration
+
+Your web server should be configured by reading in a file called
+*web.conf*.  This file will determine where resources are located
+and what types of files the server supports.  The configuration file
+can contain multiple lines, with each line following one of the
+following formats:
+
+<pre>
+host [name] [path]
+media [ext] [type]
+parameter [name] [value]
+</pre>
+
+An example configuration file could contain:
+
+<pre>
+host default /tmp/web1
+host localhost /tmp/web2
+
+media txt text/plain
+media html text/html
+media jpg image/jpeg
+media gif image/gif
+media png image/png
+media pdf application/pdf
+
+parameter timeout 1
+</pre>
+
+A host line tells the server where the document root is
+located for a given host.  This path can be either relative
+`web1` or absolute `/tmp/web1`.  A relative path starts in the
+current directory, whereas an absolute path starts in the root
+directory. The keyword `default` gives the path for any other
+host not listed in the configuration file.
+
+A media line tells the server the MIME type to use in the Content-Type
+header for a document that ends in the given extension.  If a document
+has no extension, or if its extension is not listed in the
+configuration file, then your server should treat it as a text/plain
+file.
+
+The parameter line tells the server the time, in seconds, that a
+socket is allowed to be idle before it will be closed.
+
+When you start your web server, you should parse this configuration
+file.
+
+## Command Line Arguments and Error Checking
+
+Your server should be called *web.py* and must take the following
+arguments:
+
+<pre>
+-p [port]
+-d
+</pre>
+
+The port argument gives the port the web server should bind to, by
+default 8080.  The debug flag turns debugging on for your server.
+
+You should check for errors for all system calls and exit
+gracefully if an error occurs, printing out an appropriate error
+message.
+
+## Testing
+
+To test your web server, use the files located in the [Web Server
+Testing](https://github.com/zappala/web-server-testing) GitHub
+repository. Be sure to change the permissions of the file `test.txt`
+so you get a 403 code when accessing it:
+
+<pre>
+chmod ugo-rwx static/files/test.txt
+</pre>
+
+Use the
+[stress.py](https://github.com/zappala/web-server-testing/blob/master/load/stress-test.py)
+Python script in the same GitHub repository to test how your web
+server responds to different levels of load. For example:
+
+<pre>
+python stress-test.py localhost:8000/static/files/largefile.txt -t 10 -d 10
+</pre>
+
+will keep 10 threads active for 10 seconds. Each thread will
+constantly download the URL given on the command line
+
+## Report
+
+When you turn in your program, include a text file called README that
+gives a short guide to your code, sufficient for the TA to do a code
+review and verify that you have implemented the architecture
+properly. Describe how you handle non-blocking I/O, timeouts and
+caching. Be sure to mention where the code is located in your files.
+
+## Submission
+
+Create a tgz of your program directory. Be sure to include
+a PDF of your report. Also include a `web.conf` that uses
+default for a hostname, all of the testing files from
+GitHub, and the test scripts from GitHub. This will allow
+the TA to test your code immediately, rather than having to
+download or configure anything.
+
+For example, if your code is in the
+directory called web-server, then you would type this:
+
+<pre>
+tar -czvf web-server.tgz web-server
+</pre>
+
+Submit your report and the tgz file using [learningsuite.byu.edu](http://learningsuite.byu.edu).
+
+## Grading
+
+Your web server will be tested as specified in the [grading
+sheet]({{url_for("show",directory="winter-2014/labs",page="web-server-grading")}}).
+
+If you wish to receive help with your code, then you should print out
+clear and concise debugging information when the debugging flag is
+given on the command line. The more helpful and clear your debugging
+information is, the better your chances for getting useful help. You
+should apply this same standard to how you document your code.
+
+{% endfilter %}
+
+{% endblock %}
