@@ -1,7 +1,7 @@
 /* General */
 
 body {
-    font-family: 'Lato', serif;
+    font-family: 'Merriweather';
     line-height: 1.2;
 }
 
@@ -38,6 +38,7 @@ body {
 }
 
 .university {
+    font-family: 'Source Sans Pro';
     font-size: 1em;
     line-height: 2em;
     padding: 0px;
@@ -58,7 +59,6 @@ body {
 
 .top-bar .title-area {
     margin-right: 10px;
-    padding-bottom: 2px;
 }
 
 .title-area h1 {
@@ -178,6 +178,12 @@ body {
     padding: 0px 10px;
 }
 
+#page p, #page ul {
+    margin-bottom: 20px;
+    font-size: 16px;
+    line-height: 1.5;
+}
+
 /* Calendar */
 
 .schedule {
@@ -284,11 +290,15 @@ body {
     clear: both;
 }
 
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Lato';
+}
+
 h1 {
     font-size: 1.5em;
     color: #333;
-    margin-bottom: 0px;
-    margin-top: 10px;
+    margin-bottom: 15px;
+    margin-top: 15px;
 }
 
 #page h1 {
@@ -296,12 +306,12 @@ h1 {
 }
 
 h2 {
-    font-size: 1.2em;
+    font-size: 1.1em;
     background-color: #333;
     color: white;
     font-weight: normal;
     padding: 5px 10px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
     margin-top: 15px;
 }
 
@@ -310,6 +320,7 @@ h2.banner {
 }
 
 h2.plain {
+    font-family: 'Merriweather';
     font-size: 1.2em;
     margin-bottom: 0px;
     background: none;
@@ -384,7 +395,7 @@ p {
 	text-align: right;
     }
     .top-bar {
-	margin: 20px 0px 10px 0px;
+	margin: 0px 0px 0px 0px;
 	padding-left: 0px;
     }
     #page {
