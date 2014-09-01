@@ -15,7 +15,7 @@ def fall2014schedule():
     d.lecture('Introduction','The Internet and its Architecture')
     d.reading('The Internet and its Architecture',static + 'the-internet-and-its-architecture.pdf')
     d.reading('Neal Stephenson on laying undersea fiber-optic cables','http://www.wired.com/wired/archive/4.12/ffglass.html')
-    d.tutorial('Learn: Linux Command Line',term + 'tutorials/linux-command-line')
+    d.tutorial('Tutorial: Linux Command Line',term + 'tutorials/linux-command-line')
 
     d = s.day("September 5")
     d.lecture('Introduction','The Internet and its Architecture, Lab Discussion')

@@ -24,6 +24,12 @@ Fall 2014
 
 {{ render('','','Syllabus') }}
 {{ render('','schedule','Schedule') }}
+<li class="has-dropdown {% if previous == "tutorials" %}active{% endif %}">
+  <a href="#">Tutorials</a>
+  <ul class="dropdown">
+    {{ render('tutorials','linux-command-line','Linux Command Line') }}
+  </ul>
+</li>
 <li class="has-dropdown {% if previous == "labs" %}active{% endif %}">
   <a href="#">Labs</a>
   <ul class="dropdown">
