@@ -18,8 +18,6 @@ Markdown(app)
 @app.route('/<path:directory>/',defaults={'page':'index'})
 @app.route('/<path:directory>/<page>')
 def show(directory,page):
-    print page
-    print directory
     # try:
     if not directory:
         return render_template(page + '.html', active='home')
