@@ -18,16 +18,16 @@ Markdown(app)
 @app.route('/<path:directory>/',defaults={'page':'index'})
 @app.route('/<path:directory>/<page>')
 def show(directory,page):
-    # try:
-    if not directory:
-        return render_template(page + '.html', active='home')
     try:
-        prev = directory.split('/')[-1]
+        if not directory:
+            return render_template(page + '.html', active='home')
+        try:
+            prev = directory.split('/')[-1]
+        except:
+            prev = None
+        return render_template(directory+"/" + page + '.html', active=page, previous=prev)
     except:
-        prev = None
-    return render_template(directory+"/" + page + '.html', active=page, previous=prev)
-    # except:
-      #  return render_template('404.html'), 404
+        return render_template('404.html'), 404
 
 @freezer.register_generator
 def custom404():
