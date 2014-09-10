@@ -1,0 +1,172 @@
+{% extends "fall-2014/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Tutorial: Make
+
+The GNU Make tool has been one of the primary methods used for
+compiling and linking C and C++ programs for many years. Understanding
+how this tool works will enable you to write simple Makefiles for your
+class projects, helping you to understand what an IDE is doing for
+you. I generally prefer to write my own Makefiles, to keep things
+simple and cleanly organized. IDEs will often obscure what is
+happening with overly complex Makefiles.
+
+## A basic Makefile
+
+GNU Make uses a Makefile to determine how to compile and link a
+program.  I generally use the capitalized version of `Makefile`
+because Make will ignore the lowercase `makefile` if the capitalized
+version exists. On a Linux system, capitalized file names also show up
+first in the listing, making it easy to see that it is present.
+
+Here is a simple `Makefile` that I use to compile an echo client and
+server program I use in my [socket programming
+examples](https://github.com/zappala/socket-programming-examples-c):
+
+```
+# Makefile for echo client and server
+
+CXX=			g++ $(CCFLAGS)
+
+ECHO-SERVER=		echo-server.o inet-server.o server.o
+ECHO-CLIENT=		echo-client.o inet-client.o client.o
+OBJS =			$(ECHO-SERVER) $(ECHO-CLIENT)
+
+LIBS=
+
+CCFLAGS= -g
+
+all:	echo-server echo-client
+
+echo-server:$(ECHO-SERVER)
+	$(CXX) -o server $(ECHO-SERVER) $(LIBS)
+
+echo-client:$(ECHO-CLIENT)
+	$(CXX) -o client $(ECHO-CLIENT) $(LIBS)
+
+clean:
+	rm -f $(OBJS) $(OBJS:.o=.d)
+
+realclean:
+	rm -f $(OBJS) $(OBJS:.o=.d) server client
+```
+
+The first line:
+
+```
+CXX=			g++ $(CCFLAGS)
+```
+
+assigns the pre-defined CXX variable, which tells Make which compiler to use. 
+In this case, we set it to the g++ compiler, since we will be using C++
+code, but we also append the value of the CCFLAGS variable. This is
+set by a later line:
+
+```
+CCFLAGS= -g
+```
+
+When used with g++, this flag will create debugging information that
+can be used by the gdb and ddd debuggers. If you do not set the CXX
+variable, Make will attempt to use the correct compiler based on the
+suffix of the source file.
+
+The Makefile defines three additional variables:
+
+```
+ECHO-SERVER=		echo-server.o inet-server.o server.o
+ECHO-CLIENT=		echo-client.o inet-client.o client.o
+OBJS =			$(ECHO-SERVER) $(ECHO-CLIENT)
+```
+
+The first two list the objects needed to be linked into the echo server and
+echo client binaries. The last one combines these two variables into one.
+We'll see how these are used below.
+
+We next define various targets for the Makefile. These are tasks you
+can call from the command line with Make. A target consists of a word,
+a colon, and then the dependencies for that target.
+
+```
+all:	echo-server echo-client
+```
+
+The `all` target is called when you type `make` on the command line
+without specifying an additional target. In this case, we tell Make
+that its dependencies are the echo-server and echo-client
+targets. There are no commands specified for this target, so the only
+thing Make will do in this case is resolve each of these dependencies
+in order.
+
+```
+echo-server:$(ECHO-SERVER)
+	$(CXX) -o server $(ECHO-SERVER) $(LIBS)
+```
+
+The echo-server target specifies the object files in the ECHO-SERVER
+variable as dependencies. The first thing Make will do is resolve
+these dependencies. The default action in this case is to locatea  source
+file for each object. Make sees echo-server
+
+echo-client:$(ECHO-CLIENT)
+	$(CXX) -o client $(ECHO-CLIENT) $(LIBS)
+
+
+## Automatic dependency generation
+
+
+
+```
+# These lines ensure that dependencies are handled automatically.
+%.d:	%.cc
+	$(SHELL) -ec '$(CC) -M $(CPPFLAGS) $< \
+		| sed '\''s/\($*\)\.o[ :]*/\1.o $@ : /g'\'' > $@; \
+		[ -s $@ ] || rm -f $@'
+
+include	$(OBJS:.o=.d)
+
+```
+
+## Recommended Commands
+
+These are the commands I recommend you learn:
+
+* Navigation and Files
+    * pwd
+    * mkdir
+    * cd
+    * ls
+    * cp
+    * mv
+    * less
+    * cat
+    * tail
+    * chmod
+* Job Control
+    * ps
+    * top
+    * kill
+    * jobs
+    * control-z
+    * bg
+    * fg
+    * history
+* I/O Redirection
+* Searching
+    * grep
+    * find
+    * sort
+* Miscellaneous
+    * tab completion
+    * wildcard matching
+* Help
+    * man
+
+I also recommend understanding [the file system](http://linuxcommand.org/lc3_lts0040.php).
+
+{% endfilter %}
+
+{% endblock %}
