@@ -26,14 +26,14 @@ Here is a simple `Makefile` that I use to compile an echo client and
 server program I use in my [socket programming
 examples](https://github.com/zappala/socket-programming-examples-c):
 
-```
+<pre>
 # Makefile for echo client and server
 
-CXX=			g++ $(CCFLAGS)
+CXX=                    g++ $(CCFLAGS)
 
-ECHO-SERVER=		echo-server.o inet-server.o server.o
-ECHO-CLIENT=		echo-client.o inet-client.o client.o
-OBJS =			$(ECHO-SERVER) $(ECHO-CLIENT)
+ECHO-SERVER=            echo-server.o inet-server.o server.o
+ECHO-CLIENT=            echo-client.o inet-client.o client.o
+OBJS =                  $(ECHO-SERVER) $(ECHO-CLIENT)
 
 LIBS=
 
@@ -42,32 +42,32 @@ CCFLAGS= -g
 all:	echo-server echo-client
 
 echo-server:$(ECHO-SERVER)
-	$(CXX) -o server $(ECHO-SERVER) $(LIBS)
+        $(CXX) -o server $(ECHO-SERVER) $(LIBS)
 
 echo-client:$(ECHO-CLIENT)
-	$(CXX) -o client $(ECHO-CLIENT) $(LIBS)
+        $(CXX) -o client $(ECHO-CLENT) $(LIBS)
 
 clean:
-	rm -f $(OBJS) $(OBJS:.o=.d)
+        rm -f $(OBJS) $(OBJS:.o=.d)
 
 realclean:
-	rm -f $(OBJS) $(OBJS:.o=.d) server client
-```
+        rm -f $(OBJS) $(OBJS:.o=.d) server client
+</pre>
 
 The first line:
 
-```
-CXX=			g++ $(CCFLAGS)
-```
+<pre>
+CXX=                    g++ $(CCFLAGS)
+</pre>
 
 assigns the pre-defined CXX variable, which tells Make which compiler to use. 
 In this case, we set it to the g++ compiler, since we will be using C++
 code, but we also append the value of the CCFLAGS variable. This is
 set by a later line:
 
-```
+<pre>
 CCFLAGS= -g
-```
+</pre>
 
 When used with g++, this flag will create debugging information that
 can be used by the gdb and ddd debuggers. If you do not set the CXX
@@ -76,11 +76,11 @@ suffix of the source file.
 
 The Makefile defines three additional variables:
 
-```
-ECHO-SERVER=		echo-server.o inet-server.o server.o
-ECHO-CLIENT=		echo-client.o inet-client.o client.o
-OBJS =			$(ECHO-SERVER) $(ECHO-CLIENT)
-```
+<pre>
+ECHO-SERVER=            echo-server.o inet-server.o server.o
+ECHO-CLIENT=            echo-client.o inet-client.o client.o
+OBJS=	                $(ECHO-SERVER) $(ECHO-CLIENT)
+</pre>
 
 The first two list the objects needed to be linked into the echo server and
 echo client binaries. The last one combines these two variables into one.
@@ -90,9 +90,9 @@ We next define various targets for the Makefile. These are tasks you
 can call from the command line with Make. A target consists of a word,
 a colon, and then the dependencies for that target.
 
-```
-all:	echo-server echo-client
-```
+<pre>
+all:    echo-server echo-client
+</pre>
 
 The `all` target is called when you type `make` on the command line
 without specifying an additional target. In this case, we tell Make
@@ -101,71 +101,96 @@ targets. There are no commands specified for this target, so the only
 thing Make will do in this case is resolve each of these dependencies
 in order.
 
-```
+<pre>
 echo-server:$(ECHO-SERVER)
-	$(CXX) -o server $(ECHO-SERVER) $(LIBS)
-```
+        $(CXX) -o server $(ECHO-SERVER) $(LIBS)
+</pre>
 
 The echo-server target specifies the object files in the ECHO-SERVER
 variable as dependencies. The first thing Make will do is resolve
-these dependencies. The default action in this case is to locatea  source
-file for each object. Make sees echo-server
+these dependencies. The default action in this case is to locate a
+source file for each object. For `echo-server.o`, Make finds
+`echo-server.cc` and runs `g++ -g -c -o echo-server.o echo-server.cc`
+to compile the code.  Make likewise compiles the source files for
+`inet-server.o` and `server.o`.
 
+Once these dependencies are resolved, make follows the command listed
+for this target, which, after substituting variables, resolves to:
+
+<pre>
+g++ -g -o server echo-server.o inet-server.o server.o 
+</pre>
+
+This links the compiled objects into the server executable.
+
+<pre>
 echo-client:$(ECHO-CLIENT)
-	$(CXX) -o client $(ECHO-CLIENT) $(LIBS)
+        $(CXX) -o client $(ECHO-CLIENT) $(LIBS)
+</pre>
 
+The echo-client target works the same way, compiling the object files
+and then linking them into the client executable.
+
+For both of these targets, you can choose to make the individually:
+
+<pre>
+make echo-server
+make echo-client
+</pre>
+
+<pre>
+clean:
+        rm -f $(OBJS) $(OBJS:.o=.d)
+
+realclean:
+        rm -f $(OBJS) $(OBJS:.o=.d) server client
+</pre>
+
+These last lines provide some targets to clean up the object files,
+dependency files, and binaries. You can call them with:
+
+<pre>
+make clean
+make realclean
+</pre>
 
 ## Automatic dependency generation
 
+One problem with the Makefile, as shown above, is that it will only
+recompile the code if one of the source files changes. Any changes to
+header files will be ignored.
 
+An easy way to fix this is to list the header files as dependencies as
+well, but this requires you to update the Makefile any time any of those
+dependencies change. An easy way to automatically handle dependencies
+on header files is to use the following:
 
-```
+<pre>
 # These lines ensure that dependencies are handled automatically.
-%.d:	%.cc
-	$(SHELL) -ec '$(CC) -M $(CPPFLAGS) $< \
-		| sed '\''s/\($*\)\.o[ :]*/\1.o $@ : /g'\'' > $@; \
-		[ -s $@ ] || rm -f $@'
+%.d:    %.cc
+        $(SHELL) -ec '$(CC) -M $(CPPFLAGS) $< \
+                | sed '\''s/\($*\)\.o[ :]*/\1.o $@ : /g'\'' > $@; \
+                [ -s $@ ] || rm -f $@'
 
-include	$(OBJS:.o=.d)
+INCLUDE	$(OBJS:.o=.d)
+</pre>
 
-```
+The first line sets up a target for ``*.d`` and lists ``*.cc`` as a
+dependency.  This target runs a command on the shell that uses the
+compiler to to generate a list of dependencies for each ``file.cc``
+using:
 
-## Recommended Commands
+<pre>
+g++ -M file.cc
+</pre>
 
-These are the commands I recommend you learn:
+It pipes the output to the sed editor, which does some substitution
+and places the result into the ``file.d``. Each of these ``*.d`` files
+create dependencies between the object file and the header files it
+depends on.
 
-* Navigation and Files
-    * pwd
-    * mkdir
-    * cd
-    * ls
-    * cp
-    * mv
-    * less
-    * cat
-    * tail
-    * chmod
-* Job Control
-    * ps
-    * top
-    * kill
-    * jobs
-    * control-z
-    * bg
-    * fg
-    * history
-* I/O Redirection
-* Searching
-    * grep
-    * find
-    * sort
-* Miscellaneous
-    * tab completion
-    * wildcard matching
-* Help
-    * man
-
-I also recommend understanding [the file system](http://linuxcommand.org/lc3_lts0040.php).
+The last line then includes these ``*.d`` files with the Makefile so
+that the targets are included when you run Make.
 
 {% endfilter %}
 
