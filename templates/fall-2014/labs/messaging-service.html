@@ -168,7 +168,7 @@ should start counting at 1 and should be unique for each user.
 % 
 </pre>
 
-This reads the message at [index] for the indentified [user].  The
+This reads the message at [index] for the identified [user].  The
 user types the first line shown. The client formats a *get* request,
 sends it to the server, and waits for a response. The client should
 print the subject and the message retrieved, or an error message.
@@ -235,7 +235,7 @@ a testing script. You can run the server with:
 python messageDaemon.py
 </pre>
 
-Using a separate termainl, run the client with:
+Using a separate terminal, run the client with:
 
 <pre>
 python messageClient.py
@@ -260,6 +260,23 @@ C++](https://github.com/zappala/socket-programming-examples-c) as a
 starting point. You can freely use all this code. I recommend starting
 with the client and server in the `echo` folder. For string parsing,
 you can use [istringstream](http://www.cplusplus.com/reference/sstream/istringstream/) or methods in the [string library](http://www.cplusplus.com/reference/string/string/).
+
+## Debugging Network Protocols
+
+If you are having difficulty with a client talking to a server, or
+getting your server to pass the test driver, then you likely have an
+error in your protocol. For example, a common error is for the client
+to add a "\n" at the end of the put message, or for the server to
+expect a "\n" at the end of the put message, when these are not part
+of the protocol.
+
+To debug a network protocol, I strongly advise putting a print
+statement after every call to `recv()` and another one before every
+call to `send()`. On the client, this will help you to see exactly
+what is being sent to the server and what response you get. On the
+server, this will help you see exactly what is received from the
+client and what you sent in response. Examining this output should
+help you to see any errors in your implementation of a protocol.
 
 ## Submission
 
@@ -290,7 +307,7 @@ sheet]({{url_for("show",directory="winter-2014/labs",page="messaging-service-gra
 
 As a part of testing, we will use the [Python testing
 script](https://github.com/zappala/messaging-service-python) posted at
-Github.
+GitHub.
 
 If you wish to receive help with your code, then you should print out
 clear and concise debugging information when the debugging flag is
