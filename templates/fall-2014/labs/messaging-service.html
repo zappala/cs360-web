@@ -224,11 +224,42 @@ see *man 3 getopt*.  This is a powerful parser that is easy to use and
 enables many of the standard command-line behaviors that are familiar
 to Linux users.
 
-## Example Code
+## Getting Started
 
-There are some [socket programming examples in
-C++](https://github.com/zappala/socket-programming-examples-c) on
-GitHub.
+Start by cloning the [Python messaging
+service](https://github.com/zappala/messaging-service-python) Git
+repository. This provides an example of the lab written in Python and
+a testing script. You can run the server with:
+
+<pre>
+python messageDaemon.py
+</pre>
+
+Using a separate termainl, run the client with:
+
+<pre>
+python messageClient.py
+</pre>
+
+Once you understand how the messaging system is supposed to work, write
+your own client in C++ and use it to communicate with the Python server.
+This will give you experience using the socket interface, parsing strings,
+and writing a network protocol. Your client interface should work exactly
+the same as the Python client.
+
+Once you have a client working, write you own server. It should work
+with both your own client and the Python client. If all of these
+interoperate, then you can be confident you have the protocol working
+correctly. As a last step, use the python `messageTest.py` script to
+test your server and use the [grading
+sheet]({{url_for("show",directory="winter-2014/labs",page="messaging-service-grading")}})
+to be sure you have implemented everything correctly.
+
+As you write your code, use the [socket programming examples in
+C++](https://github.com/zappala/socket-programming-examples-c) as a
+starting point. You can freely use all this code. I recommend starting
+with the client and server in the `echo` folder. For string parsing,
+you can use [istringstream](http://www.cplusplus.com/reference/sstream/istringstream/) or methods in the [string library](http://www.cplusplus.com/reference/string/string/).
 
 ## Submission
 
@@ -241,12 +272,12 @@ current directory. Follow the instructions below.
 send only the source code and your Makefile.  For example, if your
 code is in the directory called lab1, then you would type this:
 
-    <pre>
-    cd lab1
-    make realclean
-    cd ..
-    tar -czvf lab1.tgz lab1
-    </pre>
+<pre>
+cd lab1
+make realclean
+cd ..
+tar -czvf lab1.tgz lab1
+</pre>
 
 * Submit the tgz file using
 [learningsuite.byu.edu](http://learningsuite.byu.edu)
@@ -254,7 +285,7 @@ code is in the directory called lab1, then you would type this:
 ## Grading
 
 Your lab will be tested as specified in the [grading
-sheet]({{url_for("show",directory="winter-2014/labs",page="messaging-service-grading")}})
+sheet]({{url_for("show",directory="winter-2014/labs",page="messaging-service-grading")}}).
       
 
 As a part of testing, we will use the [Python testing

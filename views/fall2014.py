@@ -25,7 +25,7 @@ def fall2014schedule():
     d = s.day("September 8")
     d.lecture('Systems','Socket Programming')
     d.reading('Socket Programming',static + 'socket-programming.pdf')
-
+    d.tutorial('Tutorial: Make',term + 'tutorials/make')
 
     d = s.day("September 10")
     d.lecture('Systems','Sockets and the OS')
