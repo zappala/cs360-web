@@ -30,6 +30,7 @@ def fall2014schedule():
     d = s.day("September 10")
     d.lecture('Systems','Sockets and the OS')
     d.reading('Sockets and the OS',static + 'sockets-and-the-os.pdf')
+    d.tutorial('Tutorial: Git',term + 'tutorials/git')
 
     d = s.day("September 12")
     d.lecture('Concurrent Programming','Threads and the OS')
