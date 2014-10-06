@@ -28,8 +28,14 @@ server specified in the URL, to determine the size of the object. If
 the object has a valid Content-Length field, it then downloads the
 object in parallel, using the specified number of threads. Each thread
 sends a GET request with a Range header that gives the range of bytes
-desired. The response should have a Content-Range header indicating
-the byte range of the response.
+desired. Be sure the GET request also requests the identity encoding:
+
+<pre>
+Accept-Encoding: identity
+</pre>
+
+so that it doesn't get a compressed response. The response should have
+a Content-Range header indicating the byte range of the response.
 
 The downloader saves the file in the current directory, using the same
 name as given in the URL. If the URL ends with "/", then the name
@@ -47,6 +53,10 @@ number indicating the time taken to download the object, starting from
 when the threads are created and ending when the last thread
 finishes.
 
+To verify that you downloaded the file correctly, use `wget` to
+download the file into a separate directory, and then `diff` to verify
+the files are the same.
+
 ## Experiments
 
 Several scripts for experiments are located in the 
@@ -61,8 +71,8 @@ you use while running the experiment.
 
 **Before running the experiments, be sure your code is working. Only
 run the script once or twice to collect experimental data. These files
-are hosted on DropBox and the account is rate-limited. If too many people
-download them at once, then the downloads will stop working.**
+are hosted by the federal government, and we don't want to overload their
+systems.**
 
 With the data you collect, use the
 [plot.py](https://github.com/zappala/python-networking-and-threading/blob/master/download-accelerator/plot.py)
@@ -95,8 +105,7 @@ sudo pip install virtualenv
 Or on the CS Linux machines:
 
 <pre>
-easy_install pip
-easy_install virtualenv
+easy_install --user virtualenv
 </pre>
 
 Then create a virtual environment:

@@ -107,6 +107,8 @@ def fall2014schedule():
     d = s.day('October 15')
     d.lecture('Systems','Event Driven Architecture, Lab Discussion')
     d.reading('Event-Driven Architecture',static+'event-driven-architecture.pdf')
+    d.reading('Why Threads Are A Bad Idea (for most purposes)','http://chess.cs.umd.edu/class/spring2009/cmsc433/Lectures/threadVsEvents.pdf')
+
     d = s.day('October 17')
     d.lecture('Systems','Web Proxies, Caching, and CDNs')
     d.reading('Web Proxies, Caching, and CDNs',static+'web-proxies-caching-and-cdns.pdf')
