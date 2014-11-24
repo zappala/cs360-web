@@ -164,37 +164,37 @@ def fall2014schedule():
     d.assignment('Web Application: Proposals','https://docs.google.com/document/d/1_nfHF3iQEdm4diifVBGUQ3OGI1peHRopp-nK3pb0x3Q/edit?usp=sharing')
 
     d = s.day('November 12')
-    d.lecture('Web Programming','Web Design')
+    d.lecture('Web Programming','Web Design and CSS')
     d.reading('Web Design',static+'web-design.pdf')
+    d.reading('HTML and CSS Tutorial','http://www.codecademy.com/tracks/web')
+    d.reading('CSS Tutorial','http://www.htmldog.com/guides/css/')
+    d.reading('Learn CSS Layout','http://learnlayout.com/')
+    d.reading('Design Process in the Responsive Age','http://uxdesign.smashingmagazine.com/2012/05/30/design-process-responsive-age/')
+    d.reading('Twitter Bootstrap','http://getbootstrap.com/')
+    d.reading('Foundation','http://foundation.zurb.com/')
 
 
     d = s.day('November 14')
-    d.lecture('Web Programming','CSS')
-    d.reading('HTML and CSS Tutorial','http://www.codecademy.com/tracks/web')
-    d.reading('CSS Tutorial','http://www.htmldog.com/guides/css/')
-    d.reading('Test HTML',static+'css/test.html')
-    d.reading('Test CSS',static+'css/style.css')
-    d.reading('Learn CSS Layout','http://learnlayout.com/')
-    d.reading('SASS','http://alistapart.com/article/why-sass')
-    d.reading('Design Process in the Responsive Age','http://uxdesign.smashingmagazine.com/2012/05/30/design-process-responsive-age/')
-    d.reading('Twitter Bootstrap','http://getbootstrap.com/')
-    d.reading('Responsive Grid System','http://www.responsivegridsystem.com/')
+    d.lecture('Web Programming','Introduction to Web Frameworks and MVC')
+    d.reading('Web Frameworks and MVC',static+'web-frameworks-and-mvc.pdf')
     d.assignment('Web Application: Idea and Features',term+'/labs/web-application')
-
     s.week()
 
     d = s.day('November 17')
-    d.lecture('Web Programming','Introduction to Web Frameworks and MVC')
-    d.reading('Web Frameworks and MVC',static+'web-frameworks-and-mvc.pdf')
-
-    d = s.day('November 19')
-    d.lecture('Web Programming','Designing Relational Database Models')
+    d.lecture('Web Programming','Databases')
     d.reading('Designing Relational Database Models',static+'designing-relational-database-models.pdf')
-
-    d = s.day('November 21')
-    d.lecture('Web Programming','Designing Document Database Models')
     d.reading('Designing Document Database Models',static+'designing-document-database-models.pdf')
     d.reading('Starbucks Does Not Use Two-Phase Commit','http://eaipatterns.com/ramblings/18_starbucks.html')
+
+    d = s.day('November 19')
+    d.lecture('Web Programming','node.js')
+
+    d = s.day('November 21')
+    d.lecture('Web Programming','Angular.js')
+    d.reading('AngularJS in 20ish Minutes','https://www.youtube.com/watch?v=tnXO-i7944M')
+    d.reading('10 Reasons Why You Should Use AngularJS','http://www.sitepoint.com/10-reasons-use-angularjs/')
+    d.reading('Why Does Angular.js Rock?','http://angular-tips.com/blog/2013/08/why-does-angular-dot-js-rock/')
+    d.reading('The Top 10 Mistakes AngularJS Developers Make','https://www.airpair.com/angularjs/posts/top-10-mistakes-angularjs-developers-make')
 
     d = s.day('November 22')
     d.assignment('Web Application: Interface Design',term+'/labs/web-application')
@@ -202,18 +202,14 @@ def fall2014schedule():
     s.week()
 
     d = s.day('November 24')
-    d.lecture('Web Programming','Users and Authentication')
-    d.reading('Users and Authentication',static+'users-and-authentication.pdf')
-
-    d = s.day('November 25')
     d.lecture('Web Programming','Javascript')
     d.reading('Javascript',static+'javascript.pdf')
     d.reading('Javascript at Codecademy','http://www.codecademy.com/tracks/javascript?jump_to=4fa836e5996b00000302064a')
     d.reading('JQuery at Codecademy','http://www.codecademy.com/tracks/jquery')
-    d.reading('AngularJS in 20ish Minutes','https://www.youtube.com/watch?v=tnXO-i7944M')
-    d.reading('10 Reasons Why You Should Use AngularJS','http://www.sitepoint.com/10-reasons-use-angularjs/')
-    d.reading('Why Does Angular.js Rock?','http://angular-tips.com/blog/2013/08/why-does-angular-dot-js-rock/')
-    d.reading('Ember.js Guides','http://emberjs.com/guides/')
+
+    d = s.day('November 25')
+    d.lecture('Web Programming','Group Meetings')
+    d.reading('Front End Ops','http://www.ianfeather.co.uk/presentations/front-end-ops/#/t0-begin')
 
     d = s.day('November 26')
     d.lecture('No Class')
@@ -224,7 +220,8 @@ def fall2014schedule():
     s.week()
 
     d = s.day('December 1')
-    d.lecture('Web Programming','Group Meetings')
+    d.lecture('Web Programming','Users and Authentication')
+    d.reading('Users and Authentication',static+'users-and-authentication.pdf')
     d.assignment('Web Application: Milestone 1',term+'/labs/web-application')
 
     d = s.day('December 3')
