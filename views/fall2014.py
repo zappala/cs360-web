@@ -192,6 +192,7 @@ def fall2014schedule():
 
     d = s.day('November 21')
     d.lecture('Web Programming','Angular.js')
+    d.reading('AngularJS Course','https://www.codeschool.com/courses/shaping-up-with-angular-js')
     d.reading('AngularJS in 20ish Minutes','https://www.youtube.com/watch?v=tnXO-i7944M')
     d.reading('10 Reasons Why You Should Use AngularJS','http://www.sitepoint.com/10-reasons-use-angularjs/')
     d.reading('Why Does Angular.js Rock?','http://angular-tips.com/blog/2013/08/why-does-angular-dot-js-rock/')
