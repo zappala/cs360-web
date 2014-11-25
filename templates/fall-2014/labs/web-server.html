@@ -189,7 +189,7 @@ chmod ugo-rwx static/files/test.txt
 </pre>
 
 Use the
-[stress.py](https://github.com/zappala/web-server-testing/blob/master/load/stress-test.py)
+[stress.py](https://github.com/zappala/web-server-testing/blob/master/tests/stress-test.py)
 Python script in the same GitHub repository to test how your web
 server responds to different levels of load. For example:
 
@@ -200,22 +200,18 @@ python stress-test.py localhost:8000/static/files/largefile.txt -t 10 -d 10
 will keep 10 threads active for 10 seconds. Each thread will
 constantly download the URL given on the command line
 
-## Report
+## Non-Blocking I/O Requirement
 
-When you turn in your program, include a text file called README that
-gives a short guide to your code, sufficient for the TA to do a code
-review and verify that you have implemented the architecture
-properly. Describe how you handle non-blocking I/O, timeouts and
-caching. Be sure to mention where the code is located in your files.
+Your web server is required to use epoll() with non-blocking I/O on
+both the server and the client sockets, as shown in the sample code.
+Any lab turned in without this will earn zero points.
 
 ## Submission
 
-Create a tgz of your program directory. Be sure to include
-a PDF of your report. Also include a `web.conf` that uses
-default for a hostname, all of the testing files from
-GitHub, and the test scripts from GitHub. This will allow
-the TA to test your code immediately, rather than having to
-download or configure anything.
+Create a tgz of your program directory. Also include a `web.conf` that
+uses default for a hostname, all of the testing files from GitHub, and
+the test scripts from GitHub. This will allow the TA to test your code
+immediately, rather than having to download or configure anything.
 
 For example, if your code is in the
 directory called web-server, then you would type this:
@@ -229,7 +225,7 @@ Submit your report and the tgz file using [learningsuite.byu.edu](http://learnin
 ## Grading
 
 Your web server will be tested as specified in the [grading
-sheet]({{url_for("show",directory="winter-2014/labs",page="web-server-grading")}}).
+sheet]({{url_for("show",directory="fall-2014/labs",page="web-server-grading")}}).
 
 If you wish to receive help with your code, then you should print out
 clear and concise debugging information when the debugging flag is

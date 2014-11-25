@@ -6,6 +6,7 @@ from schedule import *
 @app.route('/fall-2014/schedule')
 def fall2014schedule():
     static = '/static/lectures/winter-2014/'
+    new = '/static/lectures/fall-2014/'
     term = '/fall-2014/'
     s = Schedule()
 
@@ -118,7 +119,7 @@ def fall2014schedule():
 
     d = s.day('October 20')
     d.lecture('Security','Network Security')
-    d.reading('Network Security',static+'network-security.pdf')
+    d.reading('Network Security',new+'network-security.pdf')
 
     d = s.day('October 22')
     d.lecture('Security','Network Security')
@@ -161,7 +162,7 @@ def fall2014schedule():
 
     d = s.day('November 10')
     d.lecture('Web Programming','Team Formation and Agile Development')
-    d.assignment('Web Application: Proposals','https://docs.google.com/document/d/1_nfHF3iQEdm4diifVBGUQ3OGI1peHRopp-nK3pb0x3Q/edit?usp=sharing')
+    d.assignment('Web Application: Proposals','https://docs.google.com/document/d/1-GTbeKrZ9mPSR9mhIUbtXT86naQAuOxVj3iyEw0Haco/edit?usp=sharing')
 
     d = s.day('November 12')
     d.lecture('Web Programming','Web Design and CSS')
