@@ -224,6 +224,9 @@ def fall2014schedule():
     d = s.day('December 1')
     d.lecture('Web Programming','Users and Authentication')
     d.reading('Users and Authentication',static+'users-and-authentication.pdf')
+    d.reading('Research on passwords by Cormac Herley','http://research.microsoft.com/en-us/people/cormac/')
+    d.reading('The Quest to Replace Passwords: A Framework for Comparative Evaluation of Web Authentication Schemes','http://research.microsoft.com/apps/pubs/?id=161585')
+    d.reading('Does My Password Go up to Eleven? The Impact of Password Meters on Password Selection','http://research.microsoft.com/apps/pubs/?id=192108')
     d.assignment('Web Application: Milestone 1',term+'/labs/web-application')
 
     d = s.day('December 3')
