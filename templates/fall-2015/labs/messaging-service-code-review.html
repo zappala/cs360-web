@@ -1,0 +1,72 @@
+{% extends "fall-2015/menu.html" %}
+
+{% macro item(text,criteria) -%}
+<div class="box"></div>
+<div class="item">{{ text }}</div>
+<div class="clear"></div>
+<div class="criteria">{{ criteria|safe }}</div>
+<div class="problem"></div>
+<div class="problem"></div>
+{%- endmacro %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Messaging Service Code Review
+
+*Fill out this sheet for your own code and for two other students you are assigned to review.*
+
+<div class="border row">
+  <div class="columns large-6">
+    Student Name:
+  </div>
+    <div class="columns large-6">
+    Reviewed By: 
+  </div>
+</div>
+
+*Check the boxes below to indicate which tests pass
+successfully.  Circle the boxes that do not work correctly and include
+a written statement explaining the error that occured.*
+
+## Student Client and Server
+
+{{ item("Command line parsing","The server starts on the
+supplied port and can be contacted by clients using the host
+and port information.") }}
+
+{{ item("Message Protocol","The client is able to send, list, and
+read multiple messages for a variety of users.  Multiple clients can
+access the server, but one at a time.") }}
+
+{{ item("User Interface","The user interface works as
+specified.") }}
+
+## Interoperability
+
+{{ item("Message Protocol","Passes the Message Protocol tests
+in the testing script.") }}
+
+{{ item("Errors","Passes the Errors test in the testing
+script.") }}
+
+{{ item("Large Messages","Passes the Large Message test in the
+testing script.") }}
+
+{{ item("Partial Messages","Passes the Partial Messages test in
+the testing script. The student's code is efficient and does NOT
+read one byte at a time when calling recv().") }}
+
+## General Feedback
+
+{{ item("Feedback","Any additional thoughts about the code: things done well, areas for improvement.") }}
+
+
+<p></p>
+
+{% endfilter %}
+
+{% endblock %}
+
+

@@ -1,0 +1,45 @@
+{% extends "fall-2015/menu.html" %}
+
+{% block page %}
+
+<h1>Schedule</h1>
+
+<p>This schedule is subject to change. Assignments may be
+changed up until the day they are assigned.</p>
+
+<h2>Section 1: TTh 8:00am B106 JFSB</h2>
+<h2>Section 2: MW 8:00am B094 JFSB</h2>
+
+{% for week in weeks %}
+<h2 class="plain">Week {{ week.number }}</h2>
+
+{% for day in week.days %}
+<div class="row-fluid schedule">
+
+  <div class="span2 day">{{ day.date }}</div>
+
+  <div class="span10">
+    {% if day.section %}
+    <div class="content">
+      <span class="section">{{ day.section }}</span> {% if day.topic %} | <span class="topic">{{ day.topic }}</span>{% endif %}
+      <ul>
+	{% for reading in day.readings %}
+	<li>{{ reading|safe }}</li>
+	{% endfor %}
+      </ul>
+    </div>
+    {% endif %}
+    {% for tutorial in day.tutorials %}
+    <div class="tutorial">{{ tutorial|safe }}</div>
+    {% endfor %}
+    {% for assignment in day.assignments %}
+    <div class="assignment">{{ assignment|safe }}</div>
+    {% endfor %}
+  </div>
+</div>
+
+{% endfor %}
+
+{% endfor %}
+      
+{% endblock %}
