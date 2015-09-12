@@ -1,0 +1,193 @@
+{% extends "fall-2015/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Homework: Socket I/O
+
+When using a TCP socket, the socket API gives you the abstraction of a stream
+of bytes. It is up to your application to break the stream of bytes into
+coherent messages. This homework will walk you through that process.
+
+## Reading from a socket
+
+To read from a socket, use the recv() call discussed in the [socket
+programming](http://cs360.byu.edu/static/lectures/winter-2014/socket-programming.pdf)
+lecture notes.
+
+<pre>
+ssize_t recv(int s, void *buf, size_t len, int flags);
+</pre>
+
+These parameters are:
+
+* s: the socket you want to read from
+* buf: a pointer to a character buffer where the operating system will store data that has arrived on the socket
+* len: the size of your buffer in bytes
+* flags: set to zero for now
+
+This call will put your program to sleep until there is at least one
+byte of data received for the socket, or the socket is closed. The
+call returns the number of bytes actually read.
+
+Check the return value of `recv()`, which represents the number of bytes
+returned in the `buf` you provided.. The following are the possibilities
+you need to check:
+
+1. less than zero bytes, errno == EINTR
+
+    The system call was interrupted. Try again.
+
+1. less than zero bytes, any other error
+
+    This is a fatal error. Close the socket and try to handle this gracefully. If you
+    are a client, then you may try to reopen a socket to the server. If you are
+    a server ,you may simply handle the next client.
+
+1. zero bytes
+
+
+    This means the socket is closed. Close the socket and try to handle this gracefully.
+    See above.
+
+1. positive bytes
+
+    The return value is the number of bytes received. Process these bytes.
+
+## Handling messages
+
+Because the socket provides only a stream of bytes, it is your responsibility,
+as a developer, to divide this stream into messages. The following code is
+an example from the echo server discussed in class:
+
+<pre><code>
+void
+Server::handle(int client) {
+    // loop to handle all requests
+    while (1) {
+        // get a request
+        string request = get_request(client);
+        // break if client is done or an error occurred
+        if (request.empty())
+            break;
+        // send response
+        bool success = send_response(client,request);
+        // break if an error occurred
+        if (not success)
+            break;
+    }
+    close(client);
+}
+</code></pre>
+
+The server will use a method called `get_request()` to get a message
+from the client socket. This method continually calls `recv()` until
+it receives a newline (indicating the end of a message) or the socket
+is closed or some error occurs. As long as the request is not empty,
+the server sends the same characters back to the client. Note, the
+`send_response()` method will call `send()` in a loop to be sure
+all the characters are sent.
+
+In some cases, a message may contain a fixed length of characters, rather
+than using a newline to mark the end of a message. For example, the
+message `store test.txt 20\nThis is a test file.` might ask
+the server to store a file called "test.txt" with the text indicated
+after the newline. The parameter `20` indicates the number of characters
+that come *after* the newline.
+
+In this case, you may need server code that looks like this:
+
+<pre><code>
+void
+Server::handle(int client) {
+    // loop to handle all requests
+    while (1) {
+        // get a request
+        string request = get_request(client);
+        // break if client is done or an error occurred
+        if (request.empty())
+            break;
+        // parse request
+        Message message = parse_request(request);
+        // get more characters if needed
+        if (message.needed)
+            get_value(client,message);
+        // do something
+        bool success = handle_message(client,message);
+        // break if an error occurred
+        if (not success)
+            break;
+    }
+    close(client);
+}
+</code></pre>
+
+Here, the server uses a method called `parse_request()` to parse the
+line that was received into a message. This message may be an object,
+containing various fields, such as:
+
+<pre><code>
+  class Message {
+      string command;
+      string[] params;
+      string value;
+      bool needed;
+  }
+</code></pre>
+
+If we are parsing `store test.txt 20\n`, then command would be set to
+`store` and params would be set to `['test.txt','20']`. The `needed`
+field would be set to `true`, since the second parameter indicates there
+should be 20 more bytes to store in the `value` field. The `get_value()`
+method calls `recv()` until it receives all 20 bytes needed. Finally,
+the `handle_message()` method handles the received message and stores
+the file.
+
+## Parsing
+
+To parse strings, convert them to C++ strings, as shown in the echo
+sever code, and then use
+[istringstream](http://www.cplusplus.com/reference/sstream/istringstream/)
+for parsing.
+
+## Caching
+
+When you call `recv()`, remember that you are dealing with a stream of
+bytes! In the example above, the first time you call `recv()`, you may
+get `store test.txt 20\nThis`. When you parse the message looking for
+the newline, you have four extra characters afterwards. You should
+store this in a cache, which is just a string variable stored with
+your class. The next time you call recv(), you will be trying to read
+20 characters for the value of the message.  You already have four of
+them in the cache! Check the cache, calculate that you need 16 more,
+and call `recv()` until you have all that you need. The second time
+you call `recv()` you may get ` is a t`. Append this to the cache,
+subtract off the 7 additional characters, and loop to receive the
+additional 9.
+
+Note, you will need a cache for both `get_request()` and
+`get_value()`.
+
+## Homework Assignment
+
+1. Modify the [echo server code](https://github.com/zappala/socket-programming-examples-c/tree/master/echo)
+so that the server will loop and parse an infinite number of messages using the format
+discussed above:
+
+<pre>
+  store [filename] [numberOfBytes]\n[bytes]
+</pre>
+
+Each time your server gets a message, it should find the number of
+additional bytes, read these, and then print out "Stored a file called
+[filename] with [numberofBytes] bytes".
+
+1. Write a Makefile and demonstrate that you can pass the tests
+included in [parseTest.py](https://github.com/zappala/socket-programming-examples-c/blob/master/tests/parseTest.py).
+
+1. In class, show that your code compiles and passes the tests.
+
+{% endfilter %}
+
+{% endblock %}

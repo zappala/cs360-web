@@ -40,7 +40,7 @@ def fall2015schedule():
     d.lecture('Concurrent Programming','Threads and the OS')
     d.reading('Threads and the OS',static+'threads-and-the-os.pdf')
     d.reading('Pthreads Tutorial','http://www.llnl.gov/computing/tutorials/pthreads/')
-    d.assignment('Homework: Socket I/O',term + 'homework/c-c++-strings')
+    d.assignment('Homework: Socket I/O (Due 15/16)',term + 'homework/socket-io')
 
     d.lecture('Systems','Thread Pool Architecture, Lab Discussion')
     d.reading('Thread Pool Architecture',static+'thread-pool-architecture.pdf')
