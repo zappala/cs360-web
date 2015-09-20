@@ -50,21 +50,21 @@ def fall2015schedule():
     d.lecture('Concurrent Programming','Thread Synchronization')
     d.reading('Thread Synchronization',static+'thread-synchronization.pdf')
     d.reading('Mutexes, Condition Variables, and Monitors',static+'mutexes-condition-variables-and-monitors.pdf')
-    d.assignment('Homework: Threading',term + 'homework/threading')
-
-    d = s.day("September 18")
-    d.assignment('Lab: Messaging Service',term + 'labs/messaging-service')
 
     s.week()
+
+    d = s.day("September 21")
+    d.assignment('Lab: Messaging Service',term + 'labs/messaging-service')
 
     d = s.day('September 21/22')
     d.lecture('Concurrent Programming','Mutexes, Condition Variables, and Monitors')
     d.reading('Mutexes, Condition Variables, and Monitors',static+'mutexes-condition-variables-and-monitors.pdf')
-    d.assignment('Homework: Mutexes and Condition Variables',term + 'homework/mutexes-and-condition-variables')
+    d.assignment('Homework: Threading',term + 'homework/threading')
 
     d = s.day('September 23/24')
     d.lecture('Concurrent Programming','Semaphores')
     d.reading('Semaphores',static+'semaphores.pdf')
+    d.assignment('Homework: Mutexes and Condition Variables',term + 'homework/mutexes-and-condition-variables')
 
 
     s.week()
