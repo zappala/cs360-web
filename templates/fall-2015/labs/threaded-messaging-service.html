@@ -22,10 +22,11 @@ server.
 
 Modify your server so that it creates a thread pool with 10 threads.
 When a new client arrives, the server should add it to a queue of
-connections.  The threads in the pool should remove one connection
-from the queue, handle all of its requests until the client closes the
-socket, and then go back to the queue. If the queue does not have a
-connection available, the thread should sleep until a connection is
+clients.  The threads in the pool should remove one client
+from the queue, handle **one** request, and then put the client
+back into the queue. In this way, the threads handle all the clients using
+round robin servicing. If the queue does not have a
+client available, the thread should sleep until a client is
 ready.
       
 
