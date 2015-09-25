@@ -31,12 +31,14 @@ Fall 2015
     {{ render('homework','make','Make') }}
     {{ render('homework','git','Git') }}
     {{ render('homework','socket-io','Socket I/O') }}
+    {{ render('homework','mutexes-and-condition-variables','Mutexes and Condition Variables') }}
   </ul>
 </li>
 <li class="has-dropdown {% if previous == "labs" %}active{% endif %}">
   <a href="#">Labs</a>
   <ul class="dropdown">
     {{ render('labs','messaging-service','Messaging Service') }}
+    {{ render('labs','threaded-messaging-service','Threaded Messaging Service') }}
   </ul>
 </li>
 <li class="has-dropdown {% if previous == "help" %}active{% endif %}">

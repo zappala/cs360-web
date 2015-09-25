@@ -28,7 +28,7 @@ def show(directory,page):
             prev = None
         return render_template(directory+"/" + page + '.html', active=page, previous=prev)
     except:
-        return render_template('404.html'), 404
+       return render_template('404.html'), 404
 
 @freezer.register_generator
 def custom404():

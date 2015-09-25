@@ -49,7 +49,7 @@ def fall2015schedule():
     d = s.day("September 16/17")
     d.lecture('Concurrent Programming','Thread Synchronization')
     d.reading('Thread Synchronization',static+'thread-synchronization.pdf')
-    d.reading('Mutexes, Condition Variables, and Monitors',static+'mutexes-condition-variables-and-monitors.pdf')
+    d.reading('Mutexes and Condition Variables',new+'mutexes-and-condition-variables.pdf')
 
     s.week()
 
@@ -57,27 +57,26 @@ def fall2015schedule():
     d.assignment('Lab: Messaging Service',term + 'labs/messaging-service')
 
     d = s.day('September 21/22')
-    d.lecture('Concurrent Programming','Mutexes, Condition Variables, and Monitors')
-    d.reading('Mutexes, Condition Variables, and Monitors',static+'mutexes-condition-variables-and-monitors.pdf')
-    d.assignment('Homework: Threading',term + 'homework/threading')
+    d.lecture('Concurrent Programming','Mutexes and Condition Variables')
 
     d = s.day('September 23/24')
     d.lecture('Concurrent Programming','Semaphores')
-    d.reading('Semaphores',static+'semaphores.pdf')
-    d.assignment('Homework: Mutexes and Condition Variables',term + 'homework/mutexes-and-condition-variables')
+    d.reading('Semaphores',new+'semaphores.pdf')
 
 
     s.week()
 
     d = s.day('September 28/29')
-    d.lecture('Concurrent Programming','Semaphores')
-    d.assignment('Homework: Semaphores',term + 'homework/semaphores')
+    d.lecture('Concurrent Programming','Monitors and Thread-Safe Classes')
+    d.reading('Monitors and Thread-Safe Classes',new+'monitors-and-thread-safe-classes.pdf')
+    d.assignment('Homework: Mutexes and Condition Variables',term + 'homework/mutexes-and-condition-variables')
 
     d = s.day('September 30/October 1')
     d.lecture('Concurrent Programming and Systems','Deadlock and UNIX Domain Sockets')
     d.reading('Deadlock',static+'deadlock.pdf')
     d.reading('UNIX Domain Sockets',static+'unix-domain-sockets.pdf')
-    d.assignment('Homework: Mutual Exclusion',term + 'homework/mutual-exclusion')
+    d.assignment('Homework: Semaphores',term + 'homework/semaphores')
+    d.assignment('Homework: Concurrency',term + 'homework/concurrency')
 
     d = s.day('October 2')
     d.assignment('Lab: Threaded Messaging Service',term + 'labs/threaded-messaging-service')
