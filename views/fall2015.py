@@ -48,7 +48,7 @@ def fall2015schedule():
 
     d = s.day("September 16/17")
     d.lecture('Concurrent Programming','Thread Synchronization')
-    d.reading('Thread Synchronization',static+'thread-synchronization.pdf')
+    d.reading('Thread Synchronization',new+'thread-synchronization.pdf')
     d.reading('Mutexes and Condition Variables',new+'mutexes-and-condition-variables.pdf')
 
     s.week()
