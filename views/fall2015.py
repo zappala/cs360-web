@@ -76,7 +76,6 @@ def fall2015schedule():
     d.reading('Deadlock',static+'deadlock.pdf')
     d.reading('UNIX Domain Sockets',static+'unix-domain-sockets.pdf')
     d.assignment('Homework: Semaphores',term + 'homework/semaphores')
-    d.assignment('Homework: Concurrency',term + 'homework/concurrency')
 
     d = s.day('October 2')
     d.assignment('Lab: Threaded Messaging Service',term + 'labs/threaded-messaging-service')
@@ -84,6 +83,7 @@ def fall2015schedule():
     s.week()
 
     d = s.day('October 5/6')
+    d.assignment('Homework: Concurrency',term + 'homework/concurrency')
     d.lecture('Systems','Introduction to Python Programming')
     d.reading('Introduction to Python',static+'introduction-to-python.pdf')
     d.reading('Python at Codecademy','http://www.codecademy.com/tracks/python')

@@ -1,0 +1,59 @@
+{% extends "fall-2015/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Homework: Semaphores
+
+Another way to synchronize shared memory with threads is to use
+semaphores.  A semaphore can have functionality similar to either a
+mutex or a conditional variable.
+
+## Semaphores
+
+Convert your [Mutexes and Condition Variables
+homework](http://cs360.byu.edu/fall-2015/homework/mutexes-and-condition-variables)
+to use semaphores instead of mutexes and condition variables. You
+should use one semaphore to replace the mutex, and a second semaphore
+to replace the condition variable.
+
+The semaphore that acts as a lock should be initialized to one (1),
+and the semaphore that acts as a condition variable should be
+initialized to zero (0).
+
+When you run this code, you should see that Thread B always prints out
+the random number that Thread A chose.
+
+## Race Conditions
+
+Using your [Mutexes and Condition Variables
+homework](http://cs360.byu.edu/fall-2015/homework/mutexes-and-condition-variables),
+put a 'sleep(1)' statement as the first line of code for Thread B,
+causing it to sleep for one second before it acquires the mutex. When
+you run this code, you should see that Thread B is stuck. Thread A
+sends the signal while it is sleeping, before it gets a chance to wait
+for the signal. This shows you that condition variables are events
+that are only caught by a waiting thread.
+
+Now put this same 'sleep(1)' statement as the first line of code for
+Thread B in your semaphore homework. You should see that this does not
+cause Thread B to get stuck. This is because semaphores have state
+associated with them. Even thought Thread b does not wait on the
+semaphore until after Thread A is done, it reads the integer variable
+stored with the semaphore and it picks up the signal that was sent
+much earlier.
+
+## Homework Assignment
+
+1. Do all the above. Be sure to write a Makefile.
+
+1. In class, show that your code compiles and runs correctly.  Discuss
+the differences between semaphores and condition variables.
+
+1. Compare your semaphores to others in the class. Did you do anything
+different?
+
+{% endfilter %}
+
+{% endblock %}
