@@ -83,7 +83,6 @@ def fall2015schedule():
     s.week()
 
     d = s.day('October 5/6')
-    d.assignment('Homework: Concurrency',term + 'homework/concurrency')
     d.lecture('Systems','Introduction to Python Programming')
     d.reading('Introduction to Python',static+'introduction-to-python.pdf')
     d.reading('Python at Codecademy','http://www.codecademy.com/tracks/python')
@@ -93,21 +92,22 @@ def fall2015schedule():
     d = s.day('October 7/8')
     d.lecture('Systems','Python Networking and Threading, Lab Discussion')
     d.reading('Python Networking and Threading',static+'python-networking-and-threading.pdf')
-    d.assignment('Homework: Python')
+    d.assignment('Homework: Introduction to Python',term + 'homework/introduction-to-python')
 
     s.week()
     
     d = s.day('October 12/13')
     d.lecture('Systems','HTTP')
     d.reading('HTTP',static+'http.pdf')
-    d.assignment('Homework: Python Threading')
+    d.assignment('Homework: Python Threading',term + 'homework/python-threading')
 
-   
+    d = s.day('October 13/14/15')
+    d.lecture('No Class. Read HTTP and Web Proxies material on your own, work on lab.')
+
     d = s.day('October 14/15')
     d.lecture('Systems','Web Proxies, Caching, and CDNs')
     d.reading('Web Proxies, Caching, and CDNs',static+'web-proxies-caching-and-cdns.pdf')
     d.reading("O'Reilly Web Caching Chapter",'http://www.oreilly.com/catalog/webcaching/chapter/ch05.html')
-    d.assignment('Homework: Python Requests Library')
 
     d = s.day('October 16')
     d.assignment('Lab: Download Accelerator',term + 'labs/download-accelerator')
@@ -119,13 +119,13 @@ def fall2015schedule():
     d.reading('Python Socket Programming',static+'python-socket-programming.pdf')
     d.reading('Event-Driven Architecture',static+'event-driven-architecture.pdf')
     d.reading('Why Threads Are A Bad Idea (for most purposes)','http://chess.cs.umd.edu/class/spring2009/cmsc433/Lectures/threadVsEvents.pdf')
-    d.assignment('Homework: CrowdSourced Measurements')
+    d.assignment('Homework: Concurrency')
 
     d = s.day('October 21/22')
     d.lecture('Performance Measurement','Performance Evaluation')
     d.assignment('Homework: Event-Driven Programming')
 
-    d = s.day('October 19-22')
+    d = s.day('October 24-26')
     d.assignment('Exam in Testing Center | Weeks 1 - 7','')
 
     s.week()
@@ -133,6 +133,7 @@ def fall2015schedule():
     d = s.day('October 26/27')
     d.lecture('Security','Network Security')
     d.reading('Network Security',new+'network-security.pdf')
+    d.assignment('Homework: CrowdSourced Measurements')
 
     d = s.day('October 28/29')
     d.lecture('Security','Network Security')

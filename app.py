@@ -8,11 +8,13 @@ from views import fall2015
 
 from flask import Flask, render_template
 from flask_frozen import Freezer
-from flaskext.markdown import Markdown
+# from flaskext.markdown import Markdown
+from flask.ext.misaka import Misaka
 
 from config import app, freezer
 
-Markdown(app)
+# Markdown(app)
+Misaka(app,fenced_code=True)
 
 @app.route('/',defaults={'directory':None,'page':'index'})
 @app.route('/<page>',defaults={'directory':None})

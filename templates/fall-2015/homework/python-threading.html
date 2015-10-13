@@ -1,0 +1,45 @@
+{% extends "fall-2015/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Homework: Python Threading
+
+In this assignment, you will become familiar with threading in Python.
+
+**Note, this homework is scheduled before the Download Accelerator lab
+so you can have practice doing threads before you complete the lab.
+However, we will not check it until October 19/20.**
+
+## Fetching in Parallel
+
+Use the web server setup from your previous homework. Add a new link
+in `index.html` called `Headlines and Twitter Trends`.
+
+In this script, create two threads. The first thread should fetch and
+parse the news headlines from Google, using simlar code from the previous
+homework. The second thread should fetch and show the tweets from
+`https://twitter.com/whatstrending`. In the second thread, show
+all the `p` tags that use the `tweet-text` class. Both of the threads
+should store the relevant content in a local variable called `content`.
+Note, this should be a list.
+
+The body of your Python script should create these two threads, start
+them, and join them. When both threads are finished, use the `content`
+variable to get the content that each thread has fetched. Display this
+content in two side-by-side columns. You can do this with `<div>`
+tags, one that floats right and the other that floats left. Each `<div>`
+should have a width of 45%.
+
+## Homework Assignment
+
+1. Do all the above.
+
+1. In class, demonstrate that your program works and show how you created threads.
+
+1. Compare your code to others in the class.
+
+{% endfilter %}
+
+{% endblock %}

@@ -1,0 +1,49 @@
+{% extends "fall-2015/menu.html" %}
+
+{% macro item(text,score,criteria) -%}
+<div class="box"></div>
+<div class="item">{{ text }}</div>
+<div class="clear"></div>
+<div class="criteria">{{ criteria|safe }}</div>
+<div class="problem"></div>
+<div class="problem"></div>
+{%- endmacro %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Download Accelerator Code Review
+
+*Fill out this sheet for your own code and for two other students you are assigned to review.*
+
+<div class="border row">
+  <div class="columns large-6">
+    Student Name:
+  </div>
+    <div class="columns large-6">
+    Reviewed By: 
+  </div>
+</div>
+
+*Check the boxes below to indicate which tests pass
+successfully.  Circle the boxes that do not work correctly and include
+a written statement explaining the error that occured.*
+
+## Download Accelerator
+
+{{ item("Basic downloads",25,"Downloads small, medium, and large files
+correctly, with 1 thread.") }}
+
+{{ item("Threaded downloads",50,"Downloads small, medium, and large
+files correctly, with 2 and 5 threads. Verify the code uses threading.") }}
+
+## General Feedback
+
+{{ item("Feedback",0,"Any additional thoughts about the code: things done well, areas for improvement.") }}
+
+<p></p>
+
+{% endfilter %}
+
+{% endblock %}
