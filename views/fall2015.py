@@ -109,7 +109,7 @@ def fall2015schedule():
     d.reading('Web Proxies, Caching, and CDNs',static+'web-proxies-caching-and-cdns.pdf')
     d.reading("O'Reilly Web Caching Chapter",'http://www.oreilly.com/catalog/webcaching/chapter/ch05.html')
 
-    d = s.day('October 16')
+    d = s.day('October 17')
     d.assignment('Lab: Download Accelerator',term + 'labs/download-accelerator')
 
     s.week()
@@ -119,11 +119,10 @@ def fall2015schedule():
     d.reading('Python Socket Programming',static+'python-socket-programming.pdf')
     d.reading('Event-Driven Architecture',static+'event-driven-architecture.pdf')
     d.reading('Why Threads Are A Bad Idea (for most purposes)','http://chess.cs.umd.edu/class/spring2009/cmsc433/Lectures/threadVsEvents.pdf')
-    d.assignment('Homework: Concurrency')
 
     d = s.day('October 21/22')
     d.lecture('Performance Measurement','Performance Evaluation')
-    d.assignment('Homework: Event-Driven Programming')
+    d.assignment('Homework: Concurrency',term + 'homework/concurrency')
 
     d = s.day('October 24-26')
     d.assignment('Exam in Testing Center | Weeks 1 - 7','')
@@ -133,6 +132,7 @@ def fall2015schedule():
     d = s.day('October 26/27')
     d.lecture('Security','Network Security')
     d.reading('Network Security',new+'network-security.pdf')
+    d.assignment('Homework: Event-Driven Programming')
     d.assignment('Homework: CrowdSourced Measurements')
 
     d = s.day('October 28/29')

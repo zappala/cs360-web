@@ -1,0 +1,47 @@
+{% extends "fall-2015/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Homework: Concurrency
+
+This homework is intended to help you think about concurrency
+primitives and understand how to use them. Type your answers
+out in a document.
+
+## Locking
+
+1. Why is locking a shared data structure important?
+
+1. How do mutexes and semaphores differ when locking a data structure?
+
+## Signalling
+
+1. Why is signalling needed between threads? Give several examples.
+
+1. Why is it better to wait for a signal than to just use sleep()?
+
+1. How do condition variables and semaphores differ when sending a signal?
+
+1. Why do condition variables use a while loop when waiting for a signal?
+
+## Using Synchronization
+
+1. You are writing software for a bug tracking system. Multiple threads
+can add bugs into the system or edit existing bugs. Write pseudocode for
+a thread that adds a bug to the system, showing any synchronization needed.
+
+2. In this same software system, a separate thread wants to send email
+to an administrator whenever a new bug is reported. Write pseudocode for
+this thread. How would your code for the previous part be modified?
+
+## Homework Assignment
+
+1. Show your answers to a partner and discuss any differences.
+
+1. Discuss the questions in class.
+
+{% endfilter %}
+
+{% endblock %}
