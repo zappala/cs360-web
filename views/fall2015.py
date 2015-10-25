@@ -132,8 +132,8 @@ def fall2015schedule():
     d = s.day('October 26/27')
     d.lecture('Security','Network Security')
     d.reading('Network Security',new+'network-security.pdf')
-    d.assignment('Homework: Event-Driven Programming')
-    d.assignment('Homework: CrowdSourced Measurements')
+    # d.assignment('Homework: Event-Driven Programming')
+    # d.assignment('Homework: CrowdSourced Measurements')
 
     d = s.day('October 28/29')
     d.lecture('Security','Network Security')
