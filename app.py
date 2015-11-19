@@ -21,7 +21,7 @@ Misaka(app,fenced_code=True)
 @app.route('/<path:directory>/',defaults={'page':'index'})
 @app.route('/<path:directory>/<page>')
 def show(directory,page):
-    try:
+    #try:
         if not directory:
             return render_template(page + '.html', active='home')
         try:
@@ -29,8 +29,8 @@ def show(directory,page):
         except:
             prev = None
         return render_template(directory+"/" + page + '.html', active=page, previous=prev)
-    except:
-       return render_template('404.html'), 404
+    #except:
+    #   return render_template('404.html'), 404
 
 @freezer.register_generator
 def custom404():

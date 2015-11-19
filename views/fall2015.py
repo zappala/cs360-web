@@ -137,15 +137,22 @@ def fall2015schedule():
 
     d = s.day('October 28/29')
     d.lecture('Security','Network Security')
-    d.assignment('Homework: Network Security',term + 'homework/network-security')
-
-    d = s.day('October 30')
-    d.assignment('Lab: Web Server',term + 'labs/web-server')
-
 
     s.week()
 
+    d = s.day('November 2')
+    d.assignment('Lab: Web Server',term + 'labs/web-server')
+
     d = s.day('November 2/3')
+    d.lecture('Web Programming','Javascript')
+    d.reading('Javascript',new+'javascript.pdf')
+    d.reading('Eloquent Javascript (introductory)','http://eloquentjavascript.net/')
+    d.reading('Why Prototypical Inheritance Matters','http://aaditmshah.github.io/why-prototypal-inheritance-matters/')
+    d.reading('Javascript at Codecademy','http://www.codecademy.com/tracks/javascript?jump_to=4fa836e5996b00000302064a')
+    d.reading('JQuery at Codecademy','http://www.codecademy.com/tracks/jquery')
+    d.reading('The Basics of JQuery','http://andreehansson.se/the-basics-of-jquery/')
+    
+    d = s.day('November 4/5')
     d.lecture('Web Programming','Web Design and CSS')
     d.reading('Web Design',static+'web-design.pdf')
     d.reading('HTML and CSS Tutorial','http://www.codecademy.com/tracks/web')
@@ -154,33 +161,29 @@ def fall2015schedule():
     d.reading('Design Process in the Responsive Age','http://uxdesign.smashingmagazine.com/2012/05/30/design-process-responsive-age/')
     d.reading('Twitter Bootstrap','http://getbootstrap.com/')
     d.reading('Foundation','http://foundation.zurb.com/')
-    d.assignment('Homework: Web Application Proposals',term + 'homework/web-application-proposals')
-    
-    d = s.day('November 4/5')
-    d.lecture('Web Programming','Javascript')
-    d.reading('Javascript at Codecademy','http://www.codecademy.com/tracks/javascript?jump_to=4fa836e5996b00000302064a')
-    d.reading('JQuery at Codecademy','http://www.codecademy.com/tracks/jquery')
-    d.assignment('Homework: Javascript')
+    d.assignment('Homework: Web Application Proposal',term + 'homework/web-application-proposal')
+    d.assignment('Homework: Network Security',term + 'homework/network-security')
     
     s.week()
 
     d = s.day('November 9/10')
     d.lecture('Web Programming','React')
-    d.assignment('Homework: React')
+    d.assignment('Homework: Javascript',term+'homework/javascript')
 
     d = s.day('November 11/12')
     d.lecture('Web Programming','React')
-    d.assignment('Homework: React')
-    d.assignment('Homework: Web Application Idea and Features',term+'/homework/web-application-idea-and-features')
+    d.reading('Listomatic - React repo','https://github.com/zappala/listomatic-react')
+    d.assignment('Homework: React',term+'homework/react')
 
     s.week()
 
     d = s.day('November 16/17')
-    d.lecture('Web Programming','Node/Express/Sequelize')
-    d.reading('Designing Relational Database Models',static+'designing-relational-database-models.pdf')
-
+    d.lecture('Web Programming','Node/Express/Mongoose/')
+    d.reading('Designing Document Database Models',static+'designing-document-database-models.pdf')
+    d.reading('Listomatic - Node - Mongo repo','https://github.com/zappala/listomatic-node-mongo')
+    
     d = s.day('November 18/19')
-    d.lecture('Web Programming','Node/Express/Sequelize')
+    d.lecture('Web Programming','Node/Express/Mongoose')
     
     d = s.day('November 20')
     d.assignment('Homework: Web Application Front End')

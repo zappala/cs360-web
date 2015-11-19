@@ -52,6 +52,24 @@ Your web server is required to use epoll() with non-blocking I/O on
 both the server and the client sockets, as shown in the sample code.
 Any lab turned in without this will earn zero points.
 
+You may use the [http-parser](https://pypi.python.org/pypi/http-parser) library to simplify HTTP parsing.
+You can install it with pip. A short example is shown below. The help on this library is sparse so
+if you want any other functionality you will need to look at the source for the library.
+
+<pre><code class="python">try:
+    from http_parser.parser import HttpParser
+except ImportError:
+    from http_parser.pyparser import HttpParser
+
+p = HttpParser()
+nparsed = p.execute(message,len(message))
+print p.get_method(),p.get_path(),p.get_headers()
+</code></pre>
+
+{% endfilter %}
+
+{% filter markdown %}
+
 ## Server Functionality
 
 Your web server should handle the following portions of the HTTP 1.1
@@ -220,7 +238,7 @@ directory called web-server, then you would type this:
 tar -czvf web-server.tgz web-server
 </pre>
 
-Submit your report and the tgz file using [learningsuite.byu.edu](http://learningsuite.byu.edu).
+Submit your tgz file using [learningsuite.byu.edu](http://learningsuite.byu.edu).
 
 ## Grading
 
