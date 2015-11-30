@@ -180,6 +180,7 @@ def fall2015schedule():
     d = s.day('November 16/17')
     d.lecture('Web Programming','Node/Express/Mongoose/')
     d.reading('Designing Document Database Models',static+'designing-document-database-models.pdf')
+    d.reading('Starbucks Does Not Use Two-Phase Commit','http://eaipatterns.com/ramblings/18_starbucks.html')
     d.reading('Listomatic - Node - Mongo repo','https://github.com/zappala/listomatic-node-mongo')
     
     d = s.day('November 18/19')
@@ -196,16 +197,17 @@ def fall2015schedule():
     s.week()
 
     d = s.day('November 30/December 1')
-    d.lecture('Web Programming','User Registration and Token-Based Authentication')
+    d.lecture('Web Programming','Webpack')
 
     d = s.day('December 2/3')
-    d.lecture('Web Programming','NoSQL Databases and Mongoose')
-    d.reading('Designing Document Database Models',static+'designing-document-database-models.pdf')
-    d.reading('Starbucks Does Not Use Two-Phase Commit','http://eaipatterns.com/ramblings/18_starbucks.html')
-    d.assignment('Homework: Mongoose')
+    d.assignment('Homework: Web Application Back End')
+    d.lecture('Web Programming','Users and Authentication')
+    d.reading('Users and Authentication',static+'users-and-authentication.pdf')
+    d.reading('Research on passwords by Cormac Herley','http://research.microsoft.com/en-us/people/cormac/')
+    d.reading('The Quest to Replace Passwords: A Framework for Comparative Evaluation of Web Authentication Schemes','http://research.microsoft.com/apps/pubs/?id=161585')
+    d.reading('Does My Password Go up to Eleven? The Impact of Password Meters on Password Selection','http://research.microsoft.com/apps/pubs/?id=192108')
 
     d = s.day('December 4')
-    d.assignment('Homework: Web Application Back End')
 
     s.week()
 
@@ -215,11 +217,7 @@ def fall2015schedule():
 
 
     d = s.day('December 9/10')
-    d.lecture('Web Programming','Users and Authentication')
-    d.reading('Users and Authentication',static+'users-and-authentication.pdf')
-    d.reading('Research on passwords by Cormac Herley','http://research.microsoft.com/en-us/people/cormac/')
-    d.reading('The Quest to Replace Passwords: A Framework for Comparative Evaluation of Web Authentication Schemes','http://research.microsoft.com/apps/pubs/?id=161585')
-    d.reading('Does My Password Go up to Eleven? The Impact of Password Meters on Password Selection','http://research.microsoft.com/apps/pubs/?id=192108')
+    d.lecture('Security','TBA')
 
     d = s.day('December 10')
     d.assignment('Lab: Web Application',term+'/labs/web-application')
