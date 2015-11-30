@@ -187,7 +187,6 @@ def fall2015schedule():
     d.lecture('Web Programming','Node/Express/Mongoose')
     
     d = s.day('November 20')
-    d.assignment('Homework: Web Application Front End')
     
     s.week()
 
@@ -200,7 +199,7 @@ def fall2015schedule():
     d.lecture('Web Programming','Webpack')
 
     d = s.day('December 2/3')
-    d.assignment('Homework: Web Application Back End')
+    d.assignment('Homework: Webpack',term+'homework/webpack')
     d.lecture('Web Programming','Users and Authentication')
     d.reading('Users and Authentication',static+'users-and-authentication.pdf')
     d.reading('Research on passwords by Cormac Herley','http://research.microsoft.com/en-us/people/cormac/')
