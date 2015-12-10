@@ -129,6 +129,15 @@ body {
 
 .top-bar-section .dropdown li:not(.has-form) a:not(.button) {
     background: #999;
+    line-height: 46px;
+}
+
+.top-bar-section li:not(.has-form) a:not(.button) {
+    line-height: 46px;
+}
+
+.top-bar-section li.active:not(.has-form) a:not(.button) {
+    line-height: 46px;
 }
 
 /* Footer */

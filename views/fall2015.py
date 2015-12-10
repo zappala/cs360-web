@@ -197,23 +197,24 @@ def fall2015schedule():
 
     d = s.day('November 30/December 1')
     d.lecture('Web Programming','Webpack')
+    d.reading('Listomatic - Node - Mongo - React repo','https://github.com/zappala/listomatic-node-mongo-react')
 
     d = s.day('December 2/3')
-    d.assignment('Homework: Webpack',term+'homework/webpack')
-    d.lecture('Web Programming','Users and Authentication')
-    d.reading('Users and Authentication',static+'users-and-authentication.pdf')
-    d.reading('Research on passwords by Cormac Herley','http://research.microsoft.com/en-us/people/cormac/')
-    d.reading('The Quest to Replace Passwords: A Framework for Comparative Evaluation of Web Authentication Schemes','http://research.microsoft.com/apps/pubs/?id=161585')
-    d.reading('Does My Password Go up to Eleven? The Impact of Password Meters on Password Selection','http://research.microsoft.com/apps/pubs/?id=192108')
-
+    d.lecture('Security','Web Vulnerabilities')
+    d.reading('Web Vulnerabilities',new+'web-vulnerabilities.pdf')
+    d.reading('Web Storage Security','https://blog.whitehatsec.com/web-storage-security/')
     d = s.day('December 4')
 
     s.week()
 
     d = s.day('December 7/8')
-    d.lecture('Security','Web Vulnerabilities')
-    d.reading('Web Vulnerabilities',static+'web-vulnerabilities.pdf')
-
+    d.assignment('Homework: Webpack',term+'homework/webpack')
+    d.lecture('Web Programming','Users and Authentication')
+    d.reading('Users and Authentication',new+'users-and-authentication.pdf')
+    d.reading('An Administrators Guide to Internet Password Research','http://research.microsoft.com/apps/pubs/?id=227130')
+    d.reading('Authenticaton at Scale','http://www.computer.org/cms/Computer.org/ComputingNow/pdfs/AuthenticationAtScale.pdf')
+    d.reading('The Quest to Replace Passwords: A Framework for Comparative Evaluation of Web Authentication Schemes','http://research.microsoft.com/apps/pubs/?id=161585')
+    d.reading('Research on passwords by Cormac Herley','http://research.microsoft.com/en-us/people/cormac/')
 
     d = s.day('December 9/10')
     d.lecture('Security','TBA')
