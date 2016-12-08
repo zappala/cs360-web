@@ -1,0 +1,95 @@
+{% extends "fall-2016/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Lab: Threaded Messaging Service
+
+The goals of this assignment are (1) to learn how to use the pthreads
+library to manage threads, (2) to understand how to create a
+multi-threaded server, (3) to understand how and where to use basic
+thread synchronization, and (4) to gain practice with client software
+that can issue multiple requests over a socket.
+
+In this assignment, you will convert your [singly-threaded messaging
+server](/winter-2014/labs/messaging-service) into a multithreaded
+server.
+
+## Messaging Server
+
+<img class="right height-400" src="/static/figures/thread-pool-architecture.png">
+
+Modify your server so that it creates a thread pool with 10 threads.
+When a new client arrives, the server should add it to a queue of
+clients.  The threads in the pool should remove one client from the
+queue, handle **one** request, and then put the client back into the
+queue. In this way, the threads handle all the clients using round
+robin servicing. If the queue does not have a client available, the
+thread should sleep until a client is ready.
+
+Because the server is multi-threaded, you will need to ensure that
+your code uses shared memory synchronization to protect access to the
+queue and to other data structures you are using to keep track of
+messages that have been stored on the server. You must use mutexes and
+condition variables to do this.
+
+### Thread-Safe Data Structures
+
+You should be sure to create thread-safe data structures. You should
+have a class that handles storing, listing, and reading messages. Be
+sure to use a mutex to protect every method that accesses the message
+storage. You should also have a class for a thread safe connection queue. This
+queue should use mutexes to protect every method that accesses the
+queue, as well as condition variables for when the queue is full and when
+the queue is empty.
+
+### Caching
+
+Your code from the previous lab should be using caching as it processes
+data it reads from each client socket. Each socket needs its own cache, but multiple
+workers threads could handle the socket during its lifetime. A good strategy is to
+create a class that represents a client, storing both the client socket and its cache.
+The connection queue should hold instances of this class.
+
+<h2 class="clear">Report</h2>
+
+When you turn in your program, include a short README file that describes
+how you synchronized code in your lab. Explain which 
+thread-safe classes you have used, or how you have otherwise used synchronization
+in your code.
+
+## Submission
+
+* Create a tgz of your program directory.  Remove any binaries and
+  send only the source code and your Makefile.  For example, if your
+  code is in the directory called lab2, then you would type this:
+
+    <pre>
+    cd lab2
+    make realclean
+    cd ..
+    tar -czvf lab2.tgz lab2
+    </pre>
+
+* Submit your report and the tgz file using [learningsuite.byu.edu](http://learningsuite.byu.edu).
+
+
+## Grading
+
+Your lab will be tested as specified in the [grading
+sheet]({{url_for("show",directory="fall-2016/labs",page="threaded-messaging-service-grading")}}).
+
+As a part of testing, we will use the [load testing
+script](https://github.com/zappala/messaging-service-python) posted at
+Github.
+
+If you wish to receive help with your code, then you should print out
+clear and concise debugging information when the debugging flag is
+given on the command line. The more helpful and clear your debugging
+information is, the better your chances for getting useful help. You
+should apply this same standard to how you document your code.
+
+{% endfilter %}
+
+{% endblock %}

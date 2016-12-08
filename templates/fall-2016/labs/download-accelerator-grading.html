@@ -1,0 +1,45 @@
+{% extends "fall-2016/menu.html" %}
+
+{% macro item(text,score,criteria) -%}
+<div class="box"></div>
+<div class="item">{{ text }}</div>
+<div class="score">{{ score }}</div>
+<div class="clear"></div>
+<div class="criteria">{{ criteria }}</div>
+{%- endmacro %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Download Accelerator Grading Sheet
+
+*The TA will fill out this sheet when grading your program.*
+
+<div class="border">
+  Student Name:
+</div>
+
+**TA:** *Check the boxes below to indicate which tests pass
+successfully.  Circle the boxes that do not work correctly and include
+a written statement explaining the error that occured.*
+
+## Download Accelerator
+
+{{ item("Basic downloads",25,"Downloads small, medium, and large files
+correctly, with 1 thread.") }}
+
+{{ item("Threaded downloads",50,"Downloads small, medium, and large
+files correctly, with 2 and 5 threads. Verify the code uses threading.") }}
+
+<p></p>
+
+**TA** *Fill in the information below when testing is
+complete and then turn the sheet in to the professor.*
+
+<div class="border">TA Name:</div>
+<div class="border">Score:</div>
+
+{% endfilter %}
+
+{% endblock %}

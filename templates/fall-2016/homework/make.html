@@ -1,0 +1,224 @@
+{% extends "fall-2016/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Homework: Make
+
+The GNU Make tool has been one of the primary methods used for
+compiling and linking C and C++ programs for many years. Understanding
+how this tool works will enable you to write simple Makefiles for your
+class projects, helping you to understand what an IDE is doing for
+you. I generally prefer to write my own Makefiles, to keep things
+simple and cleanly organized. IDEs will often obscure what is
+happening with overly complex Makefiles.
+
+## A complete example
+
+GNU Make uses a Makefile to determine how to compile and link a
+program.  I generally use the capitalized version of `Makefile`
+because Make will ignore the lowercase `makefile` if the capitalized
+version exists. On a Linux system, capitalized file names also show up
+first in the listing, making it easy to see that it is present.
+
+Here is a simple `Makefile` that I use to compile an echo client and
+server program I use in my [socket programming
+examples](https://github.com/zappala/socket-programming-examples-c):
+
+<pre>
+# Makefile for echo client and server
+
+CXX=                    g++ $(CCFLAGS)
+
+ECHO-SERVER=            echo-server.o inet-server.o server.o
+ECHO-CLIENT=            echo-client.o inet-client.o client.o
+OBJS =                  $(ECHO-SERVER) $(ECHO-CLIENT)
+
+LIBS=
+
+CCFLAGS= -g
+
+all:	echo-server echo-client
+
+echo-server:$(ECHO-SERVER)
+        $(CXX) -o server $(ECHO-SERVER) $(LIBS)
+
+echo-client:$(ECHO-CLIENT)
+        $(CXX) -o client $(ECHO-CLENT) $(LIBS)
+
+clean:
+        rm -f $(OBJS) $(OBJS:.o=.d)
+
+realclean:
+        rm -f $(OBJS) $(OBJS:.o=.d) server client
+</pre>
+
+The first line:
+
+<pre>
+CXX=                    g++ $(CCFLAGS)
+</pre>
+
+assigns the pre-defined CXX variable, which tells Make which compiler to use. 
+In this case, we set it to the g++ compiler, since we will be using C++
+code, but we also append the value of the CCFLAGS variable. This is
+set by a later line:
+
+<pre>
+CCFLAGS= -g
+</pre>
+
+When used with g++, this flag will create debugging information that
+can be used by the gdb and ddd debuggers. If you do not set the CXX
+variable, Make will attempt to use the correct compiler based on the
+suffix of the source file.
+
+The Makefile defines three additional variables:
+
+<pre>
+ECHO-SERVER=            echo-server.o inet-server.o server.o
+ECHO-CLIENT=            echo-client.o inet-client.o client.o
+OBJS=	                $(ECHO-SERVER) $(ECHO-CLIENT)
+</pre>
+
+The first two list the objects needed to be linked into the echo server and
+echo client binaries. The last one combines these two variables into one.
+We'll see how these are used below.
+
+We next define various targets for the Makefile. These are tasks you
+can call from the command line with Make. A target consists of a word,
+a colon, and then the dependencies for that target.
+
+<pre>
+all:    echo-server echo-client
+</pre>
+
+The `all` target is called when you type `make` on the command line
+without specifying an additional target. In this case, we tell Make
+that its dependencies are the echo-server and echo-client
+targets. There are no commands specified for this target, so the only
+thing Make will do in this case is resolve each of these dependencies
+in order.
+
+<pre>
+echo-server:$(ECHO-SERVER)
+        $(CXX) -o server $(ECHO-SERVER) $(LIBS)
+</pre>
+
+The echo-server target specifies the object files in the ECHO-SERVER
+variable as dependencies. The first thing Make will do is resolve
+these dependencies. The default action in this case is to locate a
+source file for each object. For `echo-server.o`, Make finds
+`echo-server.cc` and runs `g++ -g -c -o echo-server.o echo-server.cc`
+to compile the code.  Make likewise compiles the source files for
+`inet-server.o` and `server.o`.
+
+Once these dependencies are resolved, make follows the command listed
+for this target, which, after substituting variables, resolves to:
+
+<pre>
+g++ -g -o server echo-server.o inet-server.o server.o 
+</pre>
+
+This links the compiled objects into the server executable.
+
+<pre>
+echo-client:$(ECHO-CLIENT)
+        $(CXX) -o client $(ECHO-CLIENT) $(LIBS)
+</pre>
+
+The echo-client target works the same way, compiling the object files
+and then linking them into the client executable.
+
+For both of these targets, you can choose to make the individually:
+
+<pre>
+make echo-server
+make echo-client
+</pre>
+
+<pre>
+clean:
+        rm -f $(OBJS) $(OBJS:.o=.d)
+
+realclean:
+        rm -f $(OBJS) $(OBJS:.o=.d) server client
+</pre>
+
+These last lines provide some targets to clean up the object files,
+dependency files, and binaries. You can call them with:
+
+<pre>
+make clean
+make realclean
+</pre>
+
+## Automatic dependency generation
+
+One problem with the Makefile, as shown above, is that it will only
+recompile the code if one of the source files changes. Any changes to
+header files will be ignored.
+
+An easy way to fix this is to list the header files as dependencies as
+well, but this requires you to update the Makefile any time any of those
+dependencies change. An easy way to automatically handle dependencies
+on header files is to use the following:
+
+<pre>
+# These lines ensure that dependencies are handled automatically.
+%.d:    %.cc
+        $(SHELL) -ec '$(CC) -M $(CPPFLAGS) $< \
+                | sed '\''s/\($*\)\.o[ :]*/\1.o $@ : /g'\'' > $@; \
+                [ -s $@ ] || rm -f $@'
+
+INCLUDE	$(OBJS:.o=.d)
+</pre>
+
+The first line sets up a target for ``*.d`` and lists ``*.cc`` as a
+dependency.  This target runs a command on the shell that uses the
+compiler to to generate a list of dependencies for each ``file.cc``
+using:
+
+<pre>
+g++ -M file.cc
+</pre>
+
+It pipes the output to the sed editor, which does some substitution
+and places the result into the ``file.d``. Each of these ``*.d`` files
+create dependencies between the object file and the header files it
+depends on.
+
+The last line then includes these ``*.d`` files with the Makefile so
+that the targets are included when you run Make.
+
+## Homework Assignment
+
+1. Go through each of the steps in [this
+tutorial](http://mrbook.org/blog/tutorials/make/). When you get to the
+last Makefile example, use the [make
+manual](http://www.gnu.org/software/make/manual/make.html) to figure
+out what each portion means.
+
+1. Modify the code for the `simple echo client and server` program in
+the [socket programming
+examples](https://github.com/zappala/socket-programming-examples-c) we
+discussed in class. Use just the client and server, and change the
+name of these to `hello.cc` and `goodbye.cc`. Modify the client so
+that it loops 10 times. Each time through the loop, it should print
+hello, send "hello\n" to the server, then read and print the
+response. Modify the server so that it waits for the client to send a
+line of characters ending with "\n". If the client sends "hello\n",
+then the server responds with "goodbye\n". Otherwise the server
+responds with "error\n".
+
+1. Write a Makefile that will compile this code from the command line.
+
+1. In class, demonstrate that your program works.
+
+1. In class, compare your Makefile with your partner's and discuss
+any differences.
+
+{% endfilter %}
+
+{% endblock %}

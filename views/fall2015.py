@@ -203,6 +203,7 @@ def fall2015schedule():
     d.lecture('Security','Web Vulnerabilities')
     d.reading('Web Vulnerabilities',new+'web-vulnerabilities.pdf')
     d.reading('Web Storage Security','https://blog.whitehatsec.com/web-storage-security/')
+    d.reading('XSS Game','https://xss-game.appspot.com/')
     d = s.day('December 4')
 
     s.week()

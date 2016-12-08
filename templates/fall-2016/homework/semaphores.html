@@ -1,0 +1,29 @@
+{% extends "fall-2016/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Homework: Semaphores
+
+Another way to synchronize shared memory with threads is to use
+semaphores.  A semaphore can have functionality similar to either a
+mutex or a conditional variable.
+
+Convert your [Synchronization Practice](http://cs360.byu.edu/fall-2016/homework/synchronization-practice)
+homework to use semaphores instead of mutexes and condition variables. You
+should use one semaphore to replace the mutex, and a second semaphore
+to replace the condition variable. Pay attention to the differences between
+semaphores and condition variables -- condition variables have state associated
+with them.
+
+## Homework Assignment
+
+1. Do all the above problems.
+
+1. In class, discuss your solutions and compare with
+other class members.
+
+{% endfilter %}
+
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends "fall-2016/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Homework: Linux Command Line
+
+The Linux command line is a power tool. Linux is the OS of choice for
+cloud computing and web servers. Usually, you will administer these
+machines remotely, so you'll need to use a shell and the command line
+to get anything done. I also use the command line frequently on my
+desktop and laptop, because it helps me to be more productive
+to keep my hands on the keyboard as much as possible.
+
+Learning to use the command line isn't very difficult. I use about
+twenty commands regularly. In addition, the basic commands haven't
+changed in decades, so once you're familiar with the command line, you
+will have that skill for a long time.
+
+## Resources
+
+There are a couple of good web sites where you can learn to use the
+command line:
+
+* [The Command Line Crash Course](http://cli.learncodethehardway.org/book/)
+
+* [LinuxCommand.org](http://linuxcommand.org/)
+
+## Recommended Commands
+
+These are the commands I recommend you learn:
+
+* Navigation and Files: pwd, mkdir, cd, ls, cp, mv, rm, less, cat, tail, chmod
+
+* Job Control: ps, top, kill, jobs, control-z, bg, fg, history
+
+* I/O Redirection
+
+* Searching: grep, find, sort
+
+* Miscellaneous: tab completion, wildcard matching
+
+* Help: man
+
+I also recommend understanding [the file system](http://linuxcommand.org/lc3_lts0040.php).
+
+## Homework Assignment
+
+1. Get Linux running on your laptop, using either a live USB stick, a
+virtual machine, or dual booting (these are listed in order of
+difficulty)
+
+1. Learn about the above commands and practice using them
+
+1. In class, demonstrate that you can open a terminal, create a directory, create a file there, copy it to a second file, remove
+the copy, change the permissions of the file, and use list the contents of the directory to show the permissions
+
+1. In class, demonstrate that you can use ps to show the current jobs and identify several of them. Start an editor such as vim from
+the command line, put it into the background, then kill it from the command line.
+
+1. In class, demonstrate that you know how to use grep to find all the files in /etc that contain the word "help".
+Run "grep -R help /etc | less" and then "grep -R --color=always help /etc  | less -R" and explain the difference.
+
+{% endfilter %}
+
+{% endblock %}

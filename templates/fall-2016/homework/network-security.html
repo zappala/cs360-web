@@ -1,0 +1,52 @@
+{% extends "fall-2016/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Homework: Network Security
+
+This homework is intended to help you think about the basics of
+symmetric key and public key cryptography and understand how to use
+them. Type your answers out in a document.
+
+# Problems
+
+1. You and a friend want to use symmetric key encryption to exchange
+secret messages. You choose a key so that you can both encrypt and decrypt
+messages with this key
+
+    a. If you pick the key, how would you share this key with your friend
+       in a secure way?
+
+    b. When you exchange messages, can you be sure you are really talking
+       with her? Why or why not?
+
+    c. After decrypting a message from your friend, can you be sure it is
+       the same message she sent? Why or why not?
+
+1. You decide to use public key cryptography to exchange a symmetric key
+with your friend.
+
+    a. How do you discover your friend's public key? How do you know this is
+       really her public key?
+
+    b. Once you know your friend's public key, how do you use it to exchange
+       a symmetric key?
+
+1. In either case, what additional information can you send to provide
+integrity for the messages you exchange? Explain how this is
+calculated.
+
+1. How does the CA system enable you to trust that you are really talking to
+a web site such as Amazon?
+
+## Homework Assignment
+
+1. Show your answers to a partner and discuss any differences.
+
+1. Discuss the questions in class.
+
+{% endfilter %}
+
+{% endblock %}

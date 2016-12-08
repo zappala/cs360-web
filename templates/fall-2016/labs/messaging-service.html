@@ -1,0 +1,325 @@
+{% extends "fall-2016/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Lab: Messaging Service
+
+The goals of this lab are (1) to learn how to write a client-server
+application using the BSD socket API, (2) to understand how to process
+and parse data when reading from a network socket, and (3) to
+understand how to implement a protocol.
+
+In this assignment, you will create a server that can store and
+retrieve messages for people.  You will also create a client that
+users can use to send and read messages.
+
+Your code must be written in C++.
+
+## Messaging Protocol
+
+The messaging protocol defines the communication between the client
+and the server.  Protocol fields are separated by whitespace and lines
+are ended by the newline character (\n).
+
+### Storing Messages
+
+<pre>
+<b>Request</b>
+put [name] [subject] [length]\n[message]
+
+<b>Responses</b>
+OK\n
+error [description]\n
+</pre>
+
+The *put* request asks the server to store a message for a user
+identified by [name].  The request consists of a [subject] and
+[length] characters.  The [message] comes after the newline. The
+[length] is the number of characters in the message and does not
+include the newline or any of the characters before it. The server
+returns the *OK* response if the message is stored successfully.
+Otherwise, the server returns the *error* response, including a
+descriptive message explaining the error.
+
+Messages are stored in memory and are not written to disk. This means
+that multiple clients can connect over time and read all messages
+stored on the server, but once the server quits all messages are lost.
+
+### Listing Messages
+
+<pre>
+<b>Request</b>
+list [name]\n
+
+<b>Responses</b>
+list [number]\n[index] [subject]\n...[index] [subject]\n
+error [description]\n
+</pre>
+
+The *list* request gets a list of messages for a user identified by
+[name].  The server returns the *list* response if the query is
+formatted properly.  The [number] returned may be zero if no messages
+are stored for that user.  The subsequent lines list a numeric [index]
+and the associated [subject] for each message stored for the user.
+Otherwise, the server returns the *error* response, including a
+descriptive message explaining the error. The [index] should count
+starting at 1 and should be unique for each user.
+
+### Retrieving Messages
+
+<pre>
+<b>Request</b>
+get [name] [index]\n
+
+<b>Responses</b>
+message [subject] [length]\n[message]
+error [description]\n
+</pre>
+
+The *get* request gets a message given by [index] for a user
+identified by [name].  The server returns the *message* response if
+the query is formatted properly and a message with the given index
+exists for the listed user.  The message consists of a [subject] and
+[length] characters.  The entire message comes after the newline
+character.  The [length] is the number of characters in the message
+and does not include the newline or any of the characters before
+it. Otherwise, the server returns the *error* response, including a
+descriptive message explaining the error.
+
+### Reset
+
+<pre>
+<b>Request</b>
+reset\n
+
+<b>Responses</b>
+OK\n
+</pre>
+
+The *reset* request removes all stored messages for all users. This is
+used for testing purposes.
+
+## Server
+
+The messaging server implements the server side of the messaging
+protocol and handles one client at a time.  It is
+singly-threaded. Once connected, a client should be able to issue as
+many commands as it wants, and the server will only close the
+connection if the client closes it first. You are welcome to use the
+echo server distributed on the class web site as a starting point.
+
+## Client User Interface
+
+The messaging client performs two functions: it implements the client
+side of the messaging protocol and it provides a user
+interface. <u>The user interface is not identical to the messaging
+protocol.</u> The user interface defines what the user sees, which
+hides some of the detail of the underlying protocol.
+
+The user interface for the client should look exactly as shown below.
+The interface provides a prompt of the form "% " (percent sign and a
+space) and supports the following commands:
+
+### Send Command
+
+<pre>
+% send [user] [subject]
+- Type your message. End with a blank line -
+[message]
+...
+[message]
+[blank line]
+% 
+</pre>
+
+This allows the user to store a [message] for the identified [user]
+with the given [subject].  The user types the first line shown, and
+the client responds with the instructions to type a message. The user
+then types the rest of the message and ends with a blank line. Once
+the use finishes, the client formats a *put* request, sends it to the
+server, and waits for a response. The client should only print a
+response from the server if it returns an error. The client shows the
+prompt when it is done.
+
+### List Command
+
+<pre>
+% list [user]
+[index] [subject]
+...
+[index] [subject]
+% 
+</pre>
+
+This allows the user to list all the messages for [user].  The user
+types the first line shown. The client formats a *list* request, sends
+it to the server, and waits for a response.  The client should print
+the list of indexes and subjects, or an error message. The [index]
+should start counting at 1 and should be unique for each user.
+
+### Read Command
+
+<pre>
+% read [user] [index]
+[subject]
+[message]
+% 
+</pre>
+
+This reads the message at [index] for the identified [user].  The
+user types the first line shown. The client formats a *get* request,
+sends it to the server, and waits for a response. The client should
+print the subject and the message retrieved, or an error message.
+
+### Quit Command
+
+<pre>
+% quit
+</pre>
+
+This quits the program.
+
+## Command Line Arguments
+
+The messaging server should be called <i>msgd</i> and take the
+following arguments:
+
+<pre>
+Argument           Definition
+---------------------------------------------------------
+-p [port]          port number of the messaging server
+-d                 print debugging information
+</pre>
+
+
+The port number is required; it indicates the port your server will
+bind on.  You may code a default value for this option so that you do
+not have to type it every time when you test your code.
+
+The messaging client should be called <i>msg</i> and take the
+following arguments:
+
+<pre>
+Argument           Definition
+---------------------------------------------------------
+-s [server]        machine name of the messaging server (e.g. hiking.cs.byu.edu)
+-p [port]          port number of the messaging server
+-d                 print debugging information
+</pre>
+
+The user must specify the server and port options so that the client
+can connect to the instant messaging server.  You may code a default
+value for these options so that you do not have to type them every
+time when you test your code.
+
+For both the client and server, the user may also specify a debugging
+flag.  In this case, you should print out any helpful debugging
+information you want, but you should never print debugging lines if
+the flag is not specified on the command line.
+
+You should use the *getopt* API for parsing the command line options;
+see *man 3 getopt*.  This is a powerful parser that is easy to use and
+enables many of the standard command-line behaviors that are familiar
+to Linux users.
+
+## Getting Started
+
+### Use the Python version
+
+Start by cloning the [Python messaging
+service](https://github.com/zappala/messaging-service-python) Git
+repository. This provides an example of the lab written in Python and
+a testing script. You can run the server with:
+
+<pre>
+python messageDaemon.py
+</pre>
+
+Using a separate terminal, run the client with:
+
+<pre>
+python messageClient.py
+</pre>
+
+### Write a C++ client to talk to the Python server
+
+Once you understand how the messaging system is supposed to work, write
+your own client in C++ and use it to communicate with the Python server.
+This will give you experience using the socket interface, parsing strings,
+and writing a network protocol. Your client interface should work exactly
+the same as the Python client.
+
+As you write your code, use the [socket programming examples in
+C++](https://github.com/zappala/socket-programming-examples-c) as a
+starting point. You can freely use all this code. I recommend starting
+with the client and server in the `echo` folder. For string parsing,
+you can use [istringstream](http://www.cplusplus.com/reference/sstream/istringstream/) or methods in the [string library](http://www.cplusplus.com/reference/string/string/).
+
+### Write a C++ server to talk to the Python and C++ clients
+
+Once you have a client working, write you own server. It should work
+with both your own client and the Python client. If all of these
+interoperate, then you can be confident you have the protocol working
+correctly. As a last step, use the python `messageTest.py` script to
+test your server and use the [grading
+sheet]({{url_for("show",directory="fall-2016/labs",page="messaging-service-grading")}})
+to be sure you have implemented everything correctly.
+
+## Debugging Network Protocols
+
+If you are having difficulty with a client talking to a server, or
+getting your server to pass the test driver, then you likely have an
+error in your protocol. For example, a common error is for the client
+to add a "\n" at the end of the put message, or for the server to
+expect a "\n" at the end of the put message, when these are not part
+of the protocol.
+
+To debug a network protocol, I strongly advise putting a print
+statement after every call to `recv()` and another one before every
+call to `send()`. On the client, this will help you to see exactly
+what is being sent to the server and what response you get. On the
+server, this will help you see exactly what is received from the
+client and what you sent in response. Examining this output should
+help you to see any errors in your implementation of a protocol.
+
+## Submission
+
+Put all of your code into a single directory. Be sure to create a tar
+file of your code, not a zip file. Be sure the tar file creates the
+directory when it is untarred, and doesn't put all of the files in the
+current directory. Follow the instructions below.
+
+* Create a tgz of your program directory.  Remove any binaries and
+send only the source code and your Makefile.  For example, if your
+code is in the directory called lab1, then you would type this:
+
+<pre>
+cd lab1
+make realclean
+cd ..
+tar -czvf lab1.tgz lab1
+</pre>
+
+* Submit the tgz file using
+[learningsuite.byu.edu](http://learningsuite.byu.edu)
+
+## Grading
+
+Your lab will be tested as specified in the [grading
+sheet]({{url_for("show",directory="fall-2016/labs",page="messaging-service-grading")}}).
+
+As a part of testing, we will use the [Python testing
+script](https://github.com/zappala/messaging-service-python) posted at
+GitHub.
+
+If you wish to receive help with your code, then you should print out
+clear and concise debugging information when the debugging flag is
+given on the command line. The more helpful and clear your debugging
+information is, the better your chances for getting useful help. You
+should apply this same standard to how you document your code.
+
+{% endfilter %}
+
+{% endblock %}

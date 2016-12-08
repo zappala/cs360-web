@@ -3,6 +3,7 @@
 body {
     font-family: 'Merriweather';
     line-height: 1.2;
+    font-size: 14px;
 }
 
 /* Header */
@@ -55,6 +56,8 @@ body {
     padding-left: 10px;
     background-color: #ffba20;
     background-color: #ee8800;
+    height: 35px;
+    line-height: 35px;
 }
 
 .top-bar .title-area {
@@ -62,7 +65,8 @@ body {
 }
 
 .title-area h1 {
-    margin-top: 7px
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .top-bar .row {
@@ -83,7 +87,7 @@ body {
 .top-bar-section ul li>a {
     font-family: 'Lato';
     text-transform: uppercase;
-    font-size: 1rem;
+    font-size: 0.9em;
 }
 
 .top-bar-section li:not(.has-form) a:not(.button) {
@@ -129,15 +133,15 @@ body {
 
 .top-bar-section .dropdown li:not(.has-form) a:not(.button) {
     background: #999;
-    line-height: 46px;
+    line-height: 35px;
 }
 
 .top-bar-section li:not(.has-form) a:not(.button) {
-    line-height: 46px;
+    line-height: 35px;
 }
 
 .top-bar-section li.active:not(.has-form) a:not(.button) {
-    line-height: 46px;
+    line-height: 35px;
 }
 
 /* Footer */
@@ -187,10 +191,14 @@ body {
     padding: 0px 10px;
 }
 
-#page p, #page ul {
+#page p {
     margin-bottom: 20px;
-    font-size: 16px;
+    font-size: 1em;
     line-height: 1.5;
+}
+
+#page ul li, #page ol li {
+    font-size: 0.9em;
 }
 
 /* Calendar */
@@ -213,7 +221,7 @@ body {
 
 .content {
     background-color: #e4e4e4;
-    padding: 10px;
+    padding: 10px 10px 1px; 10px;
     margin-bottom: 5px;
 }
 

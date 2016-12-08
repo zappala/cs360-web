@@ -1,0 +1,144 @@
+{% extends "fall-2016/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Homework: Git
+
+Learning to use version control is absolutely essential for a
+programmer.  If you are not using some kind of version control system
+already, then you should immediately start using one. Version control
+ensures that you can always retrieve an older version of your code in
+case you need to retrieve some code you have deleted. Storing your
+repositories in the cloud ensures that you won't lose your code, which
+should be one of your most precious possessions. I find this so
+convenient, I use version control not just for code but also for
+LaTeX papers and presentations I write, and for other documents I keep in my
+home directory.
+
+Git is the preferred tool for many developers
+because it handles [distributed version
+control](http://git-scm.com/book/en/Getting-Started-About-Version-Control)
+so well. Outside of university projects, it is most common to work on
+teams when writing code, so a tool like Git that provides easy
+collaboration is required. It is quickly becoming a de facto standard
+so it is useful to understand at least its basics. Git is supported by
+most online software repositories, like [GitHub](https://github.com/)
+and [BitBucket](https://bitbucket.org/).
+
+## Learning Git
+
+The best place to learn Git is to use the free [Pro Git
+book](http://git-scm.com/book). Read Chapters 1 and 2 and you will
+learn what you need to be productive for individual projects in this
+class.
+
+To begin, I recommend doing some initialization for your name,
+email, and editor:
+
+<pre>
+git config --global user.name "Daniel Zappala"
+git config --global user.email daniel.zappala@gmail.com
+git config --global core.editor emacs
+</pre>
+
+The commands I use most often:
+
+** Create Repositories **
+
+* `git init` : initialize a new repository
+* `git clone <url>` : clone a repository
+
+** Work With A Local Repository **
+
+* `git log` : view all previous commits
+* `git log -p` : view all previous commits with the diffs
+* `git status` : list changed and new files
+* `git diff` : view changes to files
+* `git add .` : add all new files to a repository
+* `git commit -a` : commit all changes to all files
+* `git tag <name>` : mark current commit with a tag
+
+** Update a Repository and Publish Changes **
+
+* `git remote add <remote> <url>`: add a remote repository
+* `git pull <remote> <branch>` : download commits from a remote repository and merge them
+* `git push <remote> <branch>` : upload commits to a remote repository
+* `git push --tags` : push tags to a remote repository
+
+In addition to these commands, it is useful to create a `.gitignore` file
+containing file extensions you would like to ignore. For example, this
+might include:
+
+<pre>
+*.pyc
+*~
+</pre>
+
+This ignores all compiled Python files and any emacs backups.
+
+## Branching and Workflow
+
+Once you start participating in shared projects, then Chapters 3 and 5
+of Pro Git will help you with branching and workflow models. I also
+recommend [this example
+workflow](http://nvie.com/posts/a-successful-git-branching-model/),
+which you can trim down for smaller projects. There are some good
+[thoughts about
+workflows](https://www.atlassian.com/git/tutorials/comparing-workflows/forking-workflow)
+by Atlassian.
+
+The commands I use most often:
+
+* `git branch` : list all branches
+* `git checkout <branch>` : check out an existing branch
+* `git checkout -b` : create and check out a new branch
+
+Here is a useful [Git cheatsheet](https://training.github.com/kit/downloads/github-git-cheat-sheet.pdf).
+
+## Homework Assignment
+
+1. Use the above resources to practice using git.
+
+1. Setup a *private* repository for your code for the [Homework on
+Make](http://cs360.byu.edu/fall-2016/homework/make) and store your
+code there.
+
+1. In class, show your code repository.
+
+1. In class, create a new text file and push it to your repository, containing three lines:
+
+<pre>
+One
+two
+three
+</pre>
+
+1. In class, clone your repository in a second location. You should now have two copies
+of the same repository. In the first repository, change the text file to read
+
+<pre>
+One
+two
+go
+</pre>
+
+Commit this change and push it. In the second repository, change the text file to read
+
+<pre>
+One
+two
+ready?
+Go!
+</pre>
+
+Commit this change and push it. Be sure you understand the error
+message you get. Then pull the changes from the first repository. You
+should get a merge conflict. Resolve the conflict so that the changes
+from the second repository overwrite those from the first. Commit and
+push this change.
+
+{% endfilter %}
+
+{% endblock %}

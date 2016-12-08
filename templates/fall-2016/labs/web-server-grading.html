@@ -1,0 +1,120 @@
+{% extends "fall-2016/menu.html" %}
+
+{% macro item(text,score,criteria) -%}
+<div class="box"></div>
+<div class="item">{{ text }}</div>
+<div class="score">{{ score }}</div>
+<div class="clear"></div>
+<div class="criteria">{{ criteria }}</div>
+{%- endmacro %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Web Server Grading Sheet
+
+*The TA will fill out this sheet when grading your program.*
+
+<div class="border">
+  Student Name:
+</div>
+
+**TA:** *Check the boxes below to indicate which tests pass
+successfully.  Circle the boxes that do not work correctly and
+include a written statement explaining the error that occured.*
+
+## Basic Functionality
+      
+{{ item("HTML File and Embedded Images",10,"Use a web browser to
+access the server and view the index.html file provided with the
+assignment. The server should provide both the index file and the
+embedded images. This should work for a URI that is either / or
+/index.html.") }}
+
+{{ item ("Large File",5,"Use a web browser to access the server and
+download largefile.txt. The server should provide the entire file.")
+}}
+
+{{ item("PDF File",5,"Use a web browser to download
+I-Have-A-Dream.pdf. The file should open properly in a PDF reader.")
+}}
+
+{{ item("Persistent Connection",10,"Use test script to verify that the
+server uses a persistent TCP connection, allowing the client to fetch
+multiple objects during one connection. The server should also timeout
+an idle connection based on the timeout period given in the
+configuration file.") }}
+
+{{ item("Headers",10,"Use test script to check that the server always
+returns a Date header with the correct date format and a Server header
+identifying the name of the server. Check that the server includes a
+valid Content-Length, Content-Type, and Last-Modified header.") }}
+
+## Error Checking and Response Codes
+
+{{ item("Server handles bind errors",2,"Start two servers with the
+same port number and check whether a bind error is handled
+gracefully.") }}
+
+{{ item("400 Bad Request",2,"Use test script to check that the server
+returns a 400 error and web page for the case when the client issues a
+request with the method or URI empty.") }}
+
+{{ item("403 Forbidden",2,"Use the test script to check that the
+server returns a 403 error and web page when the client requests a
+file with no read permissions.")  }}
+      
+{{ item("404 Not Found",2,"Use the test script to check that the
+server returns a 404 error and web page when the client asks for a
+file that does not exist.") }}
+
+{{ item("501",2,"Use the test script to check that the server returns
+a 501 error and web page when the client uses a method that does not
+exist.") }}
+
+## Architecture
+
+{{ item("Non-Blocking I/O",30,"The TA will test your code to be
+sure non-blocking I/O is done properly. This can be done by having
+one client send a partial request, followed by a second client sending
+a full request, followed by the rest of the first request.") }}
+
+{{ item("Idle Socket Timeout",20,"The TA will test your code to be
+sure idle sockets are timed out properly. This can be done with
+telnet.") }}
+
+{{ item("Load Test, Low Rate",25,"Use the stress test script to create
+a steady stream of requests at a low rate (10 threads busy for 10
+seconds). Your server should handle this load well.") }}
+
+{{ item("Load Test, Moderate Rate",25,"Use the stress test script to
+create a steady stream of requests a moderate rate (100 threads busy
+for 10 seconds). Your server should handle this load well.") }}
+
+## Extra Credit
+
+{{ item("HEAD and Range Requests",15,"Make your web server work with
+your download accelerator. This involves support HEAD requests and
+Range requests. Using the '-e' flag on the test script checks this
+functionality.") }}
+
+## Report
+
+{{ item("Report",50,"Your report will be given 45-50 points for A quality work,
+40-45 points for B quality work, 35-40 points for C quality work, and 25 points
+for partial work that indicates substantial effort was made.") }}
+
+<p></p>
+
+**TA:** *Fill in the information below when testing is
+  complete and then turn the sheet in to the professor.*
+
+<div class="border">TA Name:</div>
+<div class="border">Score:</div>
+
+{% endfilter %}
+
+{% endblock %}
+
+

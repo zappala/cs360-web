@@ -1,0 +1,67 @@
+{% extends "fall-2016/menu.html" %}
+
+{% macro item(text,score,criteria) -%}
+<div class="box"></div>
+<div class="item">{{ text }}</div>
+<div class="score">{{ score }}</div>
+<div class="clear"></div>
+<div class="criteria">{{ criteria }}</div>
+{%- endmacro %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Messaging Service Grading Sheet
+
+*The TA will fill out this sheet when grading your program.*
+
+<div class="border">
+  Student Name:
+</div>
+
+**TA:** *Check the boxes below to indicate which tests pass
+successfully.  Circle the boxes that do not work correctly and include
+a written statement explaining the error that occured.*
+
+## Student Client and Server
+
+{{ item("Command line parsing",10,"The server starts on the
+supplied port and can be contacted by clients using the host
+and port information.") }}
+
+{{ item("Message Protocol",50,"The client is able to send, list, and
+read multiple messages for a variety of users.  Multiple clients can
+access the server, but one at a time.") }}
+
+{{ item("User Interface",10,"The user interface works as
+specified.") }}
+
+## Interoperability
+
+{{ item("Message Protocol",5,"Passes the Message Protocol tests
+in the testing script.") }}
+
+{{ item("Errors",5,"Passes the Errors test in the testing
+script.") }}
+
+{{ item("Large Messages",10,"Passes the Large Message test in the
+testing script.") }}
+
+{{ item("Partial Messages",10,"Passes the Partial Messages test in
+the testing script. The student's code is efficient and does NOT
+read one byte at a time when calling recv().") }}
+
+<p></p>
+
+**TA:** *Fill in the information below when testing is complete and
+then turn the sheet in to the professor.*
+
+<div class="border">TA Name:</div>
+<div class="border">Score:</div>
+
+{% endfilter %}
+
+{% endblock %}
+
+

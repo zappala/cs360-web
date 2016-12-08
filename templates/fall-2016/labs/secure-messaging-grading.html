@@ -1,0 +1,54 @@
+{% extends "fall-2016/menu.html" %}
+
+{% macro item(text,score,criteria) -%}
+<div class="box"></div>
+<div class="item">{{ text }}</div>
+<div class="score">{{ score }}</div>
+<div class="clear"></div>
+<div class="criteria">{{ criteria }}</div>
+{%- endmacro %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Secure Messaging Grading Sheet
+
+*The TA will fill out this sheet when grading your program.*
+
+<div class="border">
+  Student Name:
+</div>
+
+**TA:** *Check the boxes below to indicate which tests pass
+successfully.  Circle the boxes that do not work correctly and include
+a written statement explaining the error that occured.*
+
+## Security
+
+{{ item("Keys",0,"No points awarded for this lab if no attempt at security was made.
+Examine the code to be sure the client sends and receives public keys from the server and
+uses these keys to encrypt and decrypt messages.") }}
+
+{{ item("Secure Messaging",75,"Two clients, Bob and Alice, can exchange secure messages through the
+server. A third client, Trudy, cannot read the messages.") }}
+
+{{ item("Peeking",5,"Any client can peek at the messages and only sees encrypted text.") }}
+
+## Event-Driven Programming
+
+{{ item("Event-Driven",20,"The server uses event-driven programming.") }}
+
+<p></p>
+
+**TA:** *Fill in the information below when testing is complete and
+then turn the sheet in to the professor.*
+
+<div class="border">TA Name:</div>
+<div class="border">Score:</div>
+
+{% endfilter %}
+
+{% endblock %}
+
+

@@ -1,0 +1,250 @@
+{% extends "fall-2016/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Lab: Secure Messaging Service
+
+The goals of this lab are (1) to learn how to use the [Python Cryptography Toolkit](https://www.dlitz.net/software/pycrypto/) and (2) to
+use the toolkit to implement a (somewhat) secure messaging service.
+
+In this assignment, you will create a simple messaging server that can
+store and retrieve secure messages for people.  The messages will be
+encrypted with the public key of the user, so that only that user can read them.
+You will also write a client that can send and receive secure messages.
+
+Your code must be written in Python.
+
+## Cryptography
+
+For cryptography, use the [Python Cryptography Toolkit](https://www.dlitz.net/software/pycrypto/) library, also known as pycrypto. You
+can install this with pip. Here is a simple example of how to use it:
+
+<pre><code>
+from Crypto.PublicKey import RSA
+from Crypto import Random
+
+random_generator = Random.new().read
+key = RSA.generate(2048, random_generator)
+public_key = key.publickey()
+data = public_key.encrypt('hello', 0)[0]
+
+print "############ Encrypted #############"
+print
+print data
+print
+print "############ Decrypted #############"
+print
+print key.decrypt(data)
+print
+</code></pre>
+
+When you upload a public key to the messaging server, you should export it using:
+
+<pre><code>
+export = key.exportKey()
+</code></pre>
+
+This will give you a text based key that you can upload, using the protocol described below.
+When you download a public key from the messaging server, you can transform it back into a
+key object using:
+
+<pre><code>
+key = RSA.importKey(exportkey)
+</code>
+</pre>
+
+## Messaging Protocol
+
+The messaging protocol is the same as the one for the [messaging service lab]({{url_for("show",directory="fall-2016/labs",page="messaging-service")}}), with the following additions:
+
+### Storing a Key
+
+<pre>
+<b>Request</b>
+store_key [name] [length]\n[key]
+
+<b>Responses</b>
+OK\n
+error [description]\n
+</pre>
+
+The *store_key* request asks the server to store a public key for a user
+identified by [name].  The [length] is the number of
+characters in the [key] and does not include the newline or any of
+the characters before it. Note there is no newline after the key.
+The server returns the *OK* response if the
+message is stored successfully.  Otherwise, the server returns the
+*error* response, including a descriptive message explaining the
+error.
+
+Keys are stored in memory and are not written to disk. This means
+that once the server quits all public keys are lost. Note there is no
+security for mapping keys to user names -- anyone can upload a key for
+any user name. Only the most recently uploaded key is stored.
+
+### Getting a Key
+
+<pre>
+<b>Request</b>
+get_key [name]\n
+
+<b>Responses</b>
+key [length]\n[key]
+error [description]\n
+</pre>
+
+The *get_key* request gets a public key for a user
+identified by [name].  The server returns the *key* response if
+the query is formatted properly and a key
+exists for the listed user.  The *key* response consists of
+[length] characters.  The entire key comes after the newline
+character.  The [length] is the number of characters in the message
+and does not include the newline or any of the characters before
+it. Otherwise, the server returns the *error* response, including a
+descriptive message explaining the error.
+
+## Server
+
+The messaging server should use event-driven I/O, similar to the web
+server lab.
+
+## Client User Interface
+
+The user interface for the client should look exactly as in
+[messaging service lab]({{url_for("show",directory="fall-2016/labs",page="messaging-service")}}), with the following additions:
+
+### Login Command
+
+<pre>
+% login [user]
+</pre>
+
+This generates a public/private key pair, using the `RSA.generate()` method as shown in the
+example above. The client then stores the key pair locally and sends the public key to the server
+using the `store_key` message.
+
+### Send Command
+
+Before sending a message, the client first sends a `get_key` message to get the public key of the user.
+After getting the public key, the client encrypts the message for the user, as shown in the example above.
+The encrypted version is what is sent to the server using the `put` message.
+
+### Read Command
+
+After getting a message from the server using the `get` message, the client decyrpts the message
+using the stored key (from the login command), using the example above.
+
+### Peek Command
+
+This command works the same as the original read command, in that it does *not* decrypt the message.
+Think of this as the server peeking at the message. This will let you see that the message is indeed
+encrypted.
+
+## Command Line Arguments
+
+The same as in the original assignment.
+
+## Code Re-Use
+
+You may use the [Python messaging
+service](https://github.com/zappala/messaging-service-python) code I
+have written, as well as your event-driven code from the web server
+lab or the event-driven code I provided in the [Python Networking and
+Threading](https://github.com/zappala/python-networking-and-threading)
+repository.
+
+## Example
+
+Bob:
+
+<pre>
+$ python messageClient.py -p 3000
+% login bob
+</pre>
+
+Alice:
+
+<pre>
+$ python messageClient.py -p 3000
+% login alice
+% send bob hello
+- Type your message. End with a blank line -
+This is a secret
+
+%
+</pre>
+
+Bob:
+
+<pre>
+% read bob 1
+hello
+This is a secret
+% send alice response
+- Type your message. End with a blank line -
+Secret received.
+
+%
+</pre>
+
+Alice:
+
+<pre>
+$ read alice 1
+response
+Secret received.
+%
+</pre>
+
+Trudy:
+
+<pre>
+$ python messageClient.py -p 3000
+% login trudy
+% read bob 1
+hello
+[Undecipherable text]
+%
+</pre>
+
+## Submission
+
+Create a list of the Python packages you need for your program:
+
+<pre>
+pip freeze > requirements.txt
+</pre>
+
+Including your requirements will let the grader install them easily:
+
+<pre>
+pip install -r requirements.txt
+</pre>
+
+Turn in a tgz of your program directory, include the `requirements.txt` file but *not* including
+your virtual environment. For example, if your code is
+in the directory called secure-messenger, then you would type
+this:
+
+<pre>
+tar --exclude=secure-messenger/env -czvf secure-messenger.tgz secure-messenger
+</pre>
+
+Submit your tgz file using [learningsuite.byu.edu](http://learningsuite.byu.edu).
+
+## Grading
+
+Your lab will be tested as specified in the [grading
+sheet]({{url_for("show",directory="fall-2016/labs",page="secure-messaging-grading")}}).
+
+If you wish to receive help with your code, then you should print out
+clear and concise debugging information when the debugging flag is
+given on the command line. The more helpful and clear your debugging
+information is, the better your chances for getting useful help. You
+should apply this same standard to how you document your code.
+
+{% endfilter %}
+
+{% endblock %}

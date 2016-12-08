@@ -1,0 +1,45 @@
+{% extends "fall-2016/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Study Guide
+
+This study guide is for the final exam.
+
+1. Internet Architecture
+    * Understand what IP and TCP do
+    * Understand what a routing protocol does
+1. Protocols
+    * Know how to design a protocol
+    * Text-based protocols, using spaces and newlines to separate fields
+1. DNS
+    * Understand the different types of DNS servers
+    * Understand how a name is resolved
+1. Threads and Synchronization
+    * Know how to design a thread-safe class using mutexes and condition variables
+    * Know how to use thread-safe classes to implement a threaded program
+1. HTTP
+    * Understand how the protocol works
+    * Understand how web caching works, why it is effective, and what a CDN does
+1. Event-Driven Architecture
+    * Know how polling works
+    * Know the advantages of this architecture versus threading
+    * Level-triggered versus edge-triggered interrupts
+1. Network Security
+    * Understand how symmetric key cryptography can be used to provide confidentiality
+    * Understand how public key cryptography can be used to provide confidentiality, integrity, and authentication
+    * Understand why a certificate authority is needed to ensure a certificate is valid for HTTPS
+1. Web Design 
+    * Be able to use web design principles to critque the design of a site
+1. Document Databases
+    * Know how to design a schema for a document database like Mongo
+    * Understand tradeoffs of embedded versus normalized documents
+1. Web Vulnerabilities
+    * Know how a XSS attack works and how to prevent it
+    * Know how a CSRF attack works and how to prevent it
+
+{% endfilter %}
+
+{% endblock %}

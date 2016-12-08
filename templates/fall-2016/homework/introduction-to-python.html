@@ -1,0 +1,180 @@
+{% extends "fall-2016/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Homework: Introduction Python
+
+Python is a popular language for networking. In this assignment, you
+will become familiar with the basics of the language.
+
+## Learning Python
+
+If you have not programmed in Python before, use the [Python
+Codecademy course](http://www.codecademy.com/tracks/python) to learn
+the language. Although the introduction says it will take 13 hours,
+you should be able to go much faster since you have programmed in
+several other languages previously. Feel free to skip around and move
+through the material to find the level of instruction you need.
+
+## Setup
+
+A good way to install Python packages is to use the `pip` and
+`virtualenv` tools. If you do not already have these installed, then you
+can install it on Fedora:
+
+<pre><code>
+sudo dnf install python-pip python-virtualenv
+</code></pre>
+
+Older versions of Fedora use yum instead of dnf. On Ubuntu, use apt-get instead of dnf.
+If you are on a lab machine, then use easy_install:
+
+<pre><code>
+easy_install --user virtualenv
+</code></pre>
+
+This will install to your home directory under `.local`, so you can execute the
+virtual environment package from there.
+
+Now we can install packages you will need for this homework. Go to the
+directory where you will work on the homework. In this directory,
+execute:
+
+<pre><code>
+    virtualenv env
+    source env/bin/activate
+    pip install requests
+</code></pre>
+
+This creates a virtual environment to hold the packages specific to this
+homework. When you install packages, they are installed in the local `env` directory.
+This way you can work on multiple projects that require different, conflcting packages.
+You can deactivate the virtual environment by running `deactivate`.
+
+## A Basic Web Server
+
+Below is code for a basic web server that can excute CGI
+Python scripts.
+
+<pre><code>import CGIHTTPServer
+import BaseHTTPServer
+
+class Main(object):
+    def __init__(self):
+        self.port = 8000
+        self.handler = CGIHTTPServer.CGIHTTPRequestHandler
+        self.httpd = BaseHTTPServer.HTTPServer(("",self.port),self.handler)
+
+    def run(self):
+        print "serving at port", self.port
+        self.httpd.serve_forever()
+
+m = Main()
+m.run()
+</code></pre>
+
+Place this code in a file called `server.py`. In the same directory, create a file
+called `index.html` with the following web page:
+
+~~~
+<html>
+  <head>
+    <title>CS 360 Python Homework</title>
+  </head>
+  <body>
+    <h1>Python Homework</h1>
+    <p><a href="/htbin/generateRandom.py">Generate a random number</a></p>
+    <p><a href="/htbin/grades.py">Grades</a></p>
+    <p><a href="/htbin/news.py">News</a></p>
+  </body>
+</html>
+~~~
+
+Run the server using `python server.py` and use a browser to navigate to `localhost:8000`.
+
+You can now write Python scripts that will execute in your browser. The scripts must have execute
+permission.
+
+## Random Number Generator
+
+Create a script called `generateRandom.py` and place it in a subdirectory called `htbin`.
+This script should contain:
+
+~~~
+#!/usr/bin/env python
+
+import random
+ 
+print "Content-type: text/html"
+print
+print "<h1>Python Homework</h1>"
+print "<p>"
+print random.randint(1,100)
+print "</p>"
+~~~
+
+Be sure it has execute permission: `chmod u+x htbin/generateRandom.py`. You
+can then run the script in your browser by clicking on the link in the
+index web page.
+
+Use this script to see an example of how to generate HTML output that
+will render in the browser.
+
+## Listing Grades
+
+This part of the homework will give you practice using file I/O,
+parsing input, and using a basic loop.
+
+Write a script called `htbin/grades.py` that parses the file
+`grades.txt` and displays the results in a web page. Place the
+`grades.txt` file in the top level of your homework, where `server.py` resides.
+This file should contain:
+
+<pre><code># Homework 1
+John 8
+Emma 10
+Andrea 7
+Steve 3
+Alice 9
+Harold 9
+
+# Homework 2
+John 9
+Emma 9
+Andrea 6
+Steve 10
+Alice 8
+Harold 7
+</code></pre>
+
+The output your script produces should start with
+`<h1>Grades</h1>`. Lines that begin with a "#" are the name of an
+assignment and should use an `h2` tag. Each name and grade should be
+displayed on its own line, separated by `<br>` tags. Blank lines
+should be skipped.
+
+## Getting the News
+
+This part of the homework will give you practice using the Python
+[requests](http://docs.python-requests.org/en/latest/) library.
+
+Write a script called `htbin/news.py` that fetches and dispays the
+news from `http://news.google.com`. The output your script produces
+should start with `<h1>News</h1>`. The rest of the output should
+contain the entire news page from Google. Note, you will want to use
+binary response content discussed in the
+[documentation](http://docs.python-requests.org/en/latest/user/quickstart/#binary-response-content).
+
+## Homework Assignment
+
+1. Do all the above.
+
+1. In class, demonstrate that each of your programs work.
+
+1. Compare your code to others in the class.
+
+{% endfilter %}
+
+{% endblock %}

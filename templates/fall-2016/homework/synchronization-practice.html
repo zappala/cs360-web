@@ -1,0 +1,63 @@
+{% extends "fall-2016/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Homework: Synchronization Practice
+
+When using shared memory to communicate between threads, it is important
+to use mutexes and condition variables to provide mutual exclusion and
+synchronization. This homework will walk you through some practice problems.
+
+## Problem 1
+
+Consider the following situation. An automated factory uses robots to
+assemble items. An LED display shows the total number of items made so
+far. When a robot finishes an order, it travels to the LED display,
+push a toggle to increment the number shown, then goes back to its
+position to make the next order.
+
+Write pseudocode for this robot routine, using mutexes and
+condition variables where appropriate.
+
+## Problem 2
+
+Consider the following situation. An automated factory uses robots to
+assemble items. Red robots put items into a basket.  Blue robots take
+items out of the basket, screw on a widget, and put them onto a
+conveyer belt.
+
+(a) Write psuedocode for the red robots to put items into the basket,
+using mutexes and condition variables where appropriate.
+
+(b) Write pseudocode for the blue robots to take items out of the
+basket, screw on the widget, and place them onto the conveyer belt,
+using mutexes and condition variables where appropriate.
+
+## Problem 3
+
+Consider the following situation. An automated factory uses robots to
+assemble items and drones to deliver them. A ``head'' robot collects
+orders, has the robot team make them, and then delivers them to drones
+to deliver them to customers. Drones place orders, wait for the order
+to be ready, then collect the order and fly it to a company.
+
+(a) Write pseudocode for the head robot: taking orders from drones,
+making the order, and signaling when the order is ready.  Use mutexes
+and condition variables where appropriate.
+
+(b) Write pseudocode for the drones: giving an order to the head
+robot, waiting for their order, picking up their order, and delivering
+it.  Use mutexes and condition variables where appropriate.
+
+## Homework Assignment
+
+1. Do all the above problems.
+
+1. In class, discuss your solutions and compare with
+other class members.
+
+{% endfilter %}
+
+{% endblock %}

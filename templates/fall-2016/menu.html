@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 
-{% set term = 'fall-2015' %}
+{% set term = 'fall-2016' %}
 
 {% macro render(directory,page,name) -%}
 {% set path = term %}
@@ -16,7 +16,7 @@
 {%- endmacro %}
 
 {% block term %}
-Fall 2015
+Fall 2016
 {% endblock %}
 
 
@@ -32,15 +32,12 @@ Fall 2015
     {{ render('homework','git','Git') }}
     {{ render('homework','socket-io','Socket I/O') }}
     {{ render('homework','mutexes-and-condition-variables','Mutexes and Condition Variables') }}
+    {{ render('homework','synchronization-practice','Synchronization Practice') }}
     {{ render('homework','semaphores','Semaphores') }}
     {{ render('homework','introduction-to-python','Introduction to Python') }}
     {{ render('homework','python-threading','Python Threading') }}
-    {{ render('homework','concurrency','Concurrency') }}
+    {{ render('homework','queueing-theory','Queueing Theory') }}
     {{ render('homework','network-security','Network Security') }}
-    {{ render('homework','web-application-proposal','Web Application Proposal') }}
-    {{ render('homework','javascript','JavaScript') }}
-    {{ render('homework','react','React') }}
-    {{ render('homework','webpack','webpack') }}
   </ul>
 </li>
 <li class="has-dropdown {% if previous == "labs" %}active{% endif %}">
@@ -50,17 +47,17 @@ Fall 2015
     {{ render('labs','threaded-messaging-service','Threaded Messaging Service') }}
     {{ render('labs','download-accelerator','Download Accelerator') }}
     {{ render('labs','web-server','Web Server') }}
-    {{ render('labs','web-application','Web Application') }}
+    {{ render('labs','secure-messaging','Secure Messaging') }}
   </ul>
 </li>
 <li class="has-dropdown {% if previous == "help" %}active{% endif %}">
   <a href="#">Help</a>
   <ul class="dropdown">
-    {{ render('help','instructor','Instructor and TAs') }}
+    {{ render('help','instructor','Instructor') }}
     {{ render('help','officehours','Office Hours') }}
     {{ render('help','code','Sample Code') }}
     {{ render('help','studyguide','Study Guide') }}
-    <li><a href="https://piazza.com/byu/fall2015/cs360" target="_blank">Discussion <i class="fi-arrow-right"></i></a></li>
+    <li><a href="https://piazza.com/byu/fall2016/cs360" target="_blank">Discussion <i class="fi-arrow-right"></i></a></li>
   </ul>
 </li>
 </ul>

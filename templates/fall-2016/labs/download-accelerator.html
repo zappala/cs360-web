@@ -1,0 +1,128 @@
+{% extends "fall-2016/menu.html" %}
+
+{% block page %}
+
+{% filter markdown %}
+
+# Lab: Download Accelerator
+
+In this assignment, you will create an HTTP downloader that can
+download a file in parallel using a number of concurrent number of
+threads. You will use Python for this assignment.
+
+The goals of this assignment are (1) to gain additional familiarity
+with using Python for writing networking code, and (2) to learn how to
+use threading in Python.
+
+## Downloader
+
+The downloader uses the following command line syntax:
+
+<pre>
+downloadAccelerator.py [-n threads] url
+</pre>
+
+On starting, the downloader first sends a HEAD request to the web
+server specified in the URL, to determine the size of the object. If
+the object has a valid Content-Length field, it then downloads the
+object in parallel, using the specified number of threads. Each thread
+sends a GET request with a Range header that gives the range of bytes
+desired. For example, to get the first 100 bytes of a file:
+
+<pre>
+Range: bytes=0-99
+</pre>
+
+Be sure the GET request also requests the identity encoding:
+
+<pre>
+Accept-Encoding: identity
+</pre>
+
+so that it doesn't get a compressed response.
+
+Range requests only work on static pages. You should use the CS 360
+web pages as an example, including lecture notes for larger files. If
+you do not receive a 206 status code in the response, then you are
+working with a web page that does not support content ranges. In
+addition, the response should have a Content-Range header indicating
+the byte range of the response.
+
+The downloader saves the file in the current directory, using the same
+name as given in the URL. If the URL ends with "/", then the name
+"index.html" is implied.
+
+The downloader also reports, to standard output, the following:
+
+<pre>
+[URL] [threads] [bytes] [seconds]
+</pre>
+
+where [URL] is the URL given on the command line, [bytes] is the
+number of total bytes in the object, and [seconds] is a floating point
+number indicating the time taken to download the object, starting from
+when the threads are created and ending when the last thread
+finishes.
+
+To verify that you downloaded the file correctly, use `wget` to
+download the file into a separate directory, and then `diff` to verify
+the files are the same.
+
+## Final Testing
+
+**Before running tests on these files, be sure your code is working.  These files
+are hosted by the federal government, and we don't want to overload their
+systems.**
+
+Verify your code is working correctly using the CS 360 web site, including
+large files such as lecture notes. Once you verify that a diff of the original
+file and your downloaded file indicates they are the same, then proceed with
+these tests.
+
+Download the [small](http://www2.census.gov/geo/tiger/TIGER2013/TRACT/tl_2013_10_tract.zip),
+[medium](http://www2.census.gov/geo/tiger/TIGER2013/EDGES/tl_2013_35005_edges.zip), and
+[large](http://www2.census.gov/geo/tiger/TGRGDB13/tlgdb_2013_a_39_oh.gdb.zip) census
+files from the federal govenrment. These files are approximately 1 MB, 10 MB, and 100 MB.
+Use the `diff` program to verify that your downloaded files are exactly the same as the
+original file. 
+
+## Submission
+
+Create a list of the Python packages you need for your program:
+
+<pre>
+pip freeze > requirements.txt
+</pre>
+
+Including your requirements will let the grader install them easily:
+
+<pre>
+pip install -r requirements.txt
+</pre>
+
+Turn in a tgz of your program directory, include the `requirements.txt` file but *not* including
+your virtual environment. For example, if your code is
+in the directory called download-accelerator, then you would type
+this:
+
+<pre>
+tar --exclude=download-accelerator/env -czvf download-accelerator.tgz download-accelerator
+</pre>
+
+Submit your tgz file using [learningsuite.byu.edu](http://learningsuite.byu.edu).
+
+
+## Grading
+
+Your lab will be tested as specified in the
+[grading sheet]({{url_for("show",directory="fall-2016/labs",page="download-accelerator-grading")}}).
+If you wish to receive help with your code, then you should print out
+clear and concise debugging information when the debugging flag (-d)
+is given on the command line. The more helpful and clear your
+debugging information is, the better your chances for getting useful
+help. You should apply this same standard to how you document your
+code.
+
+{% endfilter %}
+
+{% endblock %}
